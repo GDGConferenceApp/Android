@@ -3,6 +3,7 @@ package mn.devfest;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import mn.devfest.api.ReleaseApiModule;
 
 /**
  * Release DevFest Dagger component
@@ -10,7 +11,7 @@ import dagger.Component;
  * @author bherbst
  */
 @Singleton
-@Component()
+@Component(modules = ReleaseApiModule.class)
 public interface DevFestComponent extends DevFestGraph {
     final class Initializer {
         static DevFestGraph init() {
