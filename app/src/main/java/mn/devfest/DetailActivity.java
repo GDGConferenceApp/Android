@@ -1,4 +1,4 @@
-package com.blackcj.designsupportexample;
+package mn.devfest;
 
 import android.content.Intent;
 import android.os.Build;
@@ -56,8 +56,6 @@ public class DetailActivity extends AppCompatActivity {
                     finish();
                     return true;
                 }
-            case R.id.action_settings:
-                return true;
         }
         return super.onOptionsItemSelected(item);
     }

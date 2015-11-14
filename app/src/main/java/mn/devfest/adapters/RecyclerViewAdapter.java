@@ -1,4 +1,4 @@
-package com.blackcj.designsupportexample.adapters;
+package mn.devfest.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,7 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import com.blackcj.designsupportexample.R;
+
+import mn.devfest.R;
 
 /**
  * Created by chris.black on 6/11/15.
