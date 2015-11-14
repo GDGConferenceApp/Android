@@ -1,13 +1,13 @@
-package com.blackcj.designsupportexample.adapters;
+package mn.devfest.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.blackcj.designsupportexample.PageFragment;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import mn.devfest.PageFragment;
 
 /**
  * Created by chris.black on 6/11/15.

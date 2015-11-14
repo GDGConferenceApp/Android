@@ -1,4 +1,4 @@
-package com.blackcj.designsupportexample;
+package mn.devfest;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,7 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blackcj.designsupportexample.adapters.RecyclerViewAdapter;
+import mn.devfest.adapters.RecyclerViewAdapter;
+
 
 /**
  * Created by chris.black on 6/11/15.

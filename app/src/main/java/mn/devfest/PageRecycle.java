@@ -1,16 +1,14 @@
-package com.blackcj.designsupportexample;
+package mn.devfest;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blackcj.designsupportexample.adapters.RecyclerViewAdapter;
+import mn.devfest.adapters.RecyclerViewAdapter;
 
 /**
  * Created by chris.black on 6/25/15.

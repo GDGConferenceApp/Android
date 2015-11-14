@@ -1,4 +1,4 @@
-package com.blackcj.designsupportexample;
+package mn.devfest;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -11,13 +11,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.blackcj.designsupportexample.adapters.RecyclerViewAdapter;
-import com.blackcj.designsupportexample.adapters.TabPagerAdapter;
+import mn.devfest.adapters.RecyclerViewAdapter;
+import mn.devfest.adapters.TabPagerAdapter;
+
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnItemClickListener, AppBarLayout.OnOffsetChangedListener {
 
@@ -124,17 +124,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                 break;
         }
         return super.dispatchTouchEvent(ev);
-    }
-
-    ///////////////////////////////////////
-    // OPTIONS MENU
-    ///////////////////////////////////////
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
     }
 
     @Override
