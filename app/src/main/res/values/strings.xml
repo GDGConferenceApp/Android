@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">DevFestMN 2016</string>
+
+    <!-- Nav drawer -->
+    <string name="drawer_item_my_schedule">My Schedule</string>
+    <string name="drawer_item_sessions">Sessions</string>
+    <string name="drawer_item_speakers">Speakers</string>
+    <string name="drawer_item_map">Map</string>
 </resources>
