@@ -27,7 +27,7 @@ public class DetailActivity extends BaseActivity {
 
         ImageView image = (ImageView) findViewById(R.id.image);
         ViewCompat.setTransitionName(image, EXTRA_IMAGE);
-        image.setImageResource(getIntent().getIntExtra(EXTRA_IMAGE, R.drawable.ic_android_white_48dp));
+        image.setImageResource(getIntent().getIntExtra(EXTRA_IMAGE, R.drawable.ic_map_white_24dp));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class DetailActivity extends BaseActivity {
                 ActivityOptionsCompat.makeSceneTransitionAnimation(
                         activity, transitionView, EXTRA_IMAGE);
         Intent intent = new Intent(activity, DetailActivity.class);
-        intent.putExtra(EXTRA_IMAGE, R.drawable.ic_android_white_48dp);
+        intent.putExtra(EXTRA_IMAGE, R.drawable.ic_map_white_24dp);
 
         ActivityCompat.startActivity(activity, intent, options.toBundle());
     }

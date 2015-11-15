@@ -17,8 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:padding="20dp"
-            android:src="@drawable/ic_android_white_48dp"
-            tools:src="@drawable/ic_android_white_48dp"/>
+            android:src="@drawable/ic_map_white_24dp"
+            tools:src="@drawable/ic_map_white_24dp"/>
         <TextView
             android:id="@+id/text"
             android:layout_width="wrap_content"

@@ -1,113 +1,79 @@
 package mn.devfest;
 
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.ViewPager;
-import android.view.MotionEvent;
-import android.view.View;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 
-import mn.devfest.adapters.RecyclerViewAdapter;
-import mn.devfest.adapters.TabPagerAdapter;
 import mn.devfest.base.BaseActivity;
+import mn.devfest.map.MapFragment;
+import mn.devfest.schedule.ScheduleFragment;
+import mn.devfest.sessions.SessionsFragment;
+import mn.devfest.speakers.SpeakerListFragment;
 
-
-public class MainActivity extends BaseActivity implements RecyclerViewAdapter.OnItemClickListener, AppBarLayout.OnOffsetChangedListener {
-
-    private ViewPager mViewPager;
-    private TabPagerAdapter mAdapter;
-    private AppBarLayout appBarLayout;
-
-    ///////////////////////////////////////
-    // LIFE CYCLE
-    ///////////////////////////////////////
+/**
+ * Main DevFest Activity. Handle navigation between top-level screens
+ */
+public class MainActivity extends BaseActivity {
+    /**
+     * Intent extra specifying a navigation destination
+     *
+     * The value associated with this extra should be the ID of the selected navigation item
+     */
+    public static final String EXTRA_NAVIGATION_DESTINATION = "navigation_destination";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_single_pane);
 
-        mAdapter = new TabPagerAdapter(this.getSupportFragmentManager());
-        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.setTabsFromPagerAdapter(mAdapter);
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                mViewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        mViewPager = (ViewPager) findViewById(R.id.viewPager);
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        mViewPager.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        appBarLayout.addOnOffsetChangedListener(this);
-    }
-
-    @Override
-    protected void onStop() {
-        appBarLayout.removeOnOffsetChangedListener(this);
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        mAdapter.destroy();
-        super.onDestroy();
-    }
-
-    ///////////////////////////////////////
-    // SWIPE TO REFRESH FIX
-    ///////////////////////////////////////
-
-    int index = 0;
-
-    @Override
-    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-        index = i;
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        final int action = MotionEventCompat.getActionMasked(ev);
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                PageFragment pageFragment = mAdapter.getFragment(mViewPager.getCurrentItem());
-                if (pageFragment != null) {
-                    if (index == 0) {
-                        pageFragment.setSwipeToRefreshEnabled(true);
-                    } else {
-                        pageFragment.setSwipeToRefreshEnabled(false);
-                    }
-                }
-                break;
+        if (savedInstanceState == null) {
+            int navId = getIntent().getIntExtra(EXTRA_NAVIGATION_DESTINATION, R.id.nav_schedule);
+            navigateToTopLevelFragment(navId, false);
         }
-        return super.dispatchTouchEvent(ev);
     }
-
-    ///////////////////////////////////////
-    // EVENT HANDLERS
-    ///////////////////////////////////////
 
     @Override
-    public void onItemClick(View view) {
-        DetailActivity.launch(MainActivity.this, view.findViewById(R.id.image));
+    protected void navigateTo(int navItemId) {
+        navigateToTopLevelFragment(navItemId, true);
     }
+
+    /**
+     * Navigate to a top-level Fragment
+     * @param navItemId The ID of the top-level Fragment in the nav drawer
+     * @param addToBackStack True to add this transition to the back stack
+     */
+    private void navigateToTopLevelFragment(int navItemId, boolean addToBackStack) {
+        Fragment destination;
+        switch (navItemId) {
+            case R.id.nav_schedule:
+                destination = new ScheduleFragment();
+                break;
+
+            case R.id.nav_sessions:
+                destination = new SessionsFragment();
+                break;
+
+            case R.id.nav_speakers:
+                destination = new SpeakerListFragment();
+                break;
+
+            case R.id.nav_map:
+                destination = new MapFragment();
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unknown item ID " + navItemId);
+        }
+
+        FragmentTransaction transaction= getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.root_container, destination);
+
+        if (addToBackStack) {
+            transaction.addToBackStack(null);
+        }
+
+        transaction.commit();
+    }
+
 }

@@ -1,5 +1,6 @@
 package mn.devfest.base;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import mn.devfest.MainActivity;
 import mn.devfest.R;
 
 /**
@@ -55,7 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         // Default to showing the nav drawer icon
         final ActionBar ab = getSupportActionBar();
         if (ab != null) {
-            ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+            ab.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
             ab.setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -71,7 +73,22 @@ public abstract class BaseActivity extends AppCompatActivity {
                 menuItem -> {
                     menuItem.setChecked(true);
                     mDrawerLayout.closeDrawers();
+                    navigateTo(menuItem.getItemId());
                     return true;
                 });
+    }
+
+    /**
+     * Navigate to a navigation drawer item
+     *
+     * The default behavior is to launch a {@link MainActivity} with {@link MainActivity#EXTRA_NAVIGATION_DESTINATION}
+     * set to the navigation drawer item's ID
+     *
+     * @param navItemId The ID of the navigation drawer item that should be displayed
+     */
+    protected void navigateTo(int navItemId) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(MainActivity.EXTRA_NAVIGATION_DESTINATION, navItemId);
+        startActivity(intent);
     }
 }
