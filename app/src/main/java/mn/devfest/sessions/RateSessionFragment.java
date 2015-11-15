@@ -11,23 +11,23 @@ import android.view.ViewGroup;
 import mn.devfest.R;
 
 /**
- * Fragment that displays the available sessions
+ * Fragment that allows the user to rate a session
  *
  * @author bherbst
  */
-public class SessionsFragment extends Fragment {
+public class RateSessionFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_sessions, container, false);
+        return inflater.inflate(R.layout.fragment_rate_session, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.view_session).setOnClickListener(clicked ->
-                this.startActivity(new Intent(getContext(), SessionDetailsActivity.class)));
+        view.findViewById(R.id.rate_session).setOnClickListener(clicked ->
+                this.startActivity(new Intent(getContext(), RateSessionFragment.class)));
     }
 }

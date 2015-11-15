@@ -9,6 +9,6 @@
         android:layout_height="wrap_content"
         android:padding="72dp"
         android:gravity="center"
-        android:text="Map"/>
+        android:text="Rate session"/>
 
 </LinearLayout>

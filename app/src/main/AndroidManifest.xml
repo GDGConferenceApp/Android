@@ -18,6 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".sessions.SessionDetailsActivity" />
+        <activity android:name=".sessions.RateSessionActivity" />
+        <activity android:name=".speakers.SpeakerDetailsActivity" />
     </application>
 
 </manifest>

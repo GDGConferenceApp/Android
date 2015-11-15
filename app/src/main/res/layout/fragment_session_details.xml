@@ -6,9 +6,15 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="72dp"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Map"/>
+        android:text="Session details"/>
+
+    <Button
+        android:id="@+id/rate_session"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Rate a session"/>
 
 </LinearLayout>
