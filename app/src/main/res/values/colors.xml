@@ -6,6 +6,8 @@
     <color name="colorTextPrimary">#353F50</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="lightGray">#eee</color>
+    <color name="mediumGray">#BDBDBD</color>
+    <color name="darkGray">#424242</color>
     <color name="drawerItemChecked">#FFF</color>
     <color name="drawerItemDefault">#DDD</color>
 

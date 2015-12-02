@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/session_list_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="72dp"
-        android:gravity="center"
-        android:text="Sessions"/>
+        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/view_session"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="bottom|center_horizontal"
         android:text="View a session"/>
 
-</LinearLayout>
+</FrameLayout>
