@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 /**
- * @author Patrick Fuentes <pfuentes@nerdery.com>
+ * Used for displaying the list of speakers at the event
+ *
+ * @author pfuentes
  */
 public class SpeakerListAdapter extends RecyclerView.Adapter<SpeakerListAdapter.SpeakerViewHolder> {
 

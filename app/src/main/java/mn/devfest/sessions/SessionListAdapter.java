@@ -15,7 +15,7 @@ import mn.devfest.R;
 /**
  * Adapter for presenting the list of sessions
  *
- * @author Patrick Fuentes <pfuentes@nerdery.com>
+ * @author pfuentes
  */
 public class SessionListAdapter extends RecyclerView.Adapter<SessionListAdapter.SessionViewHolder> {
 

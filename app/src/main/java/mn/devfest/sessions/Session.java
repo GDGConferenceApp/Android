@@ -3,7 +3,7 @@ package mn.devfest.sessions;
 /**
  * Model object representing sessions at the event
  *
- * @author Patrick Fuentes <pfuentes@nerdery.com>
+ * @author pfuentes
  */
 public class Session {
     private int id;

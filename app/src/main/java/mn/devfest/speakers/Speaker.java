@@ -1,7 +1,8 @@
 package mn.devfest.speakers;
 
 /**
- * @author Patrick Fuentes <pfuentes@nerdery.com>
+ * Model object representing a speaker
+ * @author pfuentes
  */
 public class Speaker {
     //TODO implement
