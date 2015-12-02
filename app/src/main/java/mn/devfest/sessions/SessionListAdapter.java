@@ -31,6 +31,9 @@ public class SessionListAdapter extends RecyclerView.Adapter<SessionListAdapter.
     @Override
     public void onBindViewHolder(SessionViewHolder holder, int position) {
         Session session = mSessions.get(position);
+        if (session == null) {
+            return;
+        }
         holder.mTitleTextView.setText(session.getTitle());
     }
 
