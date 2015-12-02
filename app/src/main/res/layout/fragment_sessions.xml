@@ -6,7 +6,6 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/session_list_recyclerview"
-        android:background="#ffff0000"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

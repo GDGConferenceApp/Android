@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +25,8 @@ public class SessionsFragment extends Fragment {
     @Bind(R.id.session_list_recyclerview)
     RecyclerView mSessionRecyclerView;
 
-    
+    private SessionListAdapter mAdapter;
+    private LinearLayoutManager mLinearLayoutManager;
 
     @Nullable
     @Override
@@ -32,6 +34,11 @@ public class SessionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sessions, container, false);
         ButterKnife.bind(this, view);
 
+        mAdapter = new SessionListAdapter();
+        //TODO set data on adapter
+        mSessionRecyclerView.setAdapter(mAdapter);
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mSessionRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         return view;
     }
