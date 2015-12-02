@@ -13,6 +13,8 @@ import butterknife.ButterKnife;
 import mn.devfest.R;
 
 /**
+ * Adapter for presenting the list of sessions
+ *
  * @author Patrick Fuentes <pfuentes@nerdery.com>
  */
 public class SessionListAdapter extends RecyclerView.Adapter<SessionListAdapter.SessionViewHolder> {
@@ -28,12 +30,17 @@ public class SessionListAdapter extends RecyclerView.Adapter<SessionListAdapter.
 
     @Override
     public void onBindViewHolder(SessionViewHolder holder, int position) {
-        //TODO implement
+        Session session = mSessions.get(position);
+        holder.mTitleTextView.setText(session.getTitle());
     }
 
     @Override
     public int getItemCount() {
         return mSessions == null ? 0 : mSessions.size();
+    }
+
+    public void setSessions(ArrayList<Session> sessions) {
+        mSessions = sessions;
     }
 
     public class SessionViewHolder extends RecyclerView.ViewHolder {

@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
@@ -34,8 +36,17 @@ public class SessionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sessions, container, false);
         ButterKnife.bind(this, view);
 
+        //TODO set data real date on adapter & remove dummy data
+        ArrayList<Session> dummyData = new ArrayList<>();
+        for (int i = 0; i < 10; i ++) {
+            Session session = new Session();
+            session.setId(i);
+            session.setTitle("Session #" + i);
+            dummyData.add(session);
+        }
+
         mAdapter = new SessionListAdapter();
-        //TODO set data on adapter
+        mAdapter.setSessions(dummyData);
         mSessionRecyclerView.setAdapter(mAdapter);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mSessionRecyclerView.setLayoutManager(mLinearLayoutManager);
