@@ -10,7 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import mn.devfest.R;
 
 /**
@@ -21,8 +24,8 @@ import mn.devfest.R;
  */
 public class SpeakerListFragment extends Fragment {
 
-    @Bind(R.id.session_list_recyclerview)
-    RecyclerView mSessionRecyclerView;
+    @Bind(R.id.speaker_list_recyclerview)
+    RecyclerView mSpeakerRecyclerView;
 
     private SpeakerListAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -30,7 +33,25 @@ public class SpeakerListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_speaker_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_speaker_list, container, false);
+        ButterKnife.bind(this, view);
+
+        //TODO set data real date on adapter & remove dummy data
+        ArrayList<Speaker> dummyData = new ArrayList<>();
+        for (int i = 0; i < 10; i ++) {
+            Speaker speaker = new Speaker();
+            speaker.setId(i);
+            speaker.setName("Speaker #" + i);
+            dummyData.add(speaker);
+        }
+
+        mAdapter = new SpeakerListAdapter();
+        mAdapter.setSpeakers(dummyData);
+        mSpeakerRecyclerView.setAdapter(mAdapter);
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mSpeakerRecyclerView.setLayoutManager(mLinearLayoutManager);
+
+        return view;
     }
 
     @Override
