@@ -15,7 +15,7 @@ import mn.devfest.R;
 /**
  * Adapter for presenting the list of sessions
  *
- * @author Patrick Fuentes <pfuentes@nerdery.com>
+ * @author pfuentes
  */
 public class SessionListAdapter extends RecyclerView.Adapter<SessionListAdapter.SessionViewHolder> {
 
@@ -31,6 +31,9 @@ public class SessionListAdapter extends RecyclerView.Adapter<SessionListAdapter.
     @Override
     public void onBindViewHolder(SessionViewHolder holder, int position) {
         Session session = mSessions.get(position);
+        if (session == null) {
+            return;
+        }
         holder.mTitleTextView.setText(session.getTitle());
     }
 
