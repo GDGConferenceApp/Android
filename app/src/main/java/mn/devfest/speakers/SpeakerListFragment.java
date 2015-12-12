@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
+import mn.devfest.view.decoration.DividerItemDecoration;
 
 /**
  * Fragment that displays the list of speakers
@@ -50,6 +51,7 @@ public class SpeakerListFragment extends Fragment {
         mSpeakerRecyclerView.setAdapter(mAdapter);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mSpeakerRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mSpeakerRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
 
         return view;
     }

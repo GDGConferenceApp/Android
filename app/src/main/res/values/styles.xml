@@ -10,4 +10,11 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <style name="ListItem">
+        <item name="android:paddingTop">@dimen/list_item_vertical_padding</item>
+        <item name="android:paddingBottom">@dimen/list_item_vertical_padding</item>
+        <item name="android:paddingLeft">@dimen/list_item_horizontal_padding</item>
+        <item name="android:paddingRight">@dimen/list_item_horizontal_padding</item>
+    </style>
+
 </resources>
