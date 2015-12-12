@@ -1,6 +1,5 @@
 package mn.devfest.speakers;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -34,7 +33,13 @@ public class SpeakerListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_speaker_list, container, false);
+
+        return inflater.inflate(R.layout.fragment_speaker_list, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
         //TODO set data real date on adapter & remove dummy data
@@ -52,16 +57,6 @@ public class SpeakerListFragment extends Fragment {
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mSpeakerRecyclerView.setLayoutManager(mLinearLayoutManager);
         mSpeakerRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
-
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        view.findViewById(R.id.view_speaker_details).setOnClickListener(clicked ->
-                this.startActivity(new Intent(getContext(), SpeakerDetailsActivity.class)));
     }
     
 }

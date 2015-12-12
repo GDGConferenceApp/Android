@@ -12,6 +12,7 @@ import mn.devfest.base.SinglePaneActivity;
  * @author bherbst
  */
 public class SpeakerDetailsActivity extends SinglePaneActivity {
+    public static final String EXTRA_SPEAKER_ID = "speakerId";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
