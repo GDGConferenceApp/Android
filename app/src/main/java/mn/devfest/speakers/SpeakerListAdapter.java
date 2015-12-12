@@ -1,5 +1,7 @@
 package mn.devfest.speakers;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +60,16 @@ public class SpeakerListAdapter extends RecyclerView.Adapter<SpeakerListAdapter.
         public SpeakerViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(view -> {
+                Context context = mNameTextView.getContext();
+                int adapterPosition = getAdapterPosition();
+                Speaker speaker = mSpeakers.get(adapterPosition);
+
+                Intent speakerDetails = new Intent(context, SpeakerDetailsActivity.class);
+                speakerDetails.putExtra(SpeakerDetailsActivity.EXTRA_SPEAKER_ID, speaker.getId());
+                context.startActivity(speakerDetails);
+            });
         }
     }
 }
