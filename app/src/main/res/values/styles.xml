@@ -1,10 +1,11 @@
 <resources>
 
-    <style name="Theme.DevFestMn" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.DevFestMn" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/colorWhite</item>
+        <item name="android:textColorPrimary">@color/colorTextPrimary</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
