@@ -10,6 +10,6 @@
         android:id="@+id/bio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="@string/speaker_bio_placeholder"/>
+        tools:text="@string/body_copy_placeholder"/>
 
 </LinearLayout>

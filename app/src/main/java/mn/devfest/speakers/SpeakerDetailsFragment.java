@@ -59,6 +59,6 @@ public class SpeakerDetailsFragment extends Fragment {
 
         // Bind to the speaker
         getActivity().setTitle(mSpeaker.getName());
-        mBio.setText(R.string.speaker_bio_placeholder);
+        mBio.setText(R.string.body_copy_placeholder);
     }
 }
