@@ -13,8 +13,20 @@ import mn.devfest.R;
  * Fragment that displays details for a particular session
  *
  * @author bherbst
+ * @author pfuentes
  */
 public class SessionDetailsFragment extends Fragment {
+    private static final String ARG_SESSION_ID = "sessionId";
+
+    public static SessionDetailsFragment newInstance(int speakerId) {
+        Bundle args = new Bundle();
+        args.putInt(ARG_SESSION_ID, speakerId);
+
+        SessionDetailsFragment frag = new SessionDetailsFragment();
+        frag.setArguments(args);
+
+        return frag;
+    }
 
     @Nullable
     @Override
