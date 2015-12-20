@@ -1,5 +1,7 @@
 package mn.devfest.sessions;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +56,17 @@ public class SessionListAdapter extends RecyclerView.Adapter<SessionListAdapter.
         public SessionViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(view -> {
+                Context context = mTitleTextView.getContext();
+                int adapterPosition = getAdapterPosition();
+                Session session = mSessions.get(adapterPosition);
+
+                Intent sessionDetails = new Intent(context, SessionDetailsActivity.class);
+                sessionDetails.putExtra(SessionDetailsActivity.EXTRA_SESSION_ID, session.getId());
+                context.startActivity(sessionDetails);
+            });
+
         }
     }
 }

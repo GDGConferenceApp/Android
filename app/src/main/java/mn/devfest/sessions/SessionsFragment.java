@@ -33,7 +33,12 @@ public class SessionsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sessions, container, false);
+        return inflater.inflate(R.layout.fragment_sessions, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
         //TODO set data real date on adapter & remove dummy data
@@ -52,11 +57,5 @@ public class SessionsFragment extends Fragment {
         mSessionRecyclerView.setLayoutManager(mLinearLayoutManager);
         mSessionRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
 
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 }

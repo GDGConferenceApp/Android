@@ -12,6 +12,7 @@ import mn.devfest.base.SinglePaneActivity;
  * @author bherbst
  */
 public class SessionDetailsActivity extends SinglePaneActivity {
+    public static final String EXTRA_SESSION_ID = "sessionId";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
