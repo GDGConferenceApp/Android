@@ -10,8 +10,10 @@ import mn.devfest.base.SinglePaneActivity;
  * Activity that displays details for a particular session
  *
  * @author bherbst
+ * @author pfuentes
  */
 public class SessionDetailsActivity extends SinglePaneActivity {
+    public static final String EXTRA_SESSION_ID = "sessionId";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +23,14 @@ public class SessionDetailsActivity extends SinglePaneActivity {
 
     @Override
     protected Fragment onCreatePane() {
-        return new SessionDetailsFragment();
+        Bundle extras = getIntent().getExtras();
+        if (extras.containsKey(EXTRA_SESSION_ID)) {
+            int sessionId = extras.getInt(EXTRA_SESSION_ID);
+            return SessionDetailsFragment.newInstance(sessionId);
+        } else {
+            throw new IllegalStateException("SessionDetailsActivity requires an EXTRA_SESSION_ID");
+        }
+
     }
 
     @Override
