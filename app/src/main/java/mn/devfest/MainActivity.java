@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
+import mn.devfest.api.DevFestDataSource;
 import mn.devfest.base.BaseActivity;
 import mn.devfest.map.MapFragment;
 import mn.devfest.schedule.ScheduleFragment;
@@ -30,6 +31,7 @@ public class MainActivity extends BaseActivity {
             int navId = getIntent().getIntExtra(EXTRA_NAVIGATION_DESTINATION, R.id.nav_schedule);
             navigateToTopLevelFragment(navId, false);
         }
+        DevFestDataSource ds = new DevFestDataSource(this);
     }
 
     @Override
