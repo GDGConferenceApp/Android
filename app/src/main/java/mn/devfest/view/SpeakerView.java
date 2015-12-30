@@ -8,9 +8,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
+import mn.devfest.speakers.Speaker;
 
 /**
  * Custom view that displays information about a speaker
@@ -41,6 +44,7 @@ public class SpeakerView extends LinearLayout {
     TextView mWebsiteTextView;
 
     Context mContext;
+    Speaker mSpeaker;
 
     public SpeakerView(Context context) {
         super(context);
@@ -62,7 +66,19 @@ public class SpeakerView extends LinearLayout {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.view_speaker, this);
         ButterKnife.bind(this, view);
-        //TODO implement
+    }
+
+    public void setSpeaker(Speaker speaker) {
+        mSpeaker = speaker;
+        updateTextAndImage();
+    }
+
+    private void updateTextAndImage() {
+        Picasso.with(mContext)
+                .load("asdf") //TODO use the proper URL when it's added to the model
+                .placeholder(R.drawable.ic_account_circle_white_48dp)
+                .into(mProfileImageview);
+        //TODO update all copy from the speaker
     }
 
 }
