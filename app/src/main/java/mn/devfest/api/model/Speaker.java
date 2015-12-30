@@ -27,4 +27,24 @@ public class Speaker {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public String getTwitter() {
+        return twitter;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
 }

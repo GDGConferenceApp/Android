@@ -18,6 +18,12 @@
         tools:text="Frank Fauxman"/>
 
     <TextView
+        android:id="@+id/speaker_view_company"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Mentor Mate"/>
+
+    <TextView
         android:id="@+id/speaker_view_bio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

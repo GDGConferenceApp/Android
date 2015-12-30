@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
-import mn.devfest.speakers.Speaker;
+import mn.devfest.api.model.Speaker;
 
 /**
  * Custom view that displays information about a speaker
@@ -21,27 +21,23 @@ import mn.devfest.speakers.Speaker;
  * @author pfuentes
  */
 public class SpeakerView extends LinearLayout {
-    
+
     @Bind(R.id.speaker_view_image)
     ImageView mProfileImageview;
-
     @Bind(R.id.speaker_view_name)
     TextView mNameTextview;
-
+    @Bind(R.id.speaker_view_company)
+    TextView mCompanyTextview;
     @Bind(R.id.speaker_view_bio)
     TextView mBioTextview;
-
     @Bind(R.id.twitter_heading)
     TextView mTwitterHeading;
-
     @Bind(R.id.speaker_twitter)
-    TextView mTwitterTextView;
-
+    TextView mTwitterTextview;
     @Bind(R.id.website_heading)
     TextView mWebsiteHeading;
-
     @Bind(R.id.speaker_website)
-    TextView mWebsiteTextView;
+    TextView mWebsiteTextview;
 
     Context mContext;
     Speaker mSpeaker;
@@ -73,12 +69,34 @@ public class SpeakerView extends LinearLayout {
         updateTextAndImage();
     }
 
+    /**
+     * Updates the imageview and textviews using the currently set Speaker object.
+     * TODO maybe replace this method with data binding
+     */
     private void updateTextAndImage() {
         Picasso.with(mContext)
-                .load("asdf") //TODO use the proper URL when it's added to the model
+                .load(mSpeaker.getImage())
                 .placeholder(R.drawable.ic_account_circle_white_48dp)
                 .into(mProfileImageview);
-        //TODO update all copy from the speaker
+        mNameTextview.setText(mSpeaker.getName());
+        mBioTextview.setText(mSpeaker.getBio());
+        if (mSpeaker.getCompany().isEmpty()) {
+            mCompanyTextview.setVisibility(GONE);
+        } else {
+            mCompanyTextview.setText(mSpeaker.getCompany());
+        }
+        if (mSpeaker.getTwitter().isEmpty()) {
+            mTwitterHeading.setVisibility(GONE);
+            mTwitterTextview.setVisibility(GONE);
+        } else {
+            mTwitterTextview.setText(mSpeaker.getTwitter());
+        }
+        if (mSpeaker.getWebsite().isEmpty()) {
+            mWebsiteHeading.setVisibility(GONE);
+            mWebsiteTextview.setVisibility(GONE);
+        } else {
+            mWebsiteTextview.setText(mSpeaker.getTwitter());
+        }
     }
 
 }
