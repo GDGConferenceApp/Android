@@ -1,5 +1,6 @@
 package mn.devfest.sessions;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
+import mn.devfest.api.DevFestDataSource;
+import mn.devfest.api.model.Session;
 import mn.devfest.view.decoration.DividerItemDecoration;
 
 /**
@@ -30,10 +33,31 @@ public class SessionsFragment extends Fragment {
     private SessionListAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
 
+    private ArrayList<Session> sessionData = new ArrayList<>();
+    private DevFestDataSource.DataSourceCallback dataSource; // TODO: There is probably a 'Dagger' way to inject the data source
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_sessions, container, false);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof DevFestDataSource.DataSourceCallback) {
+            dataSource = (DevFestDataSource.DataSourceCallback)context;
+            sessionData = dataSource.getSessions();
+        }
+    }
+
+    /**
+     * Clear callback on detach to prevent null reference errors after the view has been
+     */
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        dataSource = null;
     }
 
     @Override
@@ -42,16 +66,9 @@ public class SessionsFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         //TODO set data real date on adapter & remove dummy data
-        ArrayList<Session> dummyData = new ArrayList<>();
-        for (int i = 0; i < 10; i ++) {
-            Session session = new Session();
-            session.setId(i);
-            session.setTitle("Session #" + i);
-            dummyData.add(session);
-        }
 
         mAdapter = new SessionListAdapter();
-        mAdapter.setSessions(dummyData);
+        mAdapter.setSessions(sessionData);
         mSessionRecyclerView.setAdapter(mAdapter);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mSessionRecyclerView.setLayoutManager(mLinearLayoutManager);

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
+import mn.devfest.api.model.Session;
 
 /**
  * Adapter for presenting the list of sessions

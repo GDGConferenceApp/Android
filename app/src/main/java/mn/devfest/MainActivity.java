@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
+import java.util.ArrayList;
+
 import mn.devfest.api.DevFestDataSource;
+import mn.devfest.api.model.Session;
+import mn.devfest.api.model.Speaker;
 import mn.devfest.base.BaseActivity;
 import mn.devfest.map.MapFragment;
 import mn.devfest.schedule.ScheduleFragment;
@@ -14,13 +18,16 @@ import mn.devfest.speakers.SpeakerListFragment;
 /**
  * Main DevFest Activity. Handle navigation between top-level screens
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements DevFestDataSource.DataSourceCallback {
     /**
      * Intent extra specifying a navigation destination
      *
      * The value associated with this extra should be the ID of the selected navigation item
      */
     public static final String EXTRA_NAVIGATION_DESTINATION = "navigation_destination";
+
+    // TODO: There is probably a 'Dagger' way to inject the data source
+    private DevFestDataSource ds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +38,7 @@ public class MainActivity extends BaseActivity {
             int navId = getIntent().getIntExtra(EXTRA_NAVIGATION_DESTINATION, R.id.nav_schedule);
             navigateToTopLevelFragment(navId, false);
         }
-        DevFestDataSource ds = new DevFestDataSource(this);
+        ds = new DevFestDataSource(this);
     }
 
     @Override
@@ -78,4 +85,13 @@ public class MainActivity extends BaseActivity {
         transaction.commit();
     }
 
+    @Override
+    public ArrayList<Session> getSessions() {
+        return ds.getSessions();
+    }
+
+    @Override
+    public ArrayList<Speaker> getSpeakers() {
+        return ds.getSpeakers();
+    }
 }
