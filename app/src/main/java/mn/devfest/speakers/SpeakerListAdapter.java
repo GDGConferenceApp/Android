@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
+import mn.devfest.api.model.Speaker;
 
 /**
  * Used for displaying the list of speakers at the event
