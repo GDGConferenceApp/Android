@@ -1,0 +1,342 @@
+{
+  "0": {
+    "all": true,
+    "description": "",
+    "endTime": "2016-02-06T16:00Z",
+    "room": "auditorium",
+    "speakers": ["-K5hCRIE2iUhkqglIwtL"],
+    "startTime": "2016-02-06T15:00Z",
+    "title": "Keynote: Chet Haase"
+  },
+  "1": {
+    "all": true,
+    "endTime": "2016-02-06T19:00Z",
+    "room": "cafeteria",
+    "speakers": ["-K3RiPZ8B7_G3DZIHYD2"],
+    "startTime": "2016-02-06T18:00Z",
+    "title": "Lunch"
+  },
+  "2": {
+    "all": true,
+    "endTime": "2016-02-06T15:00Z",
+    "room": "entry",
+    "speakers": [null, "-K3RiPZ8B7_G3DZIHYD2"],
+    "startTime": "2016-02-06T14:00Z",
+    "title": "Registration"
+  },
+  "-K3IgGoJZeTNgNbj6HIP": {
+    "all": true,
+    "description": "",
+    "endTime": "2016-02-07T00:00Z",
+    "room": "auditorium",
+    "speakers": [null, "-K3RiPZ8B7_G3DZIHYD2"],
+    "startTime": "2016-02-06T23:00Z",
+    "title": "Closing Remarks"
+  },
+  "-K66xliH2GhCOmYl9krE": {
+    "description": "Brillo is Google's latest embedded offering, based on Android, intended for low-power devices in the IoT market. How does it compare to the full Android stack? Will the tools be familiar to Android developers? In this session, we'll see exactly what makes Brillo tick and what that means for developers eager to test it out.",
+    "endTime": "2016-02-06T17:00Z",
+    "room": "auditorium",
+    "speakers": {
+      "-K6703qtYlXBXy0B5gKa": "-K5hBKegarSocp4a3GM9"
+    },
+    "startTime": "2016-02-06T16:00Z",
+    "title": "Brillo Under the Covers"
+  },
+  "-K66xpcvA16w6CfhaYf0": {
+    "description": "Ok, how about 2X? All the cool kids are finally figuring out how to do some real testing on Android, and you should too.  Good tests starts with a good application design.  I'll demonstrate how to setup unit, integration and UI tests with Espresso, and how to manage your application architecture using Dagger 2, to make it easier to test.  Then we'll look at how to test some common solution choices, like RxJava and Retrofit.",
+    "endTime": "2016-02-06T18:00Z",
+    "room": "auditorium",
+    "speakers": {
+      "-K6704sG2YieOJuihteW": "-K5hCLBJyblQuKXvTd3s"
+    },
+    "startTime": "2016-02-06T17:00Z",
+    "title": "10X Android Development"
+  },
+  "-K66xtZZPFQ3AAx5iR-X": {
+    "endTime": "2016-02-06T20:00Z",
+    "room": "auditorium",
+    "speakers": {
+      "-K67065XNAzt-XZLMZ9T": "-K5hCXbHeG8GPcjY1VAv"
+    },
+    "startTime": "2016-02-06T19:00Z",
+    "title": "Design Sprint"
+  },
+  "-K66xxir2yf66iddzOr-": {
+    "endTime": "2016-02-06T21:00Z",
+    "room": "auditorium",
+    "speakers": {
+      "-K670743CVF9nQrZEOgG": "-K5hCShssI9LS-9KJRWk"
+    },
+    "startTime": "2016-02-06T20:00Z",
+    "title": "Google Cloud Team"
+  },
+  "-K66y2lf7zN1UZRZukQf": {
+    "description": "\"Dependency injection\" and \"inversion of control\" sound like difficult, complex patterns but are actually quite simple! In fact, you probably use them all the time without realizing it. By understanding it you can begin to truly harness its power.  This talk will go over what it means to use dependency injection and why it's an important pattern in software development. Then we'll dive into the practical application of dependency injection via the Dagger library.",
+    "endTime": "2016-02-06T22:00Z",
+    "room": "auditorium",
+    "speakers": {
+      "-K670GIcxuL7fN-T_VCN": "-K5hBiGqAn12b-Qc58Q9"
+    },
+    "startTime": "2016-02-06T21:00Z",
+    "title": "Dependency Injection"
+  },
+  "-K66yGPXVpMtVSluNuoR": {
+    "description": "Android was built from the very beginning with multitasking in mind and this core idea directly shapes the lifecycle of an Android application. In this talk I’ll revisit some fundamental concepts of Android in order to provide a better understanding of how best to manage an app’s state during this process, focusing in particular on how to properly save and restore that state and why this is necessary.",
+    "endTime": "2016-02-06T23:00Z",
+    "room": "auditorium",
+    "speakers": {
+      "-K670HXKFHQIh4-axFRa": "-K5hBJJHU00LNS3oPtzi"
+    },
+    "startTime": "2016-02-06T22:00Z",
+    "title": "Android Application Lifecycle"
+  },
+  "-K66yKqwItBWjylyuvED": {
+    "description": "Google Nearby is an easy-to-implement, device agnostic set of APIs for discovering other devices around you using Bluetooth, WiFi and Ultrasound networking technology. This workshop will give you a brief introduction to the Nearby APIs and how to enable them in your Google Developer account. Then we’ll dive in and create an app that can discover other Nearby app users and exchange P2P data with them.",
+    "endTime": "2016-02-06T17:00Z",
+    "room": "lab",
+    "speakers": {
+      "-K672FGGsqImqlqG_T38": "-K5hBg0E3Nd9y-8IfZuV"
+    },
+    "startTime": "2016-02-06T16:00Z",
+    "title": "Won’t You Be My Neighbor? Making Friends with Google Nearby."
+  },
+  "-K66yPn5gsX4q46i__fq": {
+    "description": "An introduction to unconscious bias and how it hinders diversity in tech. As a workshop, this would involve exercises to show unconscious bias in action.",
+    "endTime": "2016-02-06T18:00Z",
+    "room": "lab",
+    "startTime": "2016-02-06T17:00Z",
+    "title": "The Science Behind Sexism: How Unconscious Bias Hinders Diversity in Tech"
+  },
+  "-K66yTMdARVqDKhXH0e4": {
+    "description": "A year ago Angular community had been surprised, because Google decided to use TypeScript to build new version of one of the most powerful JavaScript frameworks nowadays. And even more, TypeScript became the recommended language to be used to build Angular 2.0 application. It is time to learn it, isn’t it?  TypeScript is an open source programming language designed for development of large single-page applications. It is a strict superset of JavaScript with optional static typing and class-based object oriented programming support.  On the following session I am going to introduce the audience to TypeScript programming language. We will talk about classes, interfaces, modules, generics, decorators and many other features available in the language. At the end the audience will have a solid TypeScript foundation and, more importantly, when they should use it and how to start using the language in existing JavaScript projects.",
+    "endTime": "2016-02-06T20:00Z",
+    "room": "lab",
+    "speakers": {
+      "-K671HuLkhkDRlSExQ46": "-K5hBBLiPtWsAjarjUjr"
+    },
+    "startTime": "2016-02-06T19:00Z",
+    "title": "Scaling up JavaScript with TypeScript"
+  },
+  "-K66yZxgMCPjHgL4uuYe": {
+    "description": "We are releasing a BuzzFeed video player that uses BuzzFeed created and curated videos.  - We are using Exoplayer (one possible talk) - MVP (Model View Presenter) -  Short Talk of the project start to finish (in 10 minutes) with videos, of course - The Kotlin programming language (for Android)",
+    "endTime": "2016-02-06T21:00Z",
+    "room": "lab",
+    "speakers": {
+      "-K67KEwQtVnoZyri7TGL": "-K5hBZm2D9fXZxiB3HEZ"
+    },
+    "startTime": "2016-02-06T20:00Z",
+    "title": "The BuzzFeed Video App"
+  },
+  "-K66yek-mOKEQBdeBO-p": {
+    "description": "I've built several party hats that incorporate an addressable LED strip, an Arduino controller, and a Bluetooth receiver (which connects to an Android proxy service). In this workshop we will build a Google Cloud Services web interface that allows you to control the hat colors and patterns. Attendees will be able to experiment with algorithms to create interesting colorful designs. I will bring about 5 hats with me to share, and provide a bill of materials for constructing your own (only costs about $20 + a thrift store hat).",
+    "endTime": "2016-02-06T22:00Z",
+    "room": "lab",
+    "speakers": {
+      "-K672NXfNHfxjUmcUJ_Y": "-K5hCHQT5HaLGs3iGyZQ"
+    },
+    "startTime": "2016-02-06T21:00Z",
+    "title": "Welcome to the Internet of Hats"
+  },
+  "-K66yhuYGznIlSmrWDBI": {
+    "endTime": "2016-02-06T23:00Z",
+    "startTime": "2016-02-06T22:00Z",
+    "title": "Iframes are Back!"
+  },
+  "-K66yq9j7k1BHeWU6ZWk": {
+    "description": "Remember the simpler times, when all you needed in your web development toolkit was jQuery and an FTP server? Today, web developers have to navigate a sea of new frameworks, tools, and ever changing standards to get from \"New File...\" to <h1>Hello World</h1>. In this talk we will take a light-hearted journey through the recent history of modern web application development, examine where we are today, and look ahead to what's in store for us in the future.",
+    "endTime": "2016-02-06T17:00Z",
+    "room": "smallauditorium",
+    "speakers": {
+      "-K672PAFfnxkoWpdn3-R": "-K5hB_hoPwORujf7NQ5q"
+    },
+    "startTime": "2016-02-06T16:00Z",
+    "title": "Modern Web Development"
+  },
+  "-K66z4xFd9BHWGVq62HP": {
+    "description": "Build your first Google Cardboard app. In this presentation we'll talk about how you can draw objects in 3D space using OpenGL and build a heads up display (HUD) using standard Android views. We'll also cover some techniques to test Google Cardboard projects in the Android emulator.",
+    "endTime": "2016-02-06T18:00Z",
+    "room": "smallauditorium",
+    "speakers": {
+      "-K66zBotfIEjA0D7Txap": "-K5hCl4gB4EhYZ1JobeY"
+    },
+    "startTime": "2016-02-06T17:00Z",
+    "title": "Getting Started with Google Cardboard"
+  },
+  "-K66zFP0ctj6frgdIx43": {
+    "description": "Meaningful animated transitions between different screens is a key component of Material design. Learn how to leverage the support library to animate content between different screens in your applications.",
+    "endTime": "2016-02-06T20:00Z",
+    "room": "smallauditorium",
+    "speakers": {
+      "-K67Ke4DWHStls6QJYZV": "-K5hBY01Tw42PlxTfuj3"
+    },
+    "startTime": "2016-02-06T19:00Z",
+    "title": "Making Beautifully Animated Transitions"
+  },
+  "-K66zN_dfy2rlwQ_ULvx": {
+    "description": "Designers and developers need to work well together to make a good app. However, some of the most frustrating interactions on a project happen when these two groups can’t communicate effectively with each other. This talk will cover tactics for developers to effectively collaborate with designers to create assets that will make both sides happy.",
+    "endTime": "2016-02-06T22:00Z",
+    "room": "smallauditorium",
+    "speakers": {
+      "-K672ZxzGF2Kktf7EyRA": "-K5hCK8Q8wL67vpC7HCA"
+    },
+    "startTime": "2016-02-06T21:00Z",
+    "title": "How to Speak Designer"
+  },
+  "-K66zRZYS5EQfEEJfmY9": {
+    "description": "Almost all android apps need to find views and set data.   Learn how to write less cruft and develop more quickly using Google’s new Data Binding Library and other third party libraries such as Butter Knife.",
+    "endTime": "2016-02-06T23:00Z",
+    "room": "smallauditorium",
+    "speakers": {
+      "-K66zefvj8uLs9Hf56X3": "-K5hBHbH6YZE7zmPoMKK"
+    },
+    "startTime": "2016-02-06T22:00Z",
+    "title": "@Binding Android: View and Data Binding"
+  },
+  "-K66zkh0RiVi8m-ubh3D": {
+    "description": "This presentation will provide a technical introduction to Bluetooth Low Energy (BLE) beacons and Google products that make use of these beacons.  The presentation will likely include: •        A brief description of BLE beacons, and a bit of history (e.g., Apple’s iBeacon, Google’s Physical Web and Google’s Eddystone) •        An overview of how BLE beacons interact with Google’s Physical Web app, the smartphone user, and various servers managed by Google, the beacon owner, and potentially others •        A technical description of the Google Eddystone protocol, including the various frame types and the purpose of the most significant fields within those frames •        An examination, with code examples, of several beacon-related Android APIs, including the Bluetooth and Bluetooth LE APIs, the Proximity Beacon API, the Nearby Messages API, and the Places API",
+    "endTime": "2016-02-06T17:00Z",
+    "room": "classroom1",
+    "speakers": {
+      "-K670ISGN1xc7geZorS1": "-K5hBVEbhyGsh_lEOzTS"
+    },
+    "startTime": "2016-02-06T16:00Z",
+    "title": "A Technical Overview of Google's Bluetooth"
+  },
+  "-K66zqjCwPwQwBFp5Qql": {
+    "description": "This presentation will cover creation of a Chrome Extension which includes a background page and content scripts to manipulate a target page DOM, injecting third party scripts, creating and reacting to events between the elements. The page elements will be scraped, filtered and sent to a back-end server such as a local MongoDB database and/or a Firebase instance. Also cover the options for unit testing including PhantomJS, Chrome-Sinon, Mocha and Chai frameworks..",
+    "endTime": "2016-02-06T18:00Z",
+    "room": "classroom1",
+    "speakers": {
+      "-K670KHQ2Er-eCbLY00F": "-K5hBCdjBIdXHja_gvyB"
+    },
+    "startTime": "2016-02-06T17:00Z",
+    "title": "Chrome Extension for Page Scraping & Analysis"
+  },
+  "-K66zu3zFo70cSqYXPu3": {
+    "description": "An Introduction to backend web development in the Go language from the perspective of a JavaScript developer. This session will cover the basics of backend development in Go and use comparable examples written in Node.js to help bootstrap your familiarity with this increasingly popular programming language.",
+    "endTime": "2016-02-06T20:00Z",
+    "room": "classroom1",
+    "speakers": {
+      "-K670LQUVQwZU4_ZKPLb": "-K5hBEhFK-Z47kMOmEyQ"
+    },
+    "startTime": "2016-02-06T19:00Z",
+    "title": "Introductory Go for JavaScript Developers"
+  },
+  "-K66zxCb5g8T6C1dAe4P": {
+    "description": "We all would like to predict the future at some point in our lives. Well thanks to Google we can now be one step closer! This talk will give an overview of what the Google Prediction API is, how you can use it to analyze data sets, it's strengths and weaknesses and we'll run some sample data through the system.",
+    "endTime": "2016-02-06T21:00Z",
+    "room": "classroom1",
+    "speakers": {
+      "-K670N2YtBUh1L2607oj": "-K5hCPq-Vcri3eF7hTOw"
+    },
+    "startTime": "2016-02-06T20:00Z",
+    "title": "Looking into the Crystal Ball: Usiing Google's Prediction API"
+  },
+  "-K66zzn3uFNtfkEebuXN": {
+    "description": "With Angular, React, Ember & Others taking up the whole web world, I want to demonstrate how we should think in terms of modern web applications for the future. I want the viewers to get a strong understanding of how to setup architectures for SPA using Micro Services & Component Based architecture for both front and back-end.",
+    "endTime": "2016-02-06T22:00Z",
+    "room": "classroom1",
+    "speakers": {
+      "-K670TEswfUff9l5tnA0": "-K5hBXCV14RflEhUKL8Z"
+    },
+    "startTime": "2016-02-06T21:00Z",
+    "title": "Modern Web Application Architecture"
+  },
+  "-K67-1lZhWPrNpQ0vMN1": {
+    "description": "A very simple rule engine can help control asynchronous Android event dependencies. I will show how a moderately complex app initialization activity (splash screen) can be streamlined with this approach. I will present the activity code before and after, and review the rule engine itself.  A software developer for countless years with expertise in many areas across the software spectrum, including rule-based systems, I am currently dedicating myself to creating location-based social phone games.",
+    "endTime": "2016-02-06T23:00Z",
+    "room": "classroom1",
+    "speakers": {
+      "-K670Ui4OUvWlMDLew9r": "-K5hBbS4VY8KjC352O5D"
+    },
+    "startTime": "2016-02-06T22:00Z",
+    "title": "Android Rulez"
+  },
+  "-K67-97CFf4ScXOpCTPL": {
+    "description": "tarting with Android 4.3, Security-Enhanced Linux (SELinux) is used to further define the boundaries of the Android application sandbox.Android 5.0 (Lollipop) and 6.1 (Marshmallow) moves to full enforcement of SELinux. .We will explore new development from the  Android Open Source Project with demos.",
+    "endTime": "2016-02-06T17:00Z",
+    "room": "classroom2",
+    "speakers": {
+      "-K670WVqeJiuRnyUojdq": "-K5hBcVSMcWXzZcDkcXO"
+    },
+    "startTime": "2016-02-06T16:00Z",
+    "title": "Security-Enhanced Android"
+  },
+  "-K67-BTU00FSKiX37uVR": {
+    "description": "With its recent updates to Google Play Services, Android now has Mobile Vision APIs for developers to use.  See how things like facial detection and barcode scanning can now easily be included in your app.",
+    "endTime": "2016-02-06T18:00Z",
+    "room": "classroom2",
+    "speakers": {
+      "-K670XQSDGn_egffZuOq": "-K5hBdg52alfqeXQbCZP"
+    },
+    "startTime": "2016-02-06T17:00Z",
+    "title": "Android Vision: Detecting everything from faces to barcodes"
+  },
+  "-K67-ECm8kpnxbE8TGvv": {
+    "description": "\"Introduction to Salesforce AppCloud Force.com Platform for enterprise cloud application development Demo of building a enterprise cloud application in 15 mins without code Demonstration of Mobile application using Force.com Platform  \"",
+    "endTime": "2016-02-06T20:00Z",
+    "room": "classroom2",
+    "speakers": {
+      "-K670ZvxmxqoSS5x6eXy": "-K5hBjv0NKXnjm1xYLDd"
+    },
+    "startTime": "2016-02-06T19:00Z",
+    "title": "Build Cloud & Mobile Application in 15 mins on Force.com Platform"
+  },
+  "-K67-HYmvsPjT-x_r94c": {
+    "description": "This will be a two part presentation that focuses on making the IT workplace more accessible physically as well as culturally to both older workers and workers who need accommodations. While there can be overlap between the two groups regarding physical accommodations, it's the attitudes and assumptions that most often drive away older or disabled workers. We'll be talking about these issues as well as discussing ways to make your workplace accessible to an experienced  and diverse workforce.",
+    "endTime": "2016-02-06T21:00Z",
+    "room": "classroom2",
+    "speakers": {
+      "-K670a7DRSWjsiBPigro": "-K5hCItqOpdiB7j2yEKF"
+    },
+    "startTime": "2016-02-06T20:00Z",
+    "title": "Accessibility and Aging in Tech"
+  },
+  "-K67-Katb6bZfqVcouHG": {
+    "endTime": "2016-02-06T23:00Z",
+    "room": "classroom2",
+    "speakers": {
+      "-K670dKD4lpJSoTqxlFv": "-K5hCRIE2iUhkqglIwtL"
+    },
+    "startTime": "2016-02-06T22:00Z",
+    "title": "Comedy Special"
+  },
+  "-K67-OOQac-7v3zKAU6h": {
+    "description": "How do you build a highly scalable IoT products or solutions on Google’s Cloud Platform?  Google provides numerous services and APIs under the Google Cloud Platform banner.  Explore how to architect and leverage Google’s Cloud Platform to fulfill the requirements of a highly scalable IoT solution.   We’ll look architecture options and analyze a reference architecture for IoT that addresses some broad use cases.",
+    "endTime": "2016-02-06T17:00Z",
+    "room": "classroom3",
+    "speakers": {
+      "-K670fucIqhHJGQlnLL2": "-K5hCNXcklP_5y7Sah77"
+    },
+    "startTime": "2016-02-06T16:00Z",
+    "title": "IoT on Google Cloud Platform"
+  },
+  "-K67-RAyCLTFFpTg1SVg": {
+    "endTime": "2016-02-06T18:00Z",
+    "room": "classroom3",
+    "speakers": {
+      "-K670hPis1ePz7U6JV_f": "-K5hCWGYGdKxgFKVM6-2"
+    },
+    "startTime": "2016-02-06T17:00Z",
+    "title": "Firebase"
+  },
+  "-K67-U_nbJiqYueT23-B": {
+    "endTime": "2016-02-06T20:00Z",
+    "room": "classroom3",
+    "speakers": {
+      "-K67-_4cjL-KeC2x-G0o": "-K5hCcA4BLSRRdcqGlm5"
+    },
+    "startTime": "2016-02-06T19:00Z",
+    "title": "Stefanie Trimble"
+  },
+  "-K67-Xkc7Y_-08B-5d6G": {
+    "endTime": "2016-02-06T22:00Z",
+    "room": "classroom3",
+    "speakers": {
+      "-K67-Z4Vwn1oUEIRyE1w": "-K5hC_LJ-uCJEOxw_mV3"
+    },
+    "startTime": "2016-02-06T21:00Z",
+    "title": "Design"
+  }
+}

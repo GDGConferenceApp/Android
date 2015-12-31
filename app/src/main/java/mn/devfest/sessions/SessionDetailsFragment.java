@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import mn.devfest.R;
+import mn.devfest.api.model.Session;
 
 /**
  * Fragment that displays details for a particular session
@@ -48,7 +49,7 @@ public class SessionDetailsFragment extends Fragment {
 
             // TODO get real session
             mSession = new Session();
-            mSession.setId(sessionId);
+            mSession.setId("test");
             mSession.setTitle("Session " + sessionId);
         } else {
             throw new IllegalStateException("SessionDetailsFragment requires a session ID passed via newInstance()");

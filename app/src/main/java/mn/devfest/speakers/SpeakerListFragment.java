@@ -1,5 +1,6 @@
 package mn.devfest.speakers;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,9 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
+import mn.devfest.api.DevFestDataSource;
+import mn.devfest.api.model.Session;
+import mn.devfest.api.model.Speaker;
 import mn.devfest.view.decoration.DividerItemDecoration;
 
 /**
@@ -30,6 +34,9 @@ public class SpeakerListFragment extends Fragment {
     private SpeakerListAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
 
+    private ArrayList<Speaker> speakerData = new ArrayList<>();
+    private DevFestDataSource.DataSourceCallback dataSource; // TODO: There is probably a 'Dagger' way to inject the data source
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,20 +50,30 @@ public class SpeakerListFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         //TODO set data real date on adapter & remove dummy data
-        ArrayList<Speaker> dummyData = new ArrayList<>();
-        for (int i = 0; i < 10; i ++) {
-            Speaker speaker = new Speaker();
-            speaker.setId(i);
-            speaker.setName("Speaker #" + i);
-            dummyData.add(speaker);
-        }
 
         mAdapter = new SpeakerListAdapter();
-        mAdapter.setSpeakers(dummyData);
+        mAdapter.setSpeakers(speakerData);
         mSpeakerRecyclerView.setAdapter(mAdapter);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mSpeakerRecyclerView.setLayoutManager(mLinearLayoutManager);
         mSpeakerRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
     }
-    
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof DevFestDataSource.DataSourceCallback) {
+            dataSource = (DevFestDataSource.DataSourceCallback)context;
+            speakerData = dataSource.getSpeakers();
+        }
+    }
+
+    /**
+     * Clear callback on detach to prevent null reference errors after the view has been
+     */
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        dataSource = null;
+    }
 }

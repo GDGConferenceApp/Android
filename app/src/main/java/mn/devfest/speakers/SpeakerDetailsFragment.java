@@ -11,6 +11,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
+import mn.devfest.api.model.Speaker;
 
 /**
  * Fragment that displays details for a particular session
@@ -51,7 +52,7 @@ public class SpeakerDetailsFragment extends Fragment {
 
             // TODO get real speaker
             mSpeaker = new Speaker();
-            mSpeaker.setId(speakerId);
+            mSpeaker.setId("test");
             mSpeaker.setName("Speaker " + speakerId);
         } else {
             throw new IllegalStateException("SpeakerDetailsFragment requires a speaker ID passed via newInstance()");
