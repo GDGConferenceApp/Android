@@ -48,6 +48,12 @@
         android:gravity="center"
         tools:text="REPLACE WITH A TAG VIEW"/>
 
+    <TextView
+        android:id="@+id/session_details_speaker_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/speaker_heading_plural"/>
+
     <LinearLayout
         android:id="@+id/session_details_speaker_layout"
         android:layout_width="match_parent"

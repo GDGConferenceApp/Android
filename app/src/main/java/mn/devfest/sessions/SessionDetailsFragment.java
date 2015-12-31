@@ -37,6 +37,8 @@ public class SessionDetailsFragment extends Fragment {
     TextView mDifficultyTextview;
     @Bind(R.id.session_details_description)
     TextView mDescriptionTextview;
+    @Bind(R.id.session_details_speaker_heading)
+    TextView mSpeakerHeading;
     @Bind(R.id.session_details_speaker_layout)
     LinearLayout mSpeakerLayout;
 
@@ -80,7 +82,7 @@ public class SessionDetailsFragment extends Fragment {
             throw new IllegalStateException("SessionDetailsFragment requires a session ID passed via newInstance()");
         }
 
-        //TODO Bind to the session
+        //Bind to the session
         getActivity().setTitle(mSession.getTitle());
         mTitleTextview.setText(mSession.getTitle());
 
@@ -89,7 +91,7 @@ public class SessionDetailsFragment extends Fragment {
         mLocationTextview.setText(mSession.getRoom());
         //TODO mDifficultyTextview.setText(mSession.);
         mDescriptionTextview.setText(mSession.getDescription());
-        addSpeakers(mSession.getSpeakers());
+        displaySpeakers(mSession.getSpeakers());
     }
 
     /**
@@ -97,11 +99,18 @@ public class SessionDetailsFragment extends Fragment {
      * for each ID
      * @param speakers an array list of speaker IDs representing the speakers
      */
-    private void addSpeakers(ArrayList<String> speakers) {
+    private void displaySpeakers(ArrayList<String> speakers) {
         if (speakers == null || speakers.size() == 0) {
+            mSpeakerHeading.setVisibility(View.GONE);
             return;
+        } else if (speakers.size() == 1) {
+            mSpeakerHeading.setText(R.string.speaker_heading_singular);
         }
 
+        //Clear any residual views
+        mSpeakerLayout.removeAllViews();
+
+        //Add SpeakerViews to the Speaker Layout
         for (String speakerId : speakers) {
             //TODO add SpeakerViews to the Speaker Layout
         }

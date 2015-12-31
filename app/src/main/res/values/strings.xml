@@ -7,6 +7,10 @@
     <string name="drawer_item_speakers">Speakers</string>
     <string name="drawer_item_map">Map</string>
 
+    <!-- Speaker Details -->
+    <string name="speaker_heading_plural">Speakers:</string>
+    <string name="speaker_heading_singular">Speaker:</string>
+
     <!-- Speaker View -->
     <string name="twitter_heading">Twitter:</string>
     <string name="website_heading">Website:</string>
