@@ -1,6 +1,7 @@
 package mn.devfest.sessions;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,15 +20,20 @@ import mn.devfest.api.model.Session;
  */
 public class SessionDetailsFragment extends Fragment {
     private static final String ARG_SESSION_ID = "sessionId";
+    private static final String ARG_SESSION_PARCEL = "sessionParcel";
 
     private Session mSession;
 
-    public static SessionDetailsFragment newInstance(int sessionId) {
+    //TODO remove parcel-related instantiation code
+    public static SessionDetailsFragment newInstance(@NonNull String sessionId, @Nullable Session session) {
         Bundle args = new Bundle();
-        args.putInt(ARG_SESSION_ID, sessionId);
+        args.putString(ARG_SESSION_ID, sessionId);
 
         SessionDetailsFragment frag = new SessionDetailsFragment();
         frag.setArguments(args);
+        if (session != null) {
+            args.putParcelable(ARG_SESSION_PARCEL, session);
+        }
 
         return frag;
     }
@@ -45,12 +51,11 @@ public class SessionDetailsFragment extends Fragment {
 
         Bundle args = getArguments();
         if (args != null && args.containsKey(ARG_SESSION_ID)) {
-            int sessionId = args.getInt(ARG_SESSION_ID);
-
-            // TODO get real session
-            mSession = new Session();
-            mSession.setId("test");
-            mSession.setTitle("Session " + sessionId);
+            //TODO get session from data layer
+            //TODO remove parcel-related instantiation code
+            if (args.containsKey(ARG_SESSION_PARCEL)) {
+                mSession = args.getParcelable(ARG_SESSION_PARCEL);
+            }
         } else {
             throw new IllegalStateException("SessionDetailsFragment requires a session ID passed via newInstance()");
         }
@@ -58,4 +63,5 @@ public class SessionDetailsFragment extends Fragment {
         //TODO Bind to the session
         getActivity().setTitle(mSession.getTitle());
     }
+
 }

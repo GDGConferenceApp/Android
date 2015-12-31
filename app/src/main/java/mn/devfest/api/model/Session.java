@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
+ * Represents a session at the conference (e.g. – a talk, workshop, etc)
  * Created by chris.black on 12/5/15.
  */
 public class Session implements Parcelable {
