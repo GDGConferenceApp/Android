@@ -11,14 +11,15 @@ import java.util.Date;
  * Created by chris.black on 12/5/15.
  */
 public class Session implements Parcelable {
-    public boolean all;
-    public String description;
-    public Date endTime;
-    public String room;
-    public ArrayList<String> speakers;
-    public Date startTime;
-    public String title;
-    public String id;
+    private boolean all;
+    private String description;
+    private Date endTime;
+    private String room;
+    private ArrayList<String> speakers;
+    private Date startTime;
+    private String title;
+
+    private String id;
 
     protected Session(Parcel in) {
         all = in.readByte() != 0;
@@ -60,19 +61,35 @@ public class Session implements Parcelable {
         }
     };
 
-    public String getId() {
-        return id;
-    }
-
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public ArrayList<String> getSpeakers() {
+        return speakers;
+    }
+
+    public Date getStartTime() {
+        return startTime;
     }
 }

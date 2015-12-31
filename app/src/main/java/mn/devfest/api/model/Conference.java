@@ -33,7 +33,7 @@ public class Conference {
             try {
                 JsonObject obj = object.getAsJsonObject(entry.getKey());
                 Session session = gson.fromJson(obj, Session.class);
-                session.id = entry.getKey();
+                session.setId(entry.getKey());
                 schedule.add(session);
             } catch (ClassCastException e) {
                 // Do nothing
