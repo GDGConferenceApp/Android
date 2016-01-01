@@ -120,8 +120,25 @@ public class SessionDetailsFragment extends Fragment {
      * Takes an array list of tags and adds new tag views to the Tag layout for each
      * @param tags an array list of tags associated with the session
      */
-    private void displayTags(ArrayList<String> tags) {
-        //TODO implement
+    private void displayTags(@Nullable ArrayList<String> tags) {
+        //TODO uncomment
+//        if (tags == null) {
+//            return;
+//        }
+
+        //TODO delete dummy data and use 'tags' parameter instead
+        ArrayList<String> dummyData = new ArrayList<>();
+        dummyData.add("Cool");
+        dummyData.add("Hard");
+        dummyData.add("Really Hard");
+        dummyData.add("Security");
+        dummyData.add("Android");
+        for (String tag : dummyData) {
+            TextView textView = new TextView(getActivity());
+            textView.setBackgroundResource(R.color.colorWhite);
+            textView.setText(tag);
+            mTagLayout.addView(textView);
+        }
     }
 
     /**
@@ -129,7 +146,7 @@ public class SessionDetailsFragment extends Fragment {
      * for each ID
      * @param speakers an array list of speaker IDs representing the speakers
      */
-    private void displaySpeakers(ArrayList<String> speakers) {
+    private void displaySpeakers(@Nullable ArrayList<String> speakers) {
         if (speakers == null || speakers.size() == 0) {
             mSpeakerHeading.setVisibility(View.GONE);
             return;
