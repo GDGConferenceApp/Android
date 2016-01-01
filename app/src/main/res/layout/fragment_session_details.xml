@@ -40,13 +40,12 @@
         android:gravity="center"
         tools:text="@string/body_copy_placeholder"/>
 
-
-    <TextView
-        android:id="@+id/session_details_tags"
+<!-- TODO delete the background color -->
+    <com.liangfeizc.flowlayout.FlowLayout
+        android:id="@+id/session_details_tag_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        tools:text="REPLACE WITH A TAG VIEW"/>
+        android:background="@android:color/holo_blue_bright"/>
 
     <TextView
         android:id="@+id/session_details_speaker_heading"

@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.liangfeizc.flowlayout.FlowLayout;
+
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -41,6 +43,8 @@ public class SessionDetailsFragment extends Fragment {
     TextView mDifficultyTextview;
     @Bind(R.id.session_details_description)
     TextView mDescriptionTextview;
+    @Bind(R.id.session_details_tag_layout)
+    FlowLayout mTagLayout;
     @Bind(R.id.session_details_speaker_heading)
     TextView mSpeakerHeading;
     @Bind(R.id.session_details_speaker_layout)
@@ -106,9 +110,18 @@ public class SessionDetailsFragment extends Fragment {
         String startToEnd = String.format(getResources().getString(R.string.start_to_end_time), start, end);
         mTimeTextview.setText(startToEnd);
         mLocationTextview.setText(mSession.getRoom());
+        displayTags(mSession.getTags());
         //TODO mDifficultyTextview.setText(mSession.);
         mDescriptionTextview.setText(mSession.getDescription());
         displaySpeakers(mSession.getSpeakers());
+    }
+
+    /**
+     * Takes an array list of tags and adds new tag views to the Tag layout for each
+     * @param tags an array list of tags associated with the session
+     */
+    private void displayTags(ArrayList<String> tags) {
+        //TODO implement
     }
 
     /**
