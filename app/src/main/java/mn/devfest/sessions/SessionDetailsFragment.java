@@ -15,7 +15,10 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
+import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
+import mn.devfest.api.model.Speaker;
+import mn.devfest.view.SpeakerView;
 
 /**
  * Fragment that displays details for a particular session
@@ -44,6 +47,8 @@ public class SessionDetailsFragment extends Fragment {
     LinearLayout mSpeakerLayout;
 
     private Session mSession;
+    // TODO: There is probably a 'Dagger' way to inject the data source
+    private DevFestDataSource mDataSource;
 
     //TODO remove parcel-related instantiation code
     public static SessionDetailsFragment newInstance(@NonNull String sessionId, @Nullable Session session) {
@@ -71,6 +76,7 @@ public class SessionDetailsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        mDataSource = new DevFestDataSource(getActivity());
 
         //Set the session member variable
         Bundle args = getArguments();
@@ -123,7 +129,19 @@ public class SessionDetailsFragment extends Fragment {
 
         //Add SpeakerViews to the Speaker Layout
         for (String speakerId : speakers) {
-            //TODO add SpeakerViews to the Speaker Layout
+            //TODO Speaker speaker = mDataSource.getSpeaker(speakerId);
+            //TODO delete this dummy speaker
+            Speaker speaker = new Speaker();
+            speaker.setId("DummyID");
+            speaker.setName("John Doe");
+            speaker.bio = getString(R.string.body_copy_placeholder);
+            speaker.company = "Mentor Mate";
+            speaker.image = "http://digventures.com/leiston-abbey/wp-content/uploads/placeholder-man-grid-240x268.png";
+            speaker.twitter = "pfue";
+            speaker.website = "google.com";
+            SpeakerView speakerView = new SpeakerView(getActivity());
+            speakerView.setSpeaker(speaker);
+            mSpeakerLayout.addView(speakerView);
         }
     }
 

@@ -95,7 +95,7 @@ public class SpeakerView extends LinearLayout {
             mWebsiteHeading.setVisibility(GONE);
             mWebsiteTextview.setVisibility(GONE);
         } else {
-            mWebsiteTextview.setText(mSpeaker.getTwitter());
+            mWebsiteTextview.setText(mSpeaker.getWebsite());
         }
     }
 
