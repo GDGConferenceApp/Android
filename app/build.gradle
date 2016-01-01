@@ -26,6 +26,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
 }
 
 dependencies {
@@ -42,6 +47,9 @@ dependencies {
     compile 'com.jakewharton.timber:timber:4.1.0'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'net.danlew:android.joda:2.9.1'
+    compile 'com.liangfeizc:flowlayout:1.0.0@aar'
 
     // Dev tools
     debugCompile 'com.facebook.stetho:stetho:1.2.0'
