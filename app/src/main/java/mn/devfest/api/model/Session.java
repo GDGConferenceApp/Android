@@ -3,8 +3,9 @@ package mn.devfest.api.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Represents a session at the conference (e.g. – a talk, workshop, etc)
@@ -13,10 +14,10 @@ import java.util.Date;
 public class Session implements Parcelable {
     private boolean all;
     private String description;
-    private Date endTime;
+    private DateTime endTime;
     private String room;
     private ArrayList<String> speakers;
-    private Date startTime;
+    private DateTime startTime;
     private String title;
 
     private String id;
@@ -24,10 +25,10 @@ public class Session implements Parcelable {
     protected Session(Parcel in) {
         all = in.readByte() != 0;
         description = in.readString();
-        endTime = new Date(in.readLong());
+        endTime = new DateTime(in.readLong());
         room = in.readString();
         speakers = in.createStringArrayList();
-        startTime = new Date(in.readLong());
+        startTime = new DateTime(in.readLong());
         title = in.readString();
         id = in.readString();
     }
@@ -36,10 +37,10 @@ public class Session implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeByte((byte) (all ? 1 : 0));
         dest.writeString(description);
-        dest.writeLong(endTime.getTime());
+        dest.writeLong(endTime.getMillis());
         dest.writeString(room);
         dest.writeStringList(speakers);
-        dest.writeLong(startTime.getTime());
+        dest.writeLong(startTime.getMillis());
         dest.writeString(title);
         dest.writeString(id);
     }
@@ -77,7 +78,7 @@ public class Session implements Parcelable {
         return description;
     }
 
-    public Date getEndTime() {
+    public DateTime getEndTime() {
         return endTime;
     }
 
@@ -89,7 +90,7 @@ public class Session implements Parcelable {
         return speakers;
     }
 
-    public Date getStartTime() {
+    public DateTime getStartTime() {
         return startTime;
     }
 }

@@ -10,6 +10,7 @@
     <!-- Speaker Details -->
     <string name="speaker_heading_plural">Speakers:</string>
     <string name="speaker_heading_singular">Speaker:</string>
+    <string name="start_to_end_time">%1$s - %2$s</string>
 
     <!-- Speaker View -->
     <string name="twitter_heading">Twitter:</string>

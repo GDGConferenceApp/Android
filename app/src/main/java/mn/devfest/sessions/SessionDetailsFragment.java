@@ -26,6 +26,7 @@ import mn.devfest.api.model.Session;
 public class SessionDetailsFragment extends Fragment {
     private static final String ARG_SESSION_ID = "sessionId";
     private static final String ARG_SESSION_PARCEL = "sessionParcel";
+    private static final String TIME_FORMAT = "h:mma";
 
     @Bind(R.id.session_details_title)
     TextView mTitleTextview;
@@ -71,6 +72,7 @@ public class SessionDetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
+        //Set the session member variable
         Bundle args = getArguments();
         if (args != null && args.containsKey(ARG_SESSION_ID)) {
             //TODO get session from data layer
@@ -83,11 +85,20 @@ public class SessionDetailsFragment extends Fragment {
         }
 
         //Bind to the session
+        bindViewsToSession();
+    }
+
+    /**
+     * Bind the views to the session member variable
+     * TODO consider using view binding
+     */
+    private void bindViewsToSession() {
         getActivity().setTitle(mSession.getTitle());
         mTitleTextview.setText(mSession.getTitle());
-
-        //TODO mTimeTextview.setText(mSession);
-
+        String start = mSession.getStartTime().toLocalTime().toString(TIME_FORMAT);
+        String end = mSession.getEndTime().toLocalTime().toString(TIME_FORMAT);
+        String startToEnd = String.format(getResources().getString(R.string.start_to_end_time), start, end);
+        mTimeTextview.setText(startToEnd);
         mLocationTextview.setText(mSession.getRoom());
         //TODO mDifficultyTextview.setText(mSession.);
         mDescriptionTextview.setText(mSession.getDescription());
