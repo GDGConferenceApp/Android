@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="NumberFeedbackField">
+        <attr name="fieldLabel" format="string"/>
+        <attr name="rating0Label" format="string" />
+        <attr name="rating5Label" format="string" />
+    </declare-styleable>
+</resources>
