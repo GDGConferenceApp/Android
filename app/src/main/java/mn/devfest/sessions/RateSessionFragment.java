@@ -20,11 +20,36 @@ import mn.devfest.view.NumberFeedbackField;
  * @author bherbst
  */
 public class RateSessionFragment extends Fragment {
+    private static final String ARG_SESSION_ID = "arg_session_id";
 
     @Bind(R.id.overall_session_rating) RatingBar mOverallBar;
     @Bind(R.id.field_relevancy) NumberFeedbackField mRelevancyBar;
     @Bind(R.id.field_content) NumberFeedbackField mcontentBar;
     @Bind(R.id.field_speaker_quality) NumberFeedbackField mSpeakerBar;
+
+    private String mSessionId;
+
+    /**
+     * Get a new RateSessionFragment for a given session
+     * @param sessionId The ID of the session to rate
+     * @return A new RatSessionFragment for the given session
+     */
+    public static RateSessionFragment newInstance(String sessionId) {
+        Bundle args = new Bundle();
+        args.putString(ARG_SESSION_ID, sessionId);
+
+        RateSessionFragment frag =  new RateSessionFragment();
+        frag.setArguments(args);
+
+        return frag;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mSessionId = getArguments().getString(ARG_SESSION_ID);
+    }
 
     @Nullable
     @Override

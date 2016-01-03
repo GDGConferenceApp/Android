@@ -179,7 +179,9 @@ public class SessionDetailsFragment extends Fragment {
 
     @OnClick(R.id.rate_session)
     void onRateClicked() {
-        startActivity(new Intent(getContext(), RateSessionActivity.class));
+        Intent rateSession = new Intent(getContext(), RateSessionActivity.class);
+        rateSession.putExtra(RateSessionActivity.EXTRA_SESSION_ID, mSession.getId());
+        startActivity(rateSession);
     }
 
 }
