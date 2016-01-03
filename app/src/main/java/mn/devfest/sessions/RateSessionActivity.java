@@ -12,6 +12,7 @@ import mn.devfest.base.SinglePaneActivity;
  * @author bherbst
  */
 public class RateSessionActivity extends SinglePaneActivity {
+    public static final String EXTRA_SESSION_ID = "extra_session_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +22,13 @@ public class RateSessionActivity extends SinglePaneActivity {
 
     @Override
     protected Fragment onCreatePane() {
-        return new RateSessionFragment();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.containsKey(EXTRA_SESSION_ID)) {
+            String sessionId = extras.getString(EXTRA_SESSION_ID);
+            return RateSessionFragment.newInstance(sessionId);
+        } else {
+            throw new IllegalStateException("RateSessionActivity requires a session ID passed in via EXTRA_SESSION_ID");
+        }
     }
 
     @Override

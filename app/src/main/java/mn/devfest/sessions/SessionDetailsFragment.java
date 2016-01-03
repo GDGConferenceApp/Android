@@ -1,5 +1,6 @@
 package mn.devfest.sessions;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mn.devfest.R;
 import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
@@ -173,6 +175,13 @@ public class SessionDetailsFragment extends Fragment {
             speakerView.setSpeaker(speaker);
             mSpeakerLayout.addView(speakerView);
         }
+    }
+
+    @OnClick(R.id.rate_session)
+    void onRateClicked() {
+        Intent rateSession = new Intent(getContext(), RateSessionActivity.class);
+        rateSession.putExtra(RateSessionActivity.EXTRA_SESSION_ID, mSession.getId());
+        startActivity(rateSession);
     }
 
 }

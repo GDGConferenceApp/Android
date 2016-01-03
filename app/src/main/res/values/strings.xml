@@ -16,6 +16,31 @@
     <string name="twitter_heading">Twitter:</string>
     <string name="website_heading">Website:</string>
 
+
+    <!-- Session rating -->
+    <string name="session_rating_label_text">Session rating:</string>
+    <string name="default_session_feedback_rating_bar_content_description">Session rating bar with a minimum of one star and a maximum of five stars</string>
+    <string name="session_feedback_content">The content:</string>
+    <string name="session_feedback_rel">Pertinent</string>
+    <string name="session_feedback_notrel">Not Pertinent</string>
+    <string name="session_feedback_title_rate">Rate</string>
+    <string name="session_feedback_advanced">Too advanced</string>
+    <string name="session_feedback_basic">Too basic</string>
+    <string name="session_feedback_content_label_text">Based on the description/my expectations, the content was:</string>
+    <string name="session_feedback_notification_text">Provide feedback for %1$s</string>
+    <string name="session_feedback_notification_ticker">Provide session feedback</string>
+    <string name="session_feedback_not_so_awesome">Not so awesome</string>
+    <string name="session_feedback_awesome">Awesome</string>
+    <string name="session_feedback_not_at_all_relevant">Not at all</string>
+    <string name="session_feedback_extremely_relevant">Extremely</string>
+    <string name="session_feedback_other">Anything else we should know?</string>
+    <string name="session_feedback_additional_comments_no_personal_info">Please don\'t add any personal information in your comments</string>
+    <string name="session_feedback_outstanding">Outstanding</string>
+    <string name="session_feedback_poor">Poor</string>
+    <string name="session_feedback_relevance">How relevant was this session to your projects?</string>
+    <string name="session_feedback_speaker_quality">Speaker quality:</string>
+    <string name="session_feedback_submitlink">Submit Feedback</string>
+
     <!-- TODO remove lorem ipsum -->
     <!-- Placeholder text -->
     <string name="body_copy_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
