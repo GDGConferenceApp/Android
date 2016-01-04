@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextAppearance.DevFest" parent="@style/TextAppearance.AppCompat" />
+
+    <style name="TextAppearance.DevFest.FeedbackRatingCaption" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+</resources>

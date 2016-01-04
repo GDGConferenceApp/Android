@@ -17,4 +17,15 @@
         <item name="android:paddingRight">@dimen/list_item_horizontal_padding</item>
     </style>
 
+    <style name="FeedbackNumberRatingBar">
+        <item name="android:progressDrawable">@drawable/number_ratingbar</item>
+        <item name="android:max">5</item>
+    </style>
+
+    <style name="FeedbackRatingBar">
+        <item name="android:numStars">5</item>
+        <item name="android:rating">0</item>
+        <item name="android:stepSize">1</item>
+    </style>
+
 </resources>
