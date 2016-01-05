@@ -24,6 +24,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Bind(R.id.map_view)
     MapView mMapView;
+    //TODO add a re-center button
+    //TODO add a widget to select floor
+
+    GoogleMap mMap;
 
     @Nullable
     @Override
@@ -62,6 +66,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        //TODO implement
+        mMap = googleMap;
+        //TODO set camera
+        //TODO set overlays
     }
 }
