@@ -11,8 +11,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.GroundOverlay;
+import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,16 +35,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private static final double CONFERENCE_CENTER_NORTHEAST_CORNER_LAT = 44.974714;
     private static final double CONFERENCE_CENTER_NORTHEAST_CORNER_LONG = -93.276806;
     private static final float CONFERENCE_CENTER_ZOOM_LEVEL = 18.5f;
-    private LatLngBounds CONFERENCE_CENTER =
-            new LatLngBounds(
-                    new LatLng(CONFERENCE_CENTER_SOUTHWEST_CORNER_LAT,CONFERENCE_CENTER_SOUTHWEST_CORNER_LONG),
-                    new LatLng(CONFERENCE_CENTER_NORTHEAST_CORNER_LAT,CONFERENCE_CENTER_NORTHEAST_CORNER_LONG));
+    private static final int CONFERENCE_CENTER_FLOOR_OVERLAY_COUNT = 3;
+
     @Bind(R.id.map_view)
     MapView mMapView;
     //TODO add a re-center button
     //TODO add a widget to select floor
 
     GoogleMap mMap;
+    ArrayList<GroundOverlay> mFloorOverlayArray = new ArrayList<>();
+
 
     @Nullable
     @Override
@@ -80,14 +85,30 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         //Move the camera to focus on the conference center
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CONFERENCE_CENTER.getCenter(), CONFERENCE_CENTER_ZOOM_LEVEL));
-        //TODO set overlays
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(getConferenceCenterBounds().getCenter(), CONFERENCE_CENTER_ZOOM_LEVEL));
+        //Add ground overlays
+        GroundOverlayOptions firstFloorOverlayOptions = new GroundOverlayOptions()
+                .image(BitmapDescriptorFactory.fromResource(R.drawable.schultze_level_one))
+                .positionFromBounds(getConferenceCenterBounds());
+        mFloorOverlayArray.add(mMap.addGroundOverlay(firstFloorOverlayOptions));
     }
 
     /**
-     * Returns the map to it's original location
+     * Resets the maps camera to it's original location
      */
     private void recenterMap() {
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(CONFERENCE_CENTER.getCenter(), CONFERENCE_CENTER_ZOOM_LEVEL));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(getConferenceCenterBounds().getCenter(), CONFERENCE_CENTER_ZOOM_LEVEL));
+    }
+
+    /**
+     * Provides the Lat-Long bounds of the conference center
+     * @return The Lat-Long bounds of the conference center
+     */
+    private LatLngBounds getConferenceCenterBounds() {
+        LatLngBounds CONFERENCE_CENTER =
+                new LatLngBounds(
+                        new LatLng(CONFERENCE_CENTER_SOUTHWEST_CORNER_LAT,CONFERENCE_CENTER_SOUTHWEST_CORNER_LONG),
+                        new LatLng(CONFERENCE_CENTER_NORTHEAST_CORNER_LAT,CONFERENCE_CENTER_NORTHEAST_CORNER_LONG));
+        return CONFERENCE_CENTER;
     }
 }
