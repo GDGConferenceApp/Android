@@ -35,7 +35,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private static final double CONFERENCE_CENTER_NORTHEAST_CORNER_LAT = 44.974714;
     private static final double CONFERENCE_CENTER_NORTHEAST_CORNER_LONG = -93.276806;
     private static final float CONFERENCE_CENTER_ZOOM_LEVEL = 18.5f;
-    private static final int CONFERENCE_CENTER_FLOOR_OVERLAY_COUNT = 3;
+    private static final int[] FLOOR_OVERLAY_ID_ARRAY = {R.drawable.schultze_level_one, R.drawable.schultze_level_two, R.drawable.schultze_level_three};
+
 
     @Bind(R.id.map_view)
     MapView mMapView;
@@ -87,10 +88,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         //Move the camera to focus on the conference center
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(getConferenceCenterBounds().getCenter(), CONFERENCE_CENTER_ZOOM_LEVEL));
         //Add ground overlays
-        GroundOverlayOptions firstFloorOverlayOptions = new GroundOverlayOptions()
-                .image(BitmapDescriptorFactory.fromResource(R.drawable.schultze_level_one))
-                .positionFromBounds(getConferenceCenterBounds());
-        mFloorOverlayArray.add(mMap.addGroundOverlay(firstFloorOverlayOptions));
+        ArrayList<GroundOverlayOptions> floorOverlayArray = new ArrayList<>();
+        for (int i = 0; i < FLOOR_OVERLAY_ID_ARRAY.length; i++) {
+            GroundOverlayOptions floorOverlayOptions = new GroundOverlayOptions()
+                    .image(BitmapDescriptorFactory.fromResource(FLOOR_OVERLAY_ID_ARRAY[i]))
+                    .zIndex(i)
+                    .positionFromBounds(getConferenceCenterBounds());
+            mFloorOverlayArray.add(mMap.addGroundOverlay(floorOverlayOptions));
+        }
     }
 
     /**
