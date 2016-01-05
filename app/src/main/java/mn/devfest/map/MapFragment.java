@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,7 +30,7 @@ import mn.devfest.R;
  *
  * @author bherbst
  */
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback, View.OnClickListener {
     //TODO extract constants to an easy to update file
     private static final double CONFERENCE_CENTER_SOUTHWEST_CORNER_LAT = 44.973986;
     private static final double CONFERENCE_CENTER_SOUTHWEST_CORNER_LONG = -93.278120;
@@ -40,8 +42,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Bind(R.id.map_view)
     MapView mMapView;
+    @Bind(R.id.floor_selector_layout)
+    LinearLayout mFloorSelectorLayout;
     //TODO add a re-center button
-    //TODO add a widget to select floor
+
 
     GoogleMap mMap;
     ArrayList<GroundOverlay> mFloorOverlayArray = new ArrayList<>();
@@ -60,6 +64,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
+        for (int i = 0; i < FLOOR_OVERLAY_ID_ARRAY.length; i++) {
+            Button button = new Button(getActivity());
+            //TODO extract string
+            int floorNumber = i + 1;
+            button.setText("Floor " + floorNumber);
+            button.setOnClickListener(this);
+            mFloorSelectorLayout.addView(button);
+        }
     }
 
     @Override
@@ -71,7 +83,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mMapView != null){
+        if (mMapView != null) {
             mMapView.onDestroy();
         }
     }
@@ -108,11 +120,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     /**
      * Provides the Lat-Long bounds of the conference center
+     *
      * @return The Lat-Long bounds of the conference center
      */
     private LatLngBounds getConferenceCenterBounds() {
         return new LatLngBounds(
-                new LatLng(CONFERENCE_CENTER_SOUTHWEST_CORNER_LAT,CONFERENCE_CENTER_SOUTHWEST_CORNER_LONG),
-                new LatLng(CONFERENCE_CENTER_NORTHEAST_CORNER_LAT,CONFERENCE_CENTER_NORTHEAST_CORNER_LONG));
+                new LatLng(CONFERENCE_CENTER_SOUTHWEST_CORNER_LAT, CONFERENCE_CENTER_SOUTHWEST_CORNER_LONG),
+                new LatLng(CONFERENCE_CENTER_NORTHEAST_CORNER_LAT, CONFERENCE_CENTER_NORTHEAST_CORNER_LONG));
+    }
+
+    @Override
+    public void onClick(View v) {
+        //TODO implement
     }
 }
