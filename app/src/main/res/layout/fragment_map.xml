@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:map="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:orientation="vertical">
+                xmlns:map="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/floor_selector_layout"
@@ -20,7 +20,5 @@
         map:cameraTargetLat="44.974320"
         map:cameraTargetLng="-93.277608"
         map:cameraZoom="19.1"/>
-
-    <!-- TODO add floor selector -->
 
 </RelativeLayout>

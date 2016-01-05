@@ -66,9 +66,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         mMapView.getMapAsync(this);
         for (int i = 0; i < FLOOR_OVERLAY_ID_ARRAY.length; i++) {
             Button button = new Button(getActivity());
-            //TODO extract string
             int floorNumber = i + 1;
-            button.setText("Floor " + floorNumber);
+            button.setText(String.format(getResources().getString(R.string.floor_selection_button_text), floorNumber));
+            button.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            button.setTag(i);
             button.setOnClickListener(this);
             mFloorSelectorLayout.addView(button);
         }
@@ -100,7 +101,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         //Move the camera to focus on the conference center
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(getConferenceCenterBounds().getCenter(), CONFERENCE_CENTER_ZOOM_LEVEL));
         //Add ground overlays
-        ArrayList<GroundOverlayOptions> floorOverlayArray = new ArrayList<>();
         for (int i = 0; i < FLOOR_OVERLAY_ID_ARRAY.length; i++) {
             GroundOverlayOptions floorOverlayOptions = new GroundOverlayOptions()
                     .image(BitmapDescriptorFactory.fromResource(FLOOR_OVERLAY_ID_ARRAY[i]))
@@ -131,6 +131,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
     @Override
     public void onClick(View v) {
-        //TODO implement
+        if (v instanceof Button) {
+            //TODO implement
+        }
     }
 }
