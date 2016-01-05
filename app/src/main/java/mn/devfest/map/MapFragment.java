@@ -93,6 +93,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             GroundOverlayOptions floorOverlayOptions = new GroundOverlayOptions()
                     .image(BitmapDescriptorFactory.fromResource(FLOOR_OVERLAY_ID_ARRAY[i]))
                     .zIndex(i)
+                    .visible((i == 0)) //Only the lowest floor is visible by default
                     .positionFromBounds(getConferenceCenterBounds());
             mFloorOverlayArray.add(mMap.addGroundOverlay(floorOverlayOptions));
         }
@@ -110,10 +111,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
      * @return The Lat-Long bounds of the conference center
      */
     private LatLngBounds getConferenceCenterBounds() {
-        LatLngBounds CONFERENCE_CENTER =
-                new LatLngBounds(
-                        new LatLng(CONFERENCE_CENTER_SOUTHWEST_CORNER_LAT,CONFERENCE_CENTER_SOUTHWEST_CORNER_LONG),
-                        new LatLng(CONFERENCE_CENTER_NORTHEAST_CORNER_LAT,CONFERENCE_CENTER_NORTHEAST_CORNER_LONG));
-        return CONFERENCE_CENTER;
+        return new LatLngBounds(
+                new LatLng(CONFERENCE_CENTER_SOUTHWEST_CORNER_LAT,CONFERENCE_CENTER_SOUTHWEST_CORNER_LONG),
+                new LatLng(CONFERENCE_CENTER_NORTHEAST_CORNER_LAT,CONFERENCE_CENTER_NORTHEAST_CORNER_LONG));
     }
 }
