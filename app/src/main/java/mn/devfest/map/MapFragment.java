@@ -7,6 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import mn.devfest.R;
 
 /**
@@ -14,7 +20,10 @@ import mn.devfest.R;
  *
  * @author bherbst
  */
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements OnMapReadyCallback {
+
+    @Bind(R.id.map_view)
+    MapView mMapView;
 
     @Nullable
     @Override
@@ -22,4 +31,37 @@ public class MapFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_map, container, false);
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
+
+        mMapView.onCreate(savedInstanceState);
+        mMapView.getMapAsync(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mMapView != null){
+            mMapView.onDestroy();
+        }
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        //TODO implement
+    }
 }
