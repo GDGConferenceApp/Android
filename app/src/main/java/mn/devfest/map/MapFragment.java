@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mn.devfest.R;
 
 /**
@@ -44,7 +46,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     MapView mMapView;
     @Bind(R.id.floor_selector_layout)
     LinearLayout mFloorSelectorLayout;
-    //TODO add a re-center button
+    @Bind(R.id.map_recenter)
+    ImageView mMapRecenterView;
 
 
     GoogleMap mMap;
@@ -69,7 +72,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             int floorNumber = i + 1;
             button.setText(String.format(getResources().getString(R.string.floor_selection_button_text), floorNumber));
             button.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            button.setTag(Integer.valueOf(i));
+            button.setTag(i);
             button.setOnClickListener(this);
             mFloorSelectorLayout.addView(button);
         }
@@ -112,13 +115,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     }
 
     /**
-     * Resets the maps camera to it's original location
-     */
-    private void recenterMap() {
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(getConferenceCenterBounds().getCenter(), CONFERENCE_CENTER_ZOOM_LEVEL));
-    }
-
-    /**
      * Provides the Lat-Long bounds of the conference center
      *
      * @return The Lat-Long bounds of the conference center
@@ -127,6 +123,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         return new LatLngBounds(
                 new LatLng(CONFERENCE_CENTER_SOUTHWEST_CORNER_LAT, CONFERENCE_CENTER_SOUTHWEST_CORNER_LONG),
                 new LatLng(CONFERENCE_CENTER_NORTHEAST_CORNER_LAT, CONFERENCE_CENTER_NORTHEAST_CORNER_LONG));
+    }
+
+    /**
+     * Resets the maps camera to it's original location
+     */
+    @OnClick(R.id.map_recenter)
+    protected void onRecenterClicked() {
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(getConferenceCenterBounds().getCenter(), CONFERENCE_CENTER_ZOOM_LEVEL));
     }
 
     @Override

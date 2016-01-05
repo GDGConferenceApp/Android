@@ -21,4 +21,13 @@
         map:cameraTargetLng="-93.277608"
         map:cameraZoom="19.1"/>
 
+    <!-- TODO update drawable -->
+    <ImageView
+        android:id="@+id/map_recenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/ic_arrow_back_white_24dp"/>
+
 </RelativeLayout>
