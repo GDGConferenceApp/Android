@@ -7,9 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,6 +24,12 @@ import mn.devfest.R;
  * @author bherbst
  */
 public class MapFragment extends Fragment implements OnMapReadyCallback {
+    //TODO extract constants to an easy to update file
+    private static final double CONFERENCE_CENTER_SOUTHWEST_CORNER_LAT = 44.973986;
+    private static final double CONFERENCE_CENTER_SOUTHWEST_CORNER_LONG = -93.278120;
+    private static final double CONFERENCE_CENTER_NORTHEAST_CORNER_LAT = 44.974714;
+    private static final double CONFERENCE_CENTER_NORTHEAST_CORNER_LONG = -93.276806;
+    private static final float CONFERENCE_CENTER_ZOOM_LEVEL = 18;
 
     @Bind(R.id.map_view)
     MapView mMapView;
@@ -67,7 +76,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        //TODO set camera
+        //Move the camera to focus on the conference center
+        LatLngBounds CONFERENCE_CENTER =
+                new LatLngBounds(
+                        new LatLng(CONFERENCE_CENTER_SOUTHWEST_CORNER_LAT,CONFERENCE_CENTER_SOUTHWEST_CORNER_LONG),
+                        new LatLng(CONFERENCE_CENTER_NORTHEAST_CORNER_LAT,CONFERENCE_CENTER_NORTHEAST_CORNER_LONG));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CONFERENCE_CENTER.getCenter(), CONFERENCE_CENTER_ZOOM_LEVEL));
         //TODO set overlays
     }
 }
