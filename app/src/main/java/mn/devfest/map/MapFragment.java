@@ -29,8 +29,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private static final double CONFERENCE_CENTER_SOUTHWEST_CORNER_LONG = -93.278120;
     private static final double CONFERENCE_CENTER_NORTHEAST_CORNER_LAT = 44.974714;
     private static final double CONFERENCE_CENTER_NORTHEAST_CORNER_LONG = -93.276806;
-    private static final float CONFERENCE_CENTER_ZOOM_LEVEL = 18;
-
+    private static final float CONFERENCE_CENTER_ZOOM_LEVEL = 18.5f;
+    private LatLngBounds CONFERENCE_CENTER =
+            new LatLngBounds(
+                    new LatLng(CONFERENCE_CENTER_SOUTHWEST_CORNER_LAT,CONFERENCE_CENTER_SOUTHWEST_CORNER_LONG),
+                    new LatLng(CONFERENCE_CENTER_NORTHEAST_CORNER_LAT,CONFERENCE_CENTER_NORTHEAST_CORNER_LONG));
     @Bind(R.id.map_view)
     MapView mMapView;
     //TODO add a re-center button
@@ -77,11 +80,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         //Move the camera to focus on the conference center
-        LatLngBounds CONFERENCE_CENTER =
-                new LatLngBounds(
-                        new LatLng(CONFERENCE_CENTER_SOUTHWEST_CORNER_LAT,CONFERENCE_CENTER_SOUTHWEST_CORNER_LONG),
-                        new LatLng(CONFERENCE_CENTER_NORTHEAST_CORNER_LAT,CONFERENCE_CENTER_NORTHEAST_CORNER_LONG));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CONFERENCE_CENTER.getCenter(), CONFERENCE_CENTER_ZOOM_LEVEL));
         //TODO set overlays
+    }
+
+    /**
+     * Returns the map to it's original location
+     */
+    private void recenterMap() {
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(CONFERENCE_CENTER.getCenter(), CONFERENCE_CENTER_ZOOM_LEVEL));
     }
 }
