@@ -69,7 +69,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             int floorNumber = i + 1;
             button.setText(String.format(getResources().getString(R.string.floor_selection_button_text), floorNumber));
             button.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            button.setTag(i);
+            button.setTag(Integer.valueOf(i));
             button.setOnClickListener(this);
             mFloorSelectorLayout.addView(button);
         }
@@ -131,8 +131,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
     @Override
     public void onClick(View v) {
-        if (v instanceof Button) {
-            //TODO implement
+        //Only address views in the floor selector layout
+        if (v.getParent() == mFloorSelectorLayout) {
+            for (int i = 0; i < FLOOR_OVERLAY_ID_ARRAY.length; i++) {
+                GroundOverlay groundOverlay = mFloorOverlayArray.get(i);
+                groundOverlay.setVisible((Integer)i == v.getTag());
+            }
         }
     }
 }
