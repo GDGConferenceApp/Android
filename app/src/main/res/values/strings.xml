@@ -16,6 +16,9 @@
     <string name="twitter_heading">Twitter:</string>
     <string name="website_heading">Website:</string>
 
+    <!-- Map -->
+    <string name="floor_selection_button_text">"Floor %d"</string>
+
 
     <!-- Session rating -->
     <string name="session_rating_label_text">Session rating:</string>

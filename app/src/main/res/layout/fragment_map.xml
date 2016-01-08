@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:map="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/floor_selector_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="72dp"
-        android:gravity="center"
-        android:text="Map"/>
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"/>
 
-</LinearLayout>
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/floor_selector_layout"
+        map:cameraTargetLat="44.974320"
+        map:cameraTargetLng="-93.277608"
+        map:cameraZoom="19.1"/>
+
+    <!-- TODO update drawable -->
+    <ImageView
+        android:id="@+id/map_recenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/ic_arrow_back_white_24dp"/>
+
+</RelativeLayout>
