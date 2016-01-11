@@ -34,10 +34,10 @@ import mn.devfest.R;
  */
 public class MapFragment extends Fragment implements OnMapReadyCallback, View.OnClickListener {
     //TODO extract constants to an easy to update file
-    private static final double CONFERENCE_CENTER_SOUTHWEST_CORNER_LAT = 44.9739424513;
-    private static final double CONFERENCE_CENTER_SOUTHWEST_CORNER_LONG = -93.2783154678;
-    private static final double CONFERENCE_CENTER_NORTHEAST_CORNER_LAT = 44.9746764119;
-    private static final double CONFERENCE_CENTER_NORTHEAST_CORNER_LONG = -93.2767699286;
+    private static final double CONFERENCE_CENTER_SOUTHWEST_CORNER_LAT = 44.97395;
+    private static final double CONFERENCE_CENTER_SOUTHWEST_CORNER_LONG = -93.2783;
+    private static final double CONFERENCE_CENTER_NORTHEAST_CORNER_LAT = 44.974725;
+    private static final double CONFERENCE_CENTER_NORTHEAST_CORNER_LONG = -93.27668;
     private static final float CONFERENCE_CENTER_ZOOM_LEVEL = 18.5f;
     private static final int[] FLOOR_OVERLAY_ID_ARRAY = {R.drawable.schultze_level_one, R.drawable.schultze_level_two, R.drawable.schultze_level_three};
 
