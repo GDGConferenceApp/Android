@@ -20,6 +20,7 @@ import mn.devfest.schedule.UserScheduleRepository;
  * This is the source of session, schedule, and speaker information. This acts as a general
  * contractor that can coordinate between various subcontractor classes including but not limited to
  * local and remote data sources.
+ * TODO make singleton
  *
  * Created by chris.black on 12/5/15.
  */
@@ -27,8 +28,13 @@ public class DevFestDataSource {
 
     private Conference mConference;
     private UserScheduleRepository mScheduleRepository;
+    private DataSourceListener mDataSourceListener;
 
-    public DevFestDataSource(Context context) {
+    public DevFestDataSource(Context context, DataSourceListener listener) {
+        mDataSourceListener = listener;
+        //TODO inject this
+        mScheduleRepository = new UserScheduleRepository(context);
+
         //Reading source from local file
         InputStream inputStream = context.getResources().openRawResource(R.raw.firebase);
         String jsonString = readJsonFile(inputStream);
@@ -40,8 +46,8 @@ public class DevFestDataSource {
         mConference.parseSpeakers(jsonobject.getAsJsonObject("speakers"));
         mConference.version = jsonobject.get("versionNum").getAsDouble();
         System.out.println(mConference.toString());
-        //TODO inject this
-        mScheduleRepository = new UserScheduleRepository(context);
+
+        onConferenceUpdated();
     }
 
     private String readJsonFile(InputStream inputStream) {
@@ -80,12 +86,27 @@ public class DevFestDataSource {
         return sessions;
     }
 
+    public void setDataSourceListener(DataSourceListener listener) {
+        mDataSourceListener = listener;
+    }
+
+    private void onConferenceUpdated() {
+        //Notify listener
+        mDataSourceListener.onSessionsUpdate(getSessions());
+        mDataSourceListener.onSpeakersUpdate(getSpeakers());
+        mDataSourceListener.onUserScheduleUpdate(getUserSchedule());
+    }
+
     /**
      * Listener for updates from the data source
      */
     public interface DataSourceListener {
-        ArrayList<Session> onSessionsUpdate();
-        ArrayList<Speaker> onSpeakersUpdate();
-        ArrayList<Session> onUserScheduleUpdate();
+        ArrayList<Session> onSessionsUpdate(ArrayList<Session> sessions);
+        ArrayList<Speaker> onSpeakersUpdate(ArrayList<Speaker> speakers);
+        ArrayList<Session> onUserScheduleUpdate(ArrayList<Session> userSchedule);
+        ArrayList<Session> getSessions();
+        ArrayList<Speaker> getSpeakers();
+        ArrayList<Session> getSchedule();
+
     }
 }

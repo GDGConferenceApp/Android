@@ -34,7 +34,7 @@ public class SessionsFragment extends Fragment {
     private LinearLayoutManager mLinearLayoutManager;
 
     private ArrayList<Session> sessionData = new ArrayList<>();
-    private DevFestDataSource.DataSourceListener dataSource; // TODO: There is probably a 'Dagger' way to inject the data source
+    private DevFestDataSource.DataSourceListener dataSourceListener; // TODO: There is probably a 'Dagger' way to inject the data source
 
     @Nullable
     @Override
@@ -46,8 +46,8 @@ public class SessionsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if(context instanceof DevFestDataSource.DataSourceListener) {
-            dataSource = (DevFestDataSource.DataSourceListener)context;
-            sessionData = dataSource.onSessionsUpdate();
+            dataSourceListener = (DevFestDataSource.DataSourceListener)context;
+            sessionData = dataSourceListener.getSessions();
         }
     }
 
@@ -57,7 +57,7 @@ public class SessionsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        dataSource = null;
+        dataSourceListener = null;
     }
 
     @Override

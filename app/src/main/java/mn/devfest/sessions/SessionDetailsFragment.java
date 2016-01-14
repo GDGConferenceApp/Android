@@ -19,10 +19,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mn.devfest.R;
-import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.view.SpeakerView;
+
 
 /**
  * Fragment that displays details for a particular session
@@ -30,7 +30,7 @@ import mn.devfest.view.SpeakerView;
  * @author bherbst
  * @author pfuentes
  */
-public class SessionDetailsFragment extends Fragment {
+public class SessionDetailsFragment extends Fragment{
     private static final String ARG_SESSION_ID = "sessionId";
     private static final String ARG_SESSION_PARCEL = "sessionParcel";
     private static final String TIME_FORMAT = "h:mma";
@@ -53,8 +53,6 @@ public class SessionDetailsFragment extends Fragment {
     LinearLayout mSpeakerLayout;
 
     private Session mSession;
-    // TODO: There is probably a 'Dagger' way to inject the data source
-    private DevFestDataSource mDataSource;
 
     //TODO remove parcel-related instantiation code
     public static SessionDetailsFragment newInstance(@NonNull String sessionId, @Nullable Session session) {
@@ -80,7 +78,6 @@ public class SessionDetailsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        mDataSource = new DevFestDataSource(getActivity());
 
         //Set the session member variable
         Bundle args = getArguments();
@@ -159,7 +156,7 @@ public class SessionDetailsFragment extends Fragment {
 
         //Add SpeakerViews to the Speaker Layout
         for (String speakerId : speakers) {
-            //TODO Speaker speaker = mDataSource.getSpeaker(speakerId);
+            //TODO Speaker speaker = mDataSourceListener.getSpeaker(speakerId);
             //TODO delete this dummy speaker
             Speaker speaker = new Speaker();
             speaker.setId("DummyID");
@@ -181,5 +178,4 @@ public class SessionDetailsFragment extends Fragment {
         rateSession.putExtra(RateSessionActivity.EXTRA_SESSION_ID, mSession.getId());
         startActivity(rateSession);
     }
-
 }

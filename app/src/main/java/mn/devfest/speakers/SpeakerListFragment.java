@@ -63,7 +63,7 @@ public class SpeakerListFragment extends Fragment {
         super.onAttach(context);
         if(context instanceof DevFestDataSource.DataSourceListener) {
             dataSource = (DevFestDataSource.DataSourceListener)context;
-            speakerData = dataSource.onSpeakersUpdate();
+            speakerData = dataSource.getSpeakers();
         }
     }
 
