@@ -41,7 +41,7 @@ public class DevFestDataSource {
         mConference.version = jsonobject.get("versionNum").getAsDouble();
         System.out.println(mConference.toString());
         //TODO inject this
-        mScheduleRepository = new UserScheduleRepository();
+        mScheduleRepository = new UserScheduleRepository(context);
     }
 
     private String readJsonFile(InputStream inputStream) {
@@ -68,8 +68,8 @@ public class DevFestDataSource {
     public ArrayList<Speaker> getSpeakers() {
         return mConference.speakers;
     }
-
-    public ArrayList<Speaker> getUserSchedule() {
+    
+    public ArrayList<Session> getUserSchedule() {
         //TODO implement
         return new ArrayList<>();
     }
