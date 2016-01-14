@@ -63,10 +63,11 @@ public class UserScheduleRepository {
      * @return true if the session is in the user's schedule; otherwise false
      */
     public boolean isInSchedule(String sessionId) {
-        //TODO implement
-        return true; //TODO update return statement
+        ArrayList<String> scheduleIds = getScheduleIds();
+        return scheduleIds.contains(sessionId);
     }
 
+    //TODO when this syncs with the API, this should be moved to another class that manages the user's schedule
     private void setScheduleIdStringSet(@NonNull ArrayList<String> scheduleIds) {
         Set<String> stringSet = new HashSet<>(scheduleIds);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
