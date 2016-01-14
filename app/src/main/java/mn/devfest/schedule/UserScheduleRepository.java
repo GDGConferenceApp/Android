@@ -32,7 +32,9 @@ public class UserScheduleRepository {
      * @param sessionId ID of the session to be added
      */
     public void addSession(String sessionId) {
-        //TODO implement
+        ArrayList<String> scheduleIds = getScheduleIdStringSet();
+        scheduleIds.add(sessionId);
+        setScheduleIdStringSet(scheduleIds);
     }
 
     /**
@@ -62,14 +64,16 @@ public class UserScheduleRepository {
         return true; //TODO update return statement
     }
 
-    private void setScheduleIdStringSet(@NonNull Set<String> stringSet) {
+    private void setScheduleIdStringSet(@NonNull ArrayList<String> scheduleIds) {
+        Set<String> stringSet = new HashSet<>(scheduleIds);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putStringSet(SCHEDULE_ID_STRING_SET_TAG, stringSet);
         editor.commit();
     }
 
     @NonNull
-    private Set<String> getScheduleIdStringSet() {
-        return mSharedPreferences.getStringSet(SCHEDULE_ID_STRING_SET_TAG, new HashSet<>());
+    private ArrayList<String> getScheduleIdStringSet() {
+        Set<String> scheduleIdSet = mSharedPreferences.getStringSet(SCHEDULE_ID_STRING_SET_TAG, new HashSet<>());
+        return new ArrayList<String>(scheduleIdSet);
     }
 }
