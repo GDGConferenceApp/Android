@@ -32,7 +32,7 @@ public class UserScheduleRepository {
      * @param sessionId ID of the session to be added
      */
     public void addSession(String sessionId) {
-        ArrayList<String> scheduleIds = getScheduleIdStringSet();
+        ArrayList<String> scheduleIds = getScheduleIds();
         scheduleIds.add(sessionId);
         setScheduleIdStringSet(scheduleIds);
     }
@@ -42,16 +42,19 @@ public class UserScheduleRepository {
      * @param sessionId ID of the session to be removed
      */
     public void removeSession(String sessionId) {
-        //TODO implement
+        ArrayList<String> scheduleIds = getScheduleIds();
+        scheduleIds.remove(sessionId);
+        setScheduleIdStringSet(scheduleIds);
     }
 
     /**
      * Shares the list of IDs for all of the sessions in the user's schedule
      * @return List of IDs of the sessions in the user's schedule
      */
+    @NonNull
     public ArrayList<String> getScheduleIds() {
-        //TODO implement
-        return new ArrayList<>(); //TODO update return statement
+        Set<String> scheduleIdSet = mSharedPreferences.getStringSet(SCHEDULE_ID_STRING_SET_TAG, new HashSet<>());
+        return new ArrayList<>(scheduleIdSet);
     }
 
     /**
@@ -69,11 +72,5 @@ public class UserScheduleRepository {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putStringSet(SCHEDULE_ID_STRING_SET_TAG, stringSet);
         editor.commit();
-    }
-
-    @NonNull
-    private ArrayList<String> getScheduleIdStringSet() {
-        Set<String> scheduleIdSet = mSharedPreferences.getStringSet(SCHEDULE_ID_STRING_SET_TAG, new HashSet<>());
-        return new ArrayList<String>(scheduleIdSet);
     }
 }
