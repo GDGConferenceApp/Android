@@ -68,10 +68,16 @@ public class DevFestDataSource {
     public ArrayList<Speaker> getSpeakers() {
         return mConference.speakers;
     }
-    
+
     public ArrayList<Session> getUserSchedule() {
-        //TODO implement
-        return new ArrayList<>();
+        //Remove sessions from the list that don't have an ID stored in the list of schedule IDs
+        ArrayList<Session> sessions = getSessions();
+        for (Session session : sessions) {
+            if (!mScheduleRepository.getScheduleIds().contains(session.getId())) {
+                sessions.remove(session);
+            }
+        }
+        return sessions;
     }
 
     /**
