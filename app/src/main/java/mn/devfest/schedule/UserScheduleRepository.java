@@ -1,6 +1,13 @@
 package mn.devfest.schedule;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Stores and provides the sessions that the user has added to their schedule.
@@ -10,6 +17,15 @@ import java.util.ArrayList;
  * @author pfuentes
  */
 public class UserScheduleRepository {
+    private static final String SCHEDULE_ID_STRING_SET_TAG = "SCHEDULE_IDS";
+
+    Context mContext;
+    SharedPreferences mSharedPreferences;
+
+    public UserScheduleRepository (@NonNull Context context){
+        mContext = context;
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+    }
 
     /**
      * Adds the session with the given ID to the user's schedule
@@ -44,5 +60,16 @@ public class UserScheduleRepository {
     public boolean isInSchedule(String sessionId) {
         //TODO implement
         return true; //TODO update return statement
+    }
+
+    private void setScheduleIdStringSet(@NonNull Set<String> stringSet) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putStringSet(SCHEDULE_ID_STRING_SET_TAG, stringSet);
+        editor.commit();
+    }
+
+    @NonNull
+    private Set<String> getScheduleIdStringSet() {
+        return mSharedPreferences.getStringSet(SCHEDULE_ID_STRING_SET_TAG, new HashSet<>());
     }
 }
