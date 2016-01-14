@@ -1,50 +1,47 @@
 package mn.devfest.api;
 
 import android.content.Context;
-import android.util.JsonReader;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Map;
 
 import mn.devfest.R;
 import mn.devfest.api.model.Conference;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
+import mn.devfest.schedule.UserScheduleRepository;
 
 /**
+ * This is the source of session, schedule, and speaker information. This acts as a general
+ * contractor that can coordinate between various subcontractor classes including but not limited to
+ * local and remote data sources.
+ *
  * Created by chris.black on 12/5/15.
  */
 public class DevFestDataSource {
 
-    private Conference conference;
+    private Conference mConference;
+    private UserScheduleRepository mScheduleRepository;
 
     public DevFestDataSource(Context context) {
         //Reading source from local file
         InputStream inputStream = context.getResources().openRawResource(R.raw.firebase);
         String jsonString = readJsonFile(inputStream);
 
-        conference = new Conference();//gson.fromJson(jsonString, Conference.class);
+        mConference = new Conference();//gson.fromJson(jsonString, Conference.class);
         JsonParser p = new JsonParser();
         JsonObject jsonobject = p.parse(jsonString).getAsJsonObject();
-        conference.parseSessions(jsonobject.getAsJsonObject("schedule"));
-        conference.parseSpeakers(jsonobject.getAsJsonObject("speakers"));
-        conference.version = jsonobject.get("versionNum").getAsDouble();
-        System.out.println(conference.toString());
+        mConference.parseSessions(jsonobject.getAsJsonObject("schedule"));
+        mConference.parseSpeakers(jsonobject.getAsJsonObject("speakers"));
+        mConference.version = jsonobject.get("versionNum").getAsDouble();
+        System.out.println(mConference.toString());
+        //TODO inject this
+        mScheduleRepository = new UserScheduleRepository();
     }
 
     private String readJsonFile(InputStream inputStream) {
@@ -65,17 +62,24 @@ public class DevFestDataSource {
     }
 
     public ArrayList<Session> getSessions() {
-        return conference.schedule;
+        return mConference.schedule;
     }
 
     public ArrayList<Speaker> getSpeakers() {
-        return conference.speakers;
+        return mConference.speakers;
     }
 
-    public interface DataSourceCallback {
+    public ArrayList<Speaker> getUserSchedule() {
+        //TODO implement
+        return new ArrayList<>();
+    }
 
-        ArrayList<Session> getSessions();
-        ArrayList<Speaker> getSpeakers();
-
+    /**
+     * Listener for updates from the data source
+     */
+    public interface DataSourceListener {
+        ArrayList<Session> onSessionsUpdate();
+        ArrayList<Speaker> onSpeakersUpdate();
+        ArrayList<Session> onUserScheduleUpdate();
     }
 }

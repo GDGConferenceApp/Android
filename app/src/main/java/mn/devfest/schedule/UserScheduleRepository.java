@@ -5,10 +5,11 @@ import java.util.ArrayList;
 /**
  * Stores and provides the sessions that the user has added to their schedule.
  * This class must be notified any time a session is added or removed from a user's schedule.
+ * TODO when this class syncs with the API, we should move it to the api package
  *
  * @author pfuentes
  */
-public class ScheduleRepository {
+public class UserScheduleRepository {
 
     /**
      * Adds the session with the given ID to the user's schedule

@@ -18,7 +18,7 @@ import mn.devfest.speakers.SpeakerListFragment;
 /**
  * Main DevFest Activity. Handle navigation between top-level screens
  */
-public class MainActivity extends BaseActivity implements DevFestDataSource.DataSourceCallback {
+public class MainActivity extends BaseActivity implements DevFestDataSource.DataSourceListener {
     /**
      * Intent extra specifying a navigation destination
      *
@@ -86,12 +86,12 @@ public class MainActivity extends BaseActivity implements DevFestDataSource.Data
     }
 
     @Override
-    public ArrayList<Session> getSessions() {
+    public ArrayList<Session> onSessionsUpdate() {
         return ds.getSessions();
     }
 
     @Override
-    public ArrayList<Speaker> getSpeakers() {
+    public ArrayList<Speaker> onSpeakersUpdate() {
         return ds.getSpeakers();
     }
 }

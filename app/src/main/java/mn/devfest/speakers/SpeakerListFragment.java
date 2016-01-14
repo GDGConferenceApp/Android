@@ -16,7 +16,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
 import mn.devfest.api.DevFestDataSource;
-import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.view.decoration.DividerItemDecoration;
 
@@ -35,7 +34,7 @@ public class SpeakerListFragment extends Fragment {
     private LinearLayoutManager mLinearLayoutManager;
 
     private ArrayList<Speaker> speakerData = new ArrayList<>();
-    private DevFestDataSource.DataSourceCallback dataSource; // TODO: There is probably a 'Dagger' way to inject the data source
+    private DevFestDataSource.DataSourceListener dataSource; // TODO: There is probably a 'Dagger' way to inject the data source
 
     @Nullable
     @Override
@@ -62,9 +61,9 @@ public class SpeakerListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof DevFestDataSource.DataSourceCallback) {
-            dataSource = (DevFestDataSource.DataSourceCallback)context;
-            speakerData = dataSource.getSpeakers();
+        if(context instanceof DevFestDataSource.DataSourceListener) {
+            dataSource = (DevFestDataSource.DataSourceListener)context;
+            speakerData = dataSource.onSpeakersUpdate();
         }
     }
 
