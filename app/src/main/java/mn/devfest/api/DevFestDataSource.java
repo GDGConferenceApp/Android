@@ -105,7 +105,7 @@ public class DevFestDataSource {
         ArrayList<Session> onSessionsUpdate(ArrayList<Session> sessions);
         ArrayList<Speaker> onSpeakersUpdate(ArrayList<Speaker> speakers);
         ArrayList<Session> onUserScheduleUpdate(ArrayList<Session> userSchedule);
-        //These methods represent that the listener has an obligation to provide info it has
+        //TODO delete these methods when they're not used any more
         ArrayList<Session> getSessions();
         ArrayList<Speaker> getSpeakers();
         ArrayList<Session> getSchedule();
