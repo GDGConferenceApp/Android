@@ -1,6 +1,7 @@
 package mn.devfest.api;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mn.devfest.api.model.Conference;
 import mn.devfest.api.model.Session;
@@ -37,17 +38,17 @@ public class DevFestDataSource implements Callback<Conference> {
         mDataSourceListener = listener;
     }
 
-    public ArrayList<Session> getSessions() {
+    public List<Session> getSessions() {
         return mConference.schedule;
     }
 
-    public ArrayList<Speaker> getSpeakers() {
+    public List<Speaker> getSpeakers() {
         return mConference.speakers;
     }
 
-    public ArrayList<Session> getUserSchedule() {
+    public List<Session> getUserSchedule() {
         //Remove sessions from the list that don't have an ID stored in the list of schedule IDs
-        ArrayList<Session> sessions = getSessions();
+        List<Session> sessions = getSessions();
 
         // We use a loop that goes backwards so we can remove items as we iterate over the list without
         // running into a concurrent modification issue or altering the indices of items
@@ -87,13 +88,13 @@ public class DevFestDataSource implements Callback<Conference> {
      */
     public interface DataSourceListener {
         //These methods are for updating the listener
-        ArrayList<Session> onSessionsUpdate(ArrayList<Session> sessions);
-        ArrayList<Speaker> onSpeakersUpdate(ArrayList<Speaker> speakers);
-        ArrayList<Session> onUserScheduleUpdate(ArrayList<Session> userSchedule);
+        List<Session> onSessionsUpdate(List<Session> sessions);
+        List<Speaker> onSpeakersUpdate(List<Speaker> speakers);
+        List<Session> onUserScheduleUpdate(List<Session> userSchedule);
         //TODO delete these methods when they're not used any more
-        ArrayList<Session> getSessions();
-        ArrayList<Speaker> getSpeakers();
-        ArrayList<Session> getSchedule();
+        List<Session> getSessions();
+        List<Speaker> getSpeakers();
+        List<Session> getSchedule();
 
     }
 }

@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,7 +22,7 @@ import mn.devfest.api.model.Speaker;
  */
 public class SpeakerListAdapter extends RecyclerView.Adapter<SpeakerListAdapter.SpeakerViewHolder> {
 
-    ArrayList<Speaker> mSpeakers;
+    List<Speaker> mSpeakers;
 
     @Override
     public SpeakerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -45,11 +45,11 @@ public class SpeakerListAdapter extends RecyclerView.Adapter<SpeakerListAdapter.
         return mSpeakers == null ? 0 : mSpeakers.size();
     }
 
-    public ArrayList<Speaker> getSpeakers() {
+    public List<Speaker> getSpeakers() {
         return mSpeakers;
     }
 
-    public void setSpeakers(ArrayList<Speaker> speakers) {
+    public void setSpeakers(List<Speaker> speakers) {
         mSpeakers = speakers;
     }
 

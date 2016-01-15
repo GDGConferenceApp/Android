@@ -37,13 +37,11 @@ public class MockDevFestApi implements DevFestApi {
         InputStream inputStream = mContext.getResources().openRawResource(R.raw.firebase);
         String jsonString = readJsonFile(inputStream);
 
+
+        // TODO get GSON deserializer from dagger
         Conference conference = new Conference();
         JsonParser p = new JsonParser();
         JsonObject jsonobject = p.parse(jsonString).getAsJsonObject();
-        conference.parseSessions(jsonobject.getAsJsonObject("schedule"));
-        conference.parseSpeakers(jsonobject.getAsJsonObject("speakers"));
-        conference.version = jsonobject.get("versionNum").getAsDouble();
-        System.out.println(conference.toString());
 
         callback.success(conference, new Response("", 200, "", new ArrayList<>(0), null));
     }

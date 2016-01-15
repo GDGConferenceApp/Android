@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
@@ -86,32 +86,32 @@ public class MainActivity extends BaseActivity implements DevFestDataSource.Data
     }
 
     @Override
-    public ArrayList<Session> onSessionsUpdate(ArrayList<Session> sessions) {
+    public List<Session> onSessionsUpdate(List<Session> sessions) {
         return sessions;
     }
 
     @Override
-    public ArrayList<Speaker> onSpeakersUpdate(ArrayList<Speaker> speakers) {
+    public List<Speaker> onSpeakersUpdate(List<Speaker> speakers) {
         return speakers;
     }
 
     @Override
-    public ArrayList<Session> onUserScheduleUpdate(ArrayList<Session> userSchedule) {
+    public List<Session> onUserScheduleUpdate(List<Session> userSchedule) {
         return userSchedule;
     }
 
     @Override
-    public ArrayList<Session> getSessions() {
+    public List<Session> getSessions() {
         return mDataSource.getSessions();
     }
 
     @Override
-    public ArrayList<Speaker> getSpeakers() {
+    public List<Speaker> getSpeakers() {
         return mDataSource.getSpeakers();
     }
 
     @Override
-    public ArrayList<Session> getSchedule() {
+    public List<Session> getSchedule() {
         return mDataSource.getUserSchedule();
     }
 }

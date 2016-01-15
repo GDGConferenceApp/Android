@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,7 +34,7 @@ public class SessionsFragment extends Fragment {
     private SessionListAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
 
-    private ArrayList<Session> sessionData = new ArrayList<>();
+    private List<Session> sessionData = new ArrayList<>();
     private DevFestDataSource.DataSourceListener dataSourceListener; // TODO: There is probably a 'Dagger' way to inject the data source
 
     @Nullable

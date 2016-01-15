@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,7 +22,7 @@ import mn.devfest.api.model.Session;
  */
 public class SessionListAdapter extends RecyclerView.Adapter<SessionListAdapter.SessionViewHolder> {
 
-    private ArrayList<Session> mSessions;
+    private List<Session> mSessions;
 
     @Override
     public SessionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -45,7 +45,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<SessionListAdapter.
         return mSessions == null ? 0 : mSessions.size();
     }
 
-    public void setSessions(ArrayList<Session> sessions) {
+    public void setSessions(List<Session> sessions) {
         mSessions = sessions;
     }
 

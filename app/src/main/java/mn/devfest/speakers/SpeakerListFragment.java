@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,7 +34,7 @@ public class SpeakerListFragment extends Fragment {
     private SpeakerListAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
 
-    private ArrayList<Speaker> speakerData = new ArrayList<>();
+    private List<Speaker> speakerData = new ArrayList<>();
     private DevFestDataSource.DataSourceListener dataSource; // TODO: There is probably a 'Dagger' way to inject the data source
 
     @Nullable
