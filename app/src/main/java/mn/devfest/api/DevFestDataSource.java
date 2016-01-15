@@ -78,9 +78,13 @@ public class DevFestDataSource {
     public ArrayList<Session> getUserSchedule() {
         //Remove sessions from the list that don't have an ID stored in the list of schedule IDs
         ArrayList<Session> sessions = getSessions();
-        for (Session session : sessions) {
+
+        // We use a loop that goes backwards so we can remove items as we iterate over the list without
+        // running into a concurrent modification issue or altering the indices of items
+        for (int i = sessions.size() - 1; i >= 0; i--) {
+            Session session = sessions.get(i);
             if (!mScheduleRepository.getScheduleIds().contains(session.getId())) {
-                sessions.remove(session);
+                sessions.remove(i);
             }
         }
         return sessions;
