@@ -1,6 +1,7 @@
 package mn.devfest;
 
 import mn.devfest.api.DevFestApi;
+import mn.devfest.api.DevFestDataSource;
 
 /**
  * Common interface for variant-specific dependencies
@@ -9,4 +10,6 @@ import mn.devfest.api.DevFestApi;
  */
 public interface DevFestGraph {
     DevFestApi devFestApi();
+
+    DevFestDataSource datasource();
 }

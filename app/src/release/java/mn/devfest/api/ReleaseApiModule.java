@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import mn.devfest.BuildConfig;
 import retrofit.RestAdapter;
 import retrofit.client.Client;
 import retrofit.converter.GsonConverter;
@@ -27,9 +28,8 @@ public final class ReleaseApiModule {
     @Provides
     @Singleton
     RestAdapter provideRestAdapter(Client client, Gson gson) {
-        // TODO use real endpoint
         return new RestAdapter.Builder()
-                .setEndpoint("https://devfest.mn")
+                .setEndpoint(BuildConfig.API_BASE)
                 .setClient(client)
                 .setConverter(new GsonConverter(gson))
                 .build();

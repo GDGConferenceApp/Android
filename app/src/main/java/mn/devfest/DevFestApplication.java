@@ -28,7 +28,7 @@ public class DevFestApplication extends Application {
      * Build the Dagger component
      */
     private void buildComponent() {
-        mGraph = DevFestComponent.Initializer.init();
+        mGraph = DevFestComponent.Initializer.init(this);
     }
 
     /**

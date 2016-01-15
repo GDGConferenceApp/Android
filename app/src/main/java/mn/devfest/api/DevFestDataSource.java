@@ -1,70 +1,40 @@
 package mn.devfest.api;
 
-import android.content.Context;
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
-import mn.devfest.R;
 import mn.devfest.api.model.Conference;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.schedule.UserScheduleRepository;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import timber.log.Timber;
 
 /**
  * This is the source of session, schedule, and speaker information. This acts as a general
  * contractor that can coordinate between various subcontractor classes including but not limited to
  * local and remote data sources.
- * TODO make singleton
  *
  * Created by chris.black on 12/5/15.
  */
-public class DevFestDataSource {
+public class DevFestDataSource implements Callback<Conference> {
+
+    private final DevFestApi mApi;
+    private final UserScheduleRepository mScheduleRepository;
 
     private Conference mConference;
-    private UserScheduleRepository mScheduleRepository;
     private DataSourceListener mDataSourceListener;
 
-    public DevFestDataSource(Context context, DataSourceListener listener) {
-        mDataSourceListener = listener;
-        //TODO inject this
-        mScheduleRepository = new UserScheduleRepository(context);
+    public DevFestDataSource(DevFestApi api, UserScheduleRepository scheduleRepository) {
+        this.mApi = api;
+        this.mScheduleRepository = scheduleRepository;
 
-        //Reading source from local file
-        InputStream inputStream = context.getResources().openRawResource(R.raw.firebase);
-        String jsonString = readJsonFile(inputStream);
-
-        mConference = new Conference();//gson.fromJson(jsonString, Conference.class);
-        JsonParser p = new JsonParser();
-        JsonObject jsonobject = p.parse(jsonString).getAsJsonObject();
-        mConference.parseSessions(jsonobject.getAsJsonObject("schedule"));
-        mConference.parseSpeakers(jsonobject.getAsJsonObject("speakers"));
-        mConference.version = jsonobject.get("versionNum").getAsDouble();
-        System.out.println(mConference.toString());
-
-        onConferenceUpdated();
+        mApi.getConferenceInfo(this);
     }
 
-    private String readJsonFile(InputStream inputStream) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-        byte bufferByte[] = new byte[1024];
-        int length;
-        try {
-            while ((length = inputStream.read(bufferByte)) != -1) {
-                outputStream.write(bufferByte, 0, length);
-            }
-            outputStream.close();
-            inputStream.close();
-        } catch (IOException e) {
-
-        }
-        return outputStream.toString();
+    public void setListener(DataSourceListener listener) {
+        mDataSourceListener = listener;
     }
 
     public ArrayList<Session> getSessions() {
@@ -99,6 +69,17 @@ public class DevFestDataSource {
         mDataSourceListener.onSessionsUpdate(getSessions());
         mDataSourceListener.onSpeakersUpdate(getSpeakers());
         mDataSourceListener.onUserScheduleUpdate(getUserSchedule());
+    }
+
+    @Override
+    public void success(Conference conference, Response response) {
+        mConference = conference;
+        onConferenceUpdated();
+    }
+
+    @Override
+    public void failure(RetrofitError error) {
+        Timber.e(error, "Failed to retrieve conference info.");
     }
 
     /**

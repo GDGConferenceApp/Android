@@ -26,7 +26,6 @@ public class MainActivity extends BaseActivity implements DevFestDataSource.Data
      */
     public static final String EXTRA_NAVIGATION_DESTINATION = "navigation_destination";
 
-    // TODO: There is probably a 'Dagger' way to inject the data source
     private DevFestDataSource mDataSource;
 
     @Override
@@ -38,7 +37,7 @@ public class MainActivity extends BaseActivity implements DevFestDataSource.Data
             int navId = getIntent().getIntExtra(EXTRA_NAVIGATION_DESTINATION, R.id.nav_schedule);
             navigateToTopLevelFragment(navId, false);
         }
-        mDataSource = new DevFestDataSource(this, this);
+        mDataSource = DevFestApplication.get(this).component().datasource();
         mDataSource.setDataSourceListener(this);
     }
 
