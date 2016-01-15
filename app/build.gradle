@@ -15,7 +15,7 @@ android {
         versionName "1.0"
 
         // TODO set up for easy configuration for other conferences
-        buildConfigField "String", "API_BASE", '"https://devfest.fluin.io"'
+        buildConfigField "String", "API_BASE", '"https://devfest.fluin.io"
     }
 
     buildTypes {
