@@ -101,9 +101,11 @@ public class DevFestDataSource {
      * Listener for updates from the data source
      */
     public interface DataSourceListener {
+        //These methods are for updating the listener
         ArrayList<Session> onSessionsUpdate(ArrayList<Session> sessions);
         ArrayList<Speaker> onSpeakersUpdate(ArrayList<Speaker> speakers);
         ArrayList<Session> onUserScheduleUpdate(ArrayList<Session> userSchedule);
+        //These methods represent that the listener has an obligation to provide info it has
         ArrayList<Session> getSessions();
         ArrayList<Speaker> getSpeakers();
         ArrayList<Session> getSchedule();
