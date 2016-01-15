@@ -3,6 +3,8 @@ package mn.devfest;
 import android.app.Application;
 import android.content.Context;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import timber.log.Timber;
 
 /**
@@ -45,6 +47,7 @@ public class DevFestApplication extends Application {
      * if you do not want the release configuration.
      */
     protected void init() {
+        JodaTimeAndroid.init(this);
         Timber.plant(new ReleaseTree());
     }
 
