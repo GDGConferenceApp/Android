@@ -43,10 +43,10 @@ public class DevFestDataSource implements Callback<Conference> {
         if (mConference == null) {
             return new ArrayList<>();
         }
-        if (mConference.schedule == null) {
+        if (mConference.getSchedule() == null) {
             return new ArrayList<>();
         }
-        return mConference.schedule;
+        return mConference.getSchedule();
     }
 
     @NonNull
@@ -54,10 +54,10 @@ public class DevFestDataSource implements Callback<Conference> {
         if (mConference == null) {
             return new ArrayList<>();
         }
-        if (mConference.speakers == null) {
+        if (mConference.getSpeakers() == null) {
             return new ArrayList<>();
         }
-        return mConference.speakers;
+        return mConference.getSpeakers();
     }
 
     @NonNull

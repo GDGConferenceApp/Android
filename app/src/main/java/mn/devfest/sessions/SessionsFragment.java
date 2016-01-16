@@ -37,7 +37,7 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
     private SessionListAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
 
-    private List<Session> mSessionData = new ArrayList<>();
+    private List<Session> mSessions = new ArrayList<>();
     private DevFestDataSource mDataSource;
 
     @Nullable
@@ -49,20 +49,23 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mDataSource = DevFestApplication.get(getActivity()).component().datasource();
+        if (mDataSource == null) {
+            mDataSource = DevFestApplication.get(getActivity()).component().datasource();
+        }
         mDataSource.setDataSourceListener(this);
         //TODO move this to a public accessor method that updates the adapter
-        mSessionData = mDataSource.getSessions();
+        mSessions = mDataSource.getSessions();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        //TODO update data
+        //Refresh the UI with the latest data
+        setSessions(mDataSource.getSessions());
     }
 
     /**
-     * Clear callback on detach to prevent null reference errors after the view has been
+     * TODO update documentation
      */
     @Override
     public void onDetach() {
@@ -76,7 +79,7 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
         ButterKnife.bind(this, view);
 
         mAdapter = new SessionListAdapter();
-        mAdapter.setSessions(mSessionData);
+        mAdapter.setSessions(mSessions);
         mSessionRecyclerView.setAdapter(mAdapter);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mSessionRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -84,9 +87,20 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
 
     }
 
+    /**
+     * Updates the data set, and notifies the adapter of the data set change
+     * @param sessions the sessions to update the UI with
+     */
+    public void setSessions(List<Session> sessions) {
+        mSessions = sessions;
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     public void onSessionsUpdate(List<Session> sessions) {
-        //TODO address update
+        setSessions(sessions);
     }
 
     @Override

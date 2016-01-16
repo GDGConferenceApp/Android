@@ -68,7 +68,7 @@ public class SpeakerListFragment extends Fragment implements DevFestDataSource.D
     }
 
     /**
-     * Clear callback on detach to prevent null reference errors after the view has been
+     * TODO update documentation
      */
     @Override
     public void onDetach() {
