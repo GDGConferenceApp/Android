@@ -1,4 +1,5 @@
 package mn.devfest.api;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,8 @@ import timber.log.Timber;
  * local and remote data sources.
  *
  * Created by chris.black on 12/5/15.
+ * @author bherbst
+ * @author pfuentes
  */
 public class DevFestDataSource implements Callback<Conference> {
 
@@ -25,6 +28,7 @@ public class DevFestDataSource implements Callback<Conference> {
     private final UserScheduleRepository mScheduleRepository;
 
     private Conference mConference;
+    //TODO move to an array of listeners
     private DataSourceListener mDataSourceListener;
 
     public DevFestDataSource(DevFestApi api, UserScheduleRepository scheduleRepository) {
@@ -38,14 +42,23 @@ public class DevFestDataSource implements Callback<Conference> {
         mDataSourceListener = listener;
     }
 
+    @NonNull
     public List<Session> getSessions() {
+        if (mConference == null) {
+            return new ArrayList<>();
+        }
+        if (mConference.schedule == null) {
+            return new ArrayList<>();
+        }
         return mConference.schedule;
     }
 
+    //TODO add @NonNull functionality
     public List<Speaker> getSpeakers() {
         return mConference.speakers;
     }
 
+    //TODO add @NonNull functionality
     public List<Session> getUserSchedule() {
         //Remove sessions from the list that don't have an ID stored in the list of schedule IDs
         List<Session> sessions = getSessions();
@@ -91,10 +104,5 @@ public class DevFestDataSource implements Callback<Conference> {
         List<Session> onSessionsUpdate(List<Session> sessions);
         List<Speaker> onSpeakersUpdate(List<Speaker> speakers);
         List<Session> onUserScheduleUpdate(List<Session> userSchedule);
-        //TODO delete these methods when they're not used any more
-        List<Session> getSessions();
-        List<Speaker> getSpeakers();
-        List<Session> getSchedule();
-
     }
 }

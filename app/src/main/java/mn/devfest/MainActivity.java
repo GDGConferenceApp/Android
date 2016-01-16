@@ -4,11 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
-import java.util.List;
-
-import mn.devfest.api.DevFestDataSource;
-import mn.devfest.api.model.Session;
-import mn.devfest.api.model.Speaker;
 import mn.devfest.base.BaseActivity;
 import mn.devfest.map.MapFragment;
 import mn.devfest.schedule.ScheduleFragment;
@@ -18,15 +13,13 @@ import mn.devfest.speakers.SpeakerListFragment;
 /**
  * Main DevFest Activity. Handle navigation between top-level screens
  */
-public class MainActivity extends BaseActivity implements DevFestDataSource.DataSourceListener {
+public class MainActivity extends BaseActivity {
     /**
      * Intent extra specifying a navigation destination
      *
      * The value associated with this extra should be the ID of the selected navigation item
      */
     public static final String EXTRA_NAVIGATION_DESTINATION = "navigation_destination";
-
-    private DevFestDataSource mDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +30,6 @@ public class MainActivity extends BaseActivity implements DevFestDataSource.Data
             int navId = getIntent().getIntExtra(EXTRA_NAVIGATION_DESTINATION, R.id.nav_schedule);
             navigateToTopLevelFragment(navId, false);
         }
-        mDataSource = DevFestApplication.get(this).component().datasource();
-        mDataSource.setDataSourceListener(this);
     }
 
     @Override
@@ -83,35 +74,5 @@ public class MainActivity extends BaseActivity implements DevFestDataSource.Data
         }
 
         transaction.commit();
-    }
-
-    @Override
-    public List<Session> onSessionsUpdate(List<Session> sessions) {
-        return sessions;
-    }
-
-    @Override
-    public List<Speaker> onSpeakersUpdate(List<Speaker> speakers) {
-        return speakers;
-    }
-
-    @Override
-    public List<Session> onUserScheduleUpdate(List<Session> userSchedule) {
-        return userSchedule;
-    }
-
-    @Override
-    public List<Session> getSessions() {
-        return mDataSource.getSessions();
-    }
-
-    @Override
-    public List<Speaker> getSpeakers() {
-        return mDataSource.getSpeakers();
-    }
-
-    @Override
-    public List<Session> getSchedule() {
-        return mDataSource.getUserSchedule();
     }
 }

@@ -15,10 +15,13 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import mn.devfest.DevFestApplication;
 import mn.devfest.R;
 import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
+import mn.devfest.api.model.Speaker;
 import mn.devfest.view.decoration.DividerItemDecoration;
+
 
 /**
  * Fragment that displays the available sessions
@@ -26,7 +29,7 @@ import mn.devfest.view.decoration.DividerItemDecoration;
  * @author bherbst
  * @author pfuentes
  */
-public class SessionsFragment extends Fragment {
+public class SessionsFragment extends Fragment implements DevFestDataSource.DataSourceListener {
 
     @Bind(R.id.session_list_recyclerview)
     RecyclerView mSessionRecyclerView;
@@ -34,8 +37,8 @@ public class SessionsFragment extends Fragment {
     private SessionListAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
 
-    private List<Session> sessionData = new ArrayList<>();
-    private DevFestDataSource.DataSourceListener dataSourceListener; // TODO: There is probably a 'Dagger' way to inject the data source
+    private List<Session> mSessionData = new ArrayList<>();
+    private DevFestDataSource mDataSource;
 
     @Nullable
     @Override
@@ -46,10 +49,16 @@ public class SessionsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof DevFestDataSource.DataSourceListener) {
-            dataSourceListener = (DevFestDataSource.DataSourceListener)context;
-            sessionData = dataSourceListener.getSessions();
-        }
+        mDataSource = DevFestApplication.get(getActivity()).component().datasource();
+        mDataSource.setDataSourceListener(this);
+        //TODO move this to a public accessor method that updates the adapter
+        mSessionData = mDataSource.getSessions();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //TODO update data
     }
 
     /**
@@ -58,7 +67,7 @@ public class SessionsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        dataSourceListener = null;
+        //TODO cleanup resources
     }
 
     @Override
@@ -66,14 +75,30 @@ public class SessionsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        //TODO set data real date on adapter & remove dummy data
-
         mAdapter = new SessionListAdapter();
-        mAdapter.setSessions(sessionData);
+        mAdapter.setSessions(mSessionData);
         mSessionRecyclerView.setAdapter(mAdapter);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mSessionRecyclerView.setLayoutManager(mLinearLayoutManager);
         mSessionRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
 
+    }
+
+    @Override
+    public List<Session> onSessionsUpdate(List<Session> sessions) {
+        //TODO address update
+        return null;
+    }
+
+    @Override
+    public List<Speaker> onSpeakersUpdate(List<Speaker> speakers) {
+        //TODO address update
+        return null;
+    }
+
+    @Override
+    public List<Session> onUserScheduleUpdate(List<Session> userSchedule) {
+        //TODO address update
+        return null;
     }
 }
