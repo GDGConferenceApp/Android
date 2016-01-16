@@ -77,20 +77,17 @@ public class SpeakerListFragment extends Fragment implements DevFestDataSource.D
     }
 
     @Override
-    public List<Session> onSessionsUpdate(List<Session> sessions) {
+    public void onSessionsUpdate(List<Session> sessions) {
         //Intentionally left blank; no UI update currently required
-        return null;
     }
 
     @Override
-    public List<Speaker> onSpeakersUpdate(List<Speaker> speakers) {
+    public void onSpeakersUpdate(List<Speaker> speakers) {
         //TODO address update
-        return null;
     }
 
     @Override
-    public List<Session> onUserScheduleUpdate(List<Session> userSchedule) {
+    public void onUserScheduleUpdate(List<Session> userSchedule) {
         //Intentionally left blank; no UI update currently required
-        return null;
     }
 }

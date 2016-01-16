@@ -85,20 +85,17 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
     }
 
     @Override
-    public List<Session> onSessionsUpdate(List<Session> sessions) {
+    public void onSessionsUpdate(List<Session> sessions) {
         //TODO address update
-        return null;
     }
 
     @Override
-    public List<Speaker> onSpeakersUpdate(List<Speaker> speakers) {
+    public void onSpeakersUpdate(List<Speaker> speakers) {
         //TODO address update
-        return null;
     }
 
     @Override
-    public List<Session> onUserScheduleUpdate(List<Session> userSchedule) {
+    public void onUserScheduleUpdate(List<Session> userSchedule) {
         //TODO address update
-        return null;
     }
 }

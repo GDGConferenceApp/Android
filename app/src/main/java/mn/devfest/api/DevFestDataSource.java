@@ -64,7 +64,7 @@ public class DevFestDataSource implements Callback<Conference> {
     public List<Session> getUserSchedule() {
         //Remove sessions from the list that don't have an ID stored in the list of schedule IDs
         List<Session> sessions = getSessions();
-        
+
         if (sessions.size() == 0) {
             return sessions;
         }
@@ -107,8 +107,8 @@ public class DevFestDataSource implements Callback<Conference> {
      */
     public interface DataSourceListener {
         //These methods are for updating the listener
-        List<Session> onSessionsUpdate(List<Session> sessions);
-        List<Speaker> onSpeakersUpdate(List<Speaker> speakers);
-        List<Session> onUserScheduleUpdate(List<Session> userSchedule);
+        void onSessionsUpdate(List<Session> sessions);
+        void onSpeakersUpdate(List<Speaker> speakers);
+        void onUserScheduleUpdate(List<Session> userSchedule);
     }
 }
