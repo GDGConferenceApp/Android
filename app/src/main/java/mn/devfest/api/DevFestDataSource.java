@@ -28,7 +28,7 @@ public class DevFestDataSource implements Callback<Conference> {
     private final UserScheduleRepository mScheduleRepository;
 
     private Conference mConference;
-    //TODO move to an array of listeners
+    //TODO move to an array of listeners?
     private DataSourceListener mDataSourceListener;
 
     public DevFestDataSource(DevFestApi api, UserScheduleRepository scheduleRepository) {
@@ -36,10 +36,6 @@ public class DevFestDataSource implements Callback<Conference> {
         this.mScheduleRepository = scheduleRepository;
 
         mApi.getConferenceInfo(this);
-    }
-
-    public void setListener(DataSourceListener listener) {
-        mDataSourceListener = listener;
     }
 
     @NonNull
@@ -53,15 +49,25 @@ public class DevFestDataSource implements Callback<Conference> {
         return mConference.schedule;
     }
 
-    //TODO add @NonNull functionality
+    @NonNull
     public List<Speaker> getSpeakers() {
+        if (mConference == null) {
+            return new ArrayList<>();
+        }
+        if (mConference.speakers == null) {
+            return new ArrayList<>();
+        }
         return mConference.speakers;
     }
 
-    //TODO add @NonNull functionality
+    @NonNull
     public List<Session> getUserSchedule() {
         //Remove sessions from the list that don't have an ID stored in the list of schedule IDs
         List<Session> sessions = getSessions();
+        
+        if (sessions.size() == 0) {
+            return sessions;
+        }
 
         // We use a loop that goes backwards so we can remove items as we iterate over the list without
         // running into a concurrent modification issue or altering the indices of items
