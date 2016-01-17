@@ -1,6 +1,7 @@
 package mn.devfest.api.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -9,13 +10,8 @@ import java.util.List;
  */
 public class Conference {
     private double version = 1;
-
     private List<Session> schedule = new ArrayList<>();
-
     private List<Speaker> speakers = new ArrayList<>();
-    public String toString() {
-        return "Version: " + version + " has " + schedule.size() + " sessions and " + speakers.size() + " speakers";
-    }
 
     public double getVersion() {
         return version;
@@ -26,18 +22,22 @@ public class Conference {
     }
 
     public List<Session> getSchedule() {
-        return schedule;
+        return Collections.unmodifiableList(schedule);
     }
 
     public void setSchedule(List<Session> schedule) {
-        this.schedule = schedule;
+        this.schedule = new ArrayList<>(schedule);
     }
 
     public List<Speaker> getSpeakers() {
-        return speakers;
+        return Collections.unmodifiableList(speakers);
     }
 
     public void setSpeakers(List<Speaker> speakers) {
-        this.speakers = speakers;
+        this.speakers = new ArrayList<>(speakers);
+    }
+
+    public String toString() {
+        return "Version: " + version + " has " + schedule.size() + " sessions and " + speakers.size() + " speakers";
     }
 }

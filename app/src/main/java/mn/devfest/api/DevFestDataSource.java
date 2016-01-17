@@ -46,6 +46,7 @@ public class DevFestDataSource implements Callback<Conference> {
         if (mConference.getSchedule() == null) {
             return new ArrayList<>();
         }
+
         return mConference.getSchedule();
     }
 
@@ -57,13 +58,15 @@ public class DevFestDataSource implements Callback<Conference> {
         if (mConference.getSpeakers() == null) {
             return new ArrayList<>();
         }
+
         return mConference.getSpeakers();
     }
 
     @NonNull
     public List<Session> getUserSchedule() {
-        //Remove sessions from the list that don't have an ID stored in the list of schedule IDs
+        // Find sessions with an ID matching the user's saved session IDs
         List<Session> sessions = getSessions();
+        List<Session> userSessions = new ArrayList<>();
 
         if (sessions.size() == 0) {
             return sessions;
@@ -73,11 +76,11 @@ public class DevFestDataSource implements Callback<Conference> {
         // running into a concurrent modification issue or altering the indices of items
         for (int i = sessions.size() - 1; i >= 0; i--) {
             Session session = sessions.get(i);
-            if (!mScheduleRepository.getScheduleIds().contains(session.getId())) {
-                sessions.remove(i);
+            if (mScheduleRepository.getScheduleIds().contains(session.getId())) {
+                userSessions.add(session);
             }
         }
-        return sessions;
+        return userSessions;
     }
 
     public void setDataSourceListener(DataSourceListener listener) {
