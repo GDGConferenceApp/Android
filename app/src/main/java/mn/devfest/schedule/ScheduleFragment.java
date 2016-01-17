@@ -46,7 +46,7 @@ public class ScheduleFragment extends Fragment implements DevFestDataSource.Data
             mDataSource = DevFestApplication.get(getActivity()).component().datasource();
         }
         mDataSource.setDataSourceListener(this);
-        setSessions(mDataSource.getUserSchedule());
+        setSchedule(mDataSource.getUserSchedule());
     }
 
     @Nullable
@@ -68,11 +68,27 @@ public class ScheduleFragment extends Fragment implements DevFestDataSource.Data
         mScheduleRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Refresh the UI with the latest data
+        setSchedule(mDataSource.getSessions());
+    }
+
+    /**
+     * TODO update documentation
+     */
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        //TODO cleanup resources
+    }
+
     /**
      * Updates the data set, and notifies the adapter of the data set change
      * @param sessions the sessions to update the UI with
      */
-    public void setSessions(List<Session> sessions) {
+    public void setSchedule(List<Session> sessions) {
         mSessions = sessions;
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
@@ -81,7 +97,7 @@ public class ScheduleFragment extends Fragment implements DevFestDataSource.Data
 
     @Override
     public void onSessionsUpdate(List<Session> sessions) {
-        setSessions(sessions);
+        setSchedule(sessions);
     }
 
     @Override
@@ -91,6 +107,6 @@ public class ScheduleFragment extends Fragment implements DevFestDataSource.Data
 
     @Override
     public void onUserScheduleUpdate(List<Session> userSchedule) {
-        setSessions(userSchedule);
+        setSchedule(userSchedule);
     }
 }
