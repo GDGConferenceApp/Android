@@ -21,7 +21,13 @@ import mn.devfest.R;
 import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
+import mn.devfest.data.sort.SessionTimeSort;
 import mn.devfest.view.decoration.DividerItemDecoration;
+import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 
 /**
@@ -43,6 +49,7 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
 
     private List<Session> mSessions = new ArrayList<>();
     private DevFestDataSource mDataSource;
+    private Subscription mDataUpdateSubscription;
 
     @Nullable
     @Override
@@ -56,16 +63,41 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
         if (mDataSource == null) {
             mDataSource = DevFestApplication.get(getActivity()).component().datasource();
         }
+
         mDataSource.setDataSourceListener(this);
-        //TODO move this to a public accessor method that updates the adapter
-        mSessions = mDataSource.getSessions();
+    }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
+
+        mAdapter = new SessionListAdapter();
+        mSessionRecyclerView.setAdapter(mAdapter);
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mSessionRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mSessionRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
     }
 
     @Override
     public void onResume() {
         super.onResume();
         //Refresh the UI with the latest data
-        setSessions(mDataSource.getSessions());
+        List<Session> sessions = mDataSource.getSessions();
+
+        if (sessions.size() == 0) {
+            mLoadingView.setVisibility(View.VISIBLE);
+        } else {
+            setSessions(sessions);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (mDataUpdateSubscription != null) {
+            mDataUpdateSubscription.unsubscribe();
+        }
     }
 
     /**
@@ -78,34 +110,31 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
         //TODO cleanup resources
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
-
-        mAdapter = new SessionListAdapter();
-        mSessionRecyclerView.setAdapter(mAdapter);
-        mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mSessionRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mSessionRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
-
-        if (mSessions.size() == 0) {
-            mLoadingView.setVisibility(View.VISIBLE);
-        } else {
-            setSessions(mSessions);
-        }
+    /**
+     * Notify this fragment that we have a new list of sessions for this conference
+     *
+     * These sessions are not guaranteed to be displayed. The user may have a filter set up that
+     * hides one or more sessions.
+     *
+     * @param sessions the new sessions
+     */
+    public void setSessions(List<Session> sessions) {
+        mDataUpdateSubscription = Observable.from(sessions)
+                .toSortedList(new SessionTimeSort())
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::updateDisplayedSessions,
+                        error -> Timber.e(error, "Error updating sessions"));
     }
 
     /**
-     * Updates the data set, and notifies the adapter of the data set change
-     * @param sessions the sessions to update the UI with
+     * Update the which sessions are displayed
+     * @param sessions The sessions to display
      */
-    public void setSessions(List<Session> sessions) {
+    private void updateDisplayedSessions(List<Session> sessions) {
         mSessions = sessions;
-        if (mAdapter != null) {
-            mAdapter.notifyDataSetChanged();
-            mAdapter.setSessions(mSessions);
-        }
+        mAdapter.setSessions(mSessions);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
