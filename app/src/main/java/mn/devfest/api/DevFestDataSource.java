@@ -39,26 +39,28 @@ public class DevFestDataSource implements Callback<Conference> {
     }
 
     public List<Session> getSessions() {
-        return mConference.schedule;
+        return mConference.getSchedule();
     }
 
     public List<Speaker> getSpeakers() {
-        return mConference.speakers;
+        return mConference.getSpeakers();
     }
 
     public List<Session> getUserSchedule() {
         //Remove sessions from the list that don't have an ID stored in the list of schedule IDs
         List<Session> sessions = getSessions();
 
+        List<Session> userSessions = new ArrayList<>();
+
         // We use a loop that goes backwards so we can remove items as we iterate over the list without
         // running into a concurrent modification issue or altering the indices of items
         for (int i = sessions.size() - 1; i >= 0; i--) {
             Session session = sessions.get(i);
-            if (!mScheduleRepository.getScheduleIds().contains(session.getId())) {
-                sessions.remove(i);
+            if (mScheduleRepository.getScheduleIds().contains(session.getId())) {
+                userSessions.add(session);
             }
         }
-        return sessions;
+        return userSessions;
     }
 
     public void setDataSourceListener(DataSourceListener listener) {
