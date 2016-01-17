@@ -15,8 +15,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import mn.devfest.DevFestApplication;
 import mn.devfest.R;
 import mn.devfest.api.DevFestDataSource;
+import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.view.decoration.DividerItemDecoration;
 
@@ -26,7 +28,7 @@ import mn.devfest.view.decoration.DividerItemDecoration;
  * @author bherbst
  * @author pfuentes
  */
-public class SpeakerListFragment extends Fragment {
+public class SpeakerListFragment extends Fragment implements DevFestDataSource.DataSourceListener {
 
     @Bind(R.id.speaker_list_recyclerview)
     RecyclerView mSpeakerRecyclerView;
@@ -34,8 +36,8 @@ public class SpeakerListFragment extends Fragment {
     private SpeakerListAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
 
-    private List<Speaker> speakerData = new ArrayList<>();
-    private DevFestDataSource.DataSourceListener dataSource; // TODO: There is probably a 'Dagger' way to inject the data source
+    private List<Speaker> mSpeakerData = new ArrayList<>();
+    private DevFestDataSource mDataSource;
 
     @Nullable
     @Override
@@ -49,10 +51,8 @@ public class SpeakerListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        //TODO set data real date on adapter & remove dummy data
-
         mAdapter = new SpeakerListAdapter();
-        mAdapter.setSpeakers(speakerData);
+        mAdapter.setSpeakers(mSpeakerData);
         mSpeakerRecyclerView.setAdapter(mAdapter);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mSpeakerRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -62,18 +62,32 @@ public class SpeakerListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof DevFestDataSource.DataSourceListener) {
-            dataSource = (DevFestDataSource.DataSourceListener)context;
-            speakerData = dataSource.getSpeakers();
-        }
+        mDataSource = DevFestApplication.get(getActivity()).component().datasource();
+        mDataSource.setDataSourceListener(this);
+        mSpeakerData = mDataSource.getSpeakers();
     }
 
     /**
-     * Clear callback on detach to prevent null reference errors after the view has been
+     * TODO update documentation
      */
     @Override
     public void onDetach() {
         super.onDetach();
-        dataSource = null;
+        //TODO cleanup resources
+    }
+
+    @Override
+    public void onSessionsUpdate(List<Session> sessions) {
+        //Intentionally left blank; no UI update currently required
+    }
+
+    @Override
+    public void onSpeakersUpdate(List<Speaker> speakers) {
+        //TODO address update
+    }
+
+    @Override
+    public void onUserScheduleUpdate(List<Session> userSchedule) {
+        //Intentionally left blank; no UI update currently required
     }
 }

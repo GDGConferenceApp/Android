@@ -16,6 +16,7 @@ android {
 
         // TODO set up for easy configuration for other conferences
         buildConfigField "String", "API_BASE", "\"https://devfest.fluin.io\""
+
     }
 
     buildTypes {

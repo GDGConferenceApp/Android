@@ -1,4 +1,5 @@
 package mn.devfest.api;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,8 @@ import timber.log.Timber;
  * local and remote data sources.
  *
  * Created by chris.black on 12/5/15.
+ * @author bherbst
+ * @author pfuentes
  */
 public class DevFestDataSource implements Callback<Conference> {
 
@@ -25,6 +28,7 @@ public class DevFestDataSource implements Callback<Conference> {
     private final UserScheduleRepository mScheduleRepository;
 
     private Conference mConference;
+    //TODO move to an array of listeners?
     private DataSourceListener mDataSourceListener;
 
     public DevFestDataSource(DevFestApi api, UserScheduleRepository scheduleRepository) {
@@ -34,22 +38,39 @@ public class DevFestDataSource implements Callback<Conference> {
         mApi.getConferenceInfo(this);
     }
 
-    public void setListener(DataSourceListener listener) {
-        mDataSourceListener = listener;
-    }
-
+    @NonNull
     public List<Session> getSessions() {
+        if (mConference == null) {
+            return new ArrayList<>();
+        }
+        if (mConference.getSchedule() == null) {
+            return new ArrayList<>();
+        }
+
         return mConference.getSchedule();
     }
 
+    @NonNull
     public List<Speaker> getSpeakers() {
+        if (mConference == null) {
+            return new ArrayList<>();
+        }
+        if (mConference.getSpeakers() == null) {
+            return new ArrayList<>();
+        }
+
         return mConference.getSpeakers();
     }
 
+    @NonNull
     public List<Session> getUserSchedule() {
         // Find sessions with an ID matching the user's saved session IDs
         List<Session> sessions = getSessions();
         List<Session> userSessions = new ArrayList<>();
+
+        if (sessions.size() == 0) {
+            return sessions;
+        }
 
         // We use a loop that goes backwards so we can remove items as we iterate over the list without
         // running into a concurrent modification issue or altering the indices of items
@@ -89,13 +110,8 @@ public class DevFestDataSource implements Callback<Conference> {
      */
     public interface DataSourceListener {
         //These methods are for updating the listener
-        List<Session> onSessionsUpdate(List<Session> sessions);
-        List<Speaker> onSpeakersUpdate(List<Speaker> speakers);
-        List<Session> onUserScheduleUpdate(List<Session> userSchedule);
-        //TODO delete these methods when they're not used any more
-        List<Session> getSessions();
-        List<Speaker> getSpeakers();
-        List<Session> getSchedule();
-
+        void onSessionsUpdate(List<Session> sessions);
+        void onSpeakersUpdate(List<Speaker> speakers);
+        void onUserScheduleUpdate(List<Session> userSchedule);
     }
 }

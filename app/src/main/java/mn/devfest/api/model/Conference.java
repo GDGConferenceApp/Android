@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * Represents all of the sessions and speakers for a given conference
  * Created by chris.black on 12/5/15.
  */
 public class Conference {
