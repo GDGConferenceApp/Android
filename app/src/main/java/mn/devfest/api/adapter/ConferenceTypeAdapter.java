@@ -29,9 +29,9 @@ public class ConferenceTypeAdapter implements JsonDeserializer<Conference> {
         // TODO we can probably do this better
         Conference conference = new Conference();
         JsonObject conferenceObject = jsonElement.getAsJsonObject();
-        conference.schedule = parseSessions(context, conferenceObject.getAsJsonObject("schedule"));
-        conference.speakers = parseSpeakers(context, conferenceObject.getAsJsonObject("speakers"));
-        conference.version = conferenceObject.get("versionNum").getAsDouble();
+        conference.setSchedule(parseSessions(context, conferenceObject.getAsJsonObject("schedule")));
+        conference.setSpeakers(parseSpeakers(context, conferenceObject.getAsJsonObject("speakers")));
+        conference.setVersion(conferenceObject.get("versionNum").getAsDouble());
 
         return conference;
     }
