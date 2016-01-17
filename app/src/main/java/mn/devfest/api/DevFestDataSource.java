@@ -47,9 +47,8 @@ public class DevFestDataSource implements Callback<Conference> {
     }
 
     public List<Session> getUserSchedule() {
-        //Remove sessions from the list that don't have an ID stored in the list of schedule IDs
+        // Find sessions with an ID matching the user's saved session IDs
         List<Session> sessions = getSessions();
-
         List<Session> userSessions = new ArrayList<>();
 
         // We use a loop that goes backwards so we can remove items as we iterate over the list without
