@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,9 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
 
     @Bind(R.id.session_list_recyclerview)
     RecyclerView mSessionRecyclerView;
+
+    @Bind(R.id.loading_progress)
+    ProgressBar mLoadingView;
 
     private SessionListAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -70,6 +74,7 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
     @Override
     public void onDetach() {
         super.onDetach();
+        ButterKnife.unbind(this);
         //TODO cleanup resources
     }
 
@@ -79,12 +84,16 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
         ButterKnife.bind(this, view);
 
         mAdapter = new SessionListAdapter();
-        mAdapter.setSessions(mSessions);
         mSessionRecyclerView.setAdapter(mAdapter);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mSessionRecyclerView.setLayoutManager(mLinearLayoutManager);
         mSessionRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
 
+        if (mSessions.size() == 0) {
+            mLoadingView.setVisibility(View.VISIBLE);
+        } else {
+            setSessions(mSessions);
+        }
     }
 
     /**
@@ -95,12 +104,14 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
         mSessions = sessions;
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
+            mAdapter.setSessions(mSessions);
         }
     }
 
     @Override
     public void onSessionsUpdate(List<Session> sessions) {
         setSessions(sessions);
+        mLoadingView.setVisibility(View.GONE);
     }
 
     @Override
