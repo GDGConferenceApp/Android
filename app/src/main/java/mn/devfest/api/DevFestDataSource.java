@@ -35,6 +35,9 @@ public class DevFestDataSource implements Callback<Conference> {
         this.mApi = api;
         this.mScheduleRepository = scheduleRepository;
 
+        // TODO this is a terrible place to fetch the API data.
+        // It isn't clear what thread this is called on, typically shouldn't happen in a constructor,
+        // and doesn't allow for easy refreshing if data if that is necessary in the future.
         mApi.getConferenceInfo(this);
     }
 
