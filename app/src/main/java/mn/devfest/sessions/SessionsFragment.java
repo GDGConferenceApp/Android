@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -27,7 +26,6 @@ import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import timber.log.Timber;
 
 
 /**
@@ -45,9 +43,7 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
     ProgressBar mLoadingView;
 
     private SessionListAdapter mAdapter;
-    private LinearLayoutManager mLinearLayoutManager;
 
-    private List<Session> mSessions = new ArrayList<>();
     private DevFestDataSource mDataSource;
     private Subscription mDataUpdateSubscription;
 
@@ -73,8 +69,8 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
 
         mAdapter = new SessionListAdapter();
         mSessionRecyclerView.setAdapter(mAdapter);
-        mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mSessionRecyclerView.setLayoutManager(mLinearLayoutManager);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        mSessionRecyclerView.setLayoutManager(linearLayoutManager);
         mSessionRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
     }
 
@@ -123,8 +119,7 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
                 .toSortedList(new SessionTimeSort())
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::updateDisplayedSessions,
-                        error -> Timber.e(error, "Error updating sessions"));
+                .subscribe(this::updateDisplayedSessions);
     }
 
     /**
@@ -132,8 +127,7 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
      * @param sessions The sessions to display
      */
     private void updateDisplayedSessions(List<Session> sessions) {
-        mSessions = sessions;
-        mAdapter.setSessions(mSessions);
+        mAdapter.setSessions(sessions);
         mAdapter.notifyDataSetChanged();
     }
 
