@@ -21,7 +21,6 @@ import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.data.sort.SessionTimeSort;
-import mn.devfest.view.decoration.DividerItemDecoration;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -71,7 +70,7 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
         mSessionRecyclerView.setAdapter(mAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mSessionRecyclerView.setLayoutManager(linearLayoutManager);
-        mSessionRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+        mSessionRecyclerView.addItemDecoration(new SessionGroupDividerDecoration(getContext()));
     }
 
     @Override
