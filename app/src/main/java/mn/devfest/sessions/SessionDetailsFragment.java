@@ -107,7 +107,8 @@ public class SessionDetailsFragment extends Fragment{
         String startToEnd = String.format(getResources().getString(R.string.start_to_end_time), start, end);
         mTimeTextview.setText(startToEnd);
         mLocationTextview.setText(mSession.getRoom());
-        displayTags(mSession.getTags());
+        // TODO category
+        //displayTags(mSession.getTags());
         //TODO mDifficultyTextview.setText(mSession.);
         mDescriptionTextview.setText(mSession.getDescription());
         displaySpeakers(mSession.getSpeakers());

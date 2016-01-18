@@ -18,4 +18,13 @@
     <color name="mediumGray">#BDBDBD</color>
     <color name="darkGray">#424242</color>
 
+    <!-- Session category colors -->
+    <color name="category_android">#558B2F</color>
+    <color name="category_design">#03A9F4</color>
+    <color name="category_chromeweb">#FF8F00</color>
+    <color name="category_cloud">#757575</color>
+    <color name="category_iot">#673AB7</color>
+    <color name="category_reach">#F44336</color>
+    <color name="category_default">#000000</color>
+
 </resources>
