@@ -20,7 +20,7 @@ public class Session implements Parcelable {
     private DateTime startTime;
     private String title;
 
-    private ArrayList<String> tags;
+    private String category;
 
     private String id;
 
@@ -32,7 +32,7 @@ public class Session implements Parcelable {
         speakers = in.createStringArrayList();
         startTime = new DateTime(in.readLong());
         title = in.readString();
-        tags = in.createStringArrayList();
+        category = in.readString();
         id = in.readString();
     }
 
@@ -45,7 +45,7 @@ public class Session implements Parcelable {
         dest.writeStringList(speakers);
         dest.writeLong(startTime.getMillis());
         dest.writeString(title);
-        dest.writeStringList(tags);
+        dest.writeString(category);
         dest.writeString(id);
     }
 
@@ -94,8 +94,8 @@ public class Session implements Parcelable {
         return speakers;
     }
 
-    public ArrayList<String> getTags() {
-        return tags;
+    public String getCategory() {
+        return category;
     }
 
     public DateTime getStartTime() {

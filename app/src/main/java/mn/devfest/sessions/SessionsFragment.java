@@ -9,8 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -20,7 +20,11 @@ import mn.devfest.R;
 import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
-import mn.devfest.view.decoration.DividerItemDecoration;
+import mn.devfest.data.sort.SessionTimeSort;
+import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -34,11 +38,13 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
     @Bind(R.id.session_list_recyclerview)
     RecyclerView mSessionRecyclerView;
 
-    private SessionListAdapter mAdapter;
-    private LinearLayoutManager mLinearLayoutManager;
+    @Bind(R.id.loading_progress)
+    ProgressBar mLoadingView;
 
-    private List<Session> mSessions = new ArrayList<>();
+    private SessionListAdapter mAdapter;
+
     private DevFestDataSource mDataSource;
+    private Subscription mDataUpdateSubscription;
 
     @Nullable
     @Override
@@ -52,16 +58,41 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
         if (mDataSource == null) {
             mDataSource = DevFestApplication.get(getActivity()).component().datasource();
         }
+
         mDataSource.setDataSourceListener(this);
-        //TODO move this to a public accessor method that updates the adapter
-        mSessions = mDataSource.getSessions();
+    }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
+
+        mAdapter = new SessionListAdapter();
+        mSessionRecyclerView.setAdapter(mAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        mSessionRecyclerView.setLayoutManager(linearLayoutManager);
+        mSessionRecyclerView.addItemDecoration(new SessionGroupDividerDecoration(getContext()));
     }
 
     @Override
     public void onResume() {
         super.onResume();
         //Refresh the UI with the latest data
-        setSessions(mDataSource.getSessions());
+        List<Session> sessions = mDataSource.getSessions();
+
+        if (sessions.size() == 0) {
+            mLoadingView.setVisibility(View.VISIBLE);
+        } else {
+            setSessions(sessions);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (mDataUpdateSubscription != null) {
+            mDataUpdateSubscription.unsubscribe();
+        }
     }
 
     /**
@@ -70,37 +101,39 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
     @Override
     public void onDetach() {
         super.onDetach();
+        ButterKnife.unbind(this);
         //TODO cleanup resources
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
-
-        mAdapter = new SessionListAdapter();
-        mAdapter.setSessions(mSessions);
-        mSessionRecyclerView.setAdapter(mAdapter);
-        mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mSessionRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mSessionRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
-
+    /**
+     * Notify this fragment that we have a new list of sessions for this conference
+     *
+     * These sessions are not guaranteed to be displayed. The user may have a filter set up that
+     * hides one or more sessions.
+     *
+     * @param sessions the new sessions
+     */
+    public void setSessions(List<Session> sessions) {
+        mDataUpdateSubscription = Observable.from(sessions)
+                .toSortedList(new SessionTimeSort())
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::updateDisplayedSessions);
     }
 
     /**
-     * Updates the data set, and notifies the adapter of the data set change
-     * @param sessions the sessions to update the UI with
+     * Update the which sessions are displayed
+     * @param sessions The sessions to display
      */
-    public void setSessions(List<Session> sessions) {
-        mSessions = sessions;
-        if (mAdapter != null) {
-            mAdapter.notifyDataSetChanged();
-        }
+    private void updateDisplayedSessions(List<Session> sessions) {
+        mAdapter.setSessions(sessions);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onSessionsUpdate(List<Session> sessions) {
         setSessions(sessions);
+        mLoadingView.setVisibility(View.GONE);
     }
 
     @Override

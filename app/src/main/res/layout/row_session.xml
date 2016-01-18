@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="horizontal"
-              android:background="?attr/selectableItemBackground"
-              style="@style/ListItem"
-              tools:ignore="UseCompoundDrawables">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="?attr/selectableItemBackground"
+    style="@style/ListItem">
+
+    <ImageView
+        android:id="@+id/session_row_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/spacing_normal"
+        android:layout_marginRight="@dimen/spacing_normal"
+        android:src="@drawable/ic_label_black_18dp"
+        android:contentDescription="@null" />
 
     <TextView
         android:id="@+id/session_row_title"

@@ -22,6 +22,8 @@ public class DevFestApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        JodaTimeAndroid.init(this);
+
         init();
         buildComponent();
     }
@@ -47,7 +49,6 @@ public class DevFestApplication extends Application {
      * if you do not want the release configuration.
      */
     protected void init() {
-        JodaTimeAndroid.init(this);
         Timber.plant(new ReleaseTree());
     }
 
