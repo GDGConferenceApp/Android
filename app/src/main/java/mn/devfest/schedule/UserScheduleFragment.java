@@ -28,7 +28,7 @@ import mn.devfest.view.decoration.DividerItemDecoration;
  *
  * @author bherbst
  */
-public class ScheduleFragment extends Fragment implements DevFestDataSource.DataSourceListener {
+public class UserScheduleFragment extends Fragment implements DevFestDataSource.DataSourceListener {
 
     @Bind(R.id.schedule_recyclerview)
     RecyclerView mScheduleRecyclerView;
@@ -36,7 +36,7 @@ public class ScheduleFragment extends Fragment implements DevFestDataSource.Data
     private SessionListAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
 
-    private List<Session> mSessions = new ArrayList<>();
+    private List<Session> mScheduleSessions = new ArrayList<>();
     private DevFestDataSource mDataSource;
 
     @Override
@@ -61,7 +61,7 @@ public class ScheduleFragment extends Fragment implements DevFestDataSource.Data
         ButterKnife.bind(this, view);
 
         mAdapter = new SessionListAdapter();
-        mAdapter.setSessions(mSessions);
+        mAdapter.setSessions(mScheduleSessions);
         mScheduleRecyclerView.setAdapter(mAdapter);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mScheduleRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -72,7 +72,7 @@ public class ScheduleFragment extends Fragment implements DevFestDataSource.Data
     public void onResume() {
         super.onResume();
         //Refresh the UI with the latest data
-        setSchedule(mDataSource.getSessions());
+        setSchedule(mDataSource.getUserSchedule());
     }
 
     /**
@@ -89,7 +89,7 @@ public class ScheduleFragment extends Fragment implements DevFestDataSource.Data
      * @param sessions the sessions to update the UI with
      */
     public void setSchedule(List<Session> sessions) {
-        mSessions = sessions;
+        mScheduleSessions = sessions;
         if (mAdapter != null) {
             mAdapter.notifyDataSetChanged();
         }

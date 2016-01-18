@@ -53,8 +53,7 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
             mDataSource = DevFestApplication.get(getActivity()).component().datasource();
         }
         mDataSource.setDataSourceListener(this);
-        //TODO move this to a public accessor method that updates the adapter
-        mSessions = mDataSource.getSessions();
+        setSessions(mDataSource.getSessions());
     }
 
     @Override
@@ -84,7 +83,6 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mSessionRecyclerView.setLayoutManager(mLinearLayoutManager);
         mSessionRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
-
     }
 
     /**
