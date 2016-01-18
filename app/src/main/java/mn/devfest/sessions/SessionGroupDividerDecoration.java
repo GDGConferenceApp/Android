@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import mn.devfest.R;
 import mn.devfest.sessions.holder.HeaderViewHolder;
 
 /**
@@ -22,11 +23,14 @@ public class SessionGroupDividerDecoration extends RecyclerView.ItemDecoration {
     };
 
     private Drawable mDivider;
+    private int mExtraTopPad;
 
     public SessionGroupDividerDecoration(Context context) {
         final TypedArray a = context.obtainStyledAttributes(ATTRS);
         mDivider = a.getDrawable(0);
         a.recycle();
+
+        mExtraTopPad = context.getResources().getDimensionPixelSize(R.dimen.spacing_normal);
     }
 
     @Override
@@ -59,7 +63,7 @@ public class SessionGroupDividerDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         if (isGroupHeader(view, parent)) {
-            outRect.set(0,  mDivider.getIntrinsicHeight(), 0, 0);
+            outRect.set(0,  mDivider.getIntrinsicHeight() + mExtraTopPad, 0, 0);
         }
     }
 
