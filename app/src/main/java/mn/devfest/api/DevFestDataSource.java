@@ -1,6 +1,7 @@
 package mn.devfest.api;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,16 @@ public class DevFestDataSource implements Callback<Conference> {
             return new ArrayList<>();
         }
 
-        return mConference.getSchedule();
+        return new ArrayList<>(mConference.getSchedule().values());
+    }
+
+    @Nullable
+    public Session getSessionById(String id) {
+        if (mConference == null) {
+            return null;
+        }
+
+        return mConference.getSchedule().get(id);
     }
 
     @NonNull
@@ -64,7 +74,16 @@ public class DevFestDataSource implements Callback<Conference> {
             return new ArrayList<>();
         }
 
-        return mConference.getSpeakers();
+        return new ArrayList<>(mConference.getSpeakers().values());
+    }
+
+    @Nullable
+    public Speaker getSpeakerById(String id) {
+        if (mConference == null) {
+            return null;
+        }
+
+        return mConference.getSpeakers().get(id);
     }
 
     @NonNull

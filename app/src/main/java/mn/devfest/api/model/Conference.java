@@ -1,8 +1,8 @@
 package mn.devfest.api.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents all of the sessions and speakers for a given conference
@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class Conference {
     private double version = 1;
-    private List<Session> schedule = new ArrayList<>();
-    private List<Speaker> speakers = new ArrayList<>();
+    private Map<String, Session> schedule = new HashMap<>(0);
+    private Map<String, Speaker> speakers = new HashMap<>(0);
 
     public double getVersion() {
         return version;
@@ -21,20 +21,20 @@ public class Conference {
         this.version = version;
     }
 
-    public List<Session> getSchedule() {
-        return Collections.unmodifiableList(schedule);
+    public Map<String, Session> getSchedule() {
+        return Collections.unmodifiableMap(schedule);
     }
 
-    public void setSchedule(List<Session> schedule) {
-        this.schedule = new ArrayList<>(schedule);
+    public void setSchedule(Map<String, Session> schedule) {
+        this.schedule = new HashMap<>(schedule);
     }
 
-    public List<Speaker> getSpeakers() {
-        return Collections.unmodifiableList(speakers);
+    public Map<String, Speaker> getSpeakers() {
+        return Collections.unmodifiableMap(speakers);
     }
 
-    public void setSpeakers(List<Speaker> speakers) {
-        this.speakers = new ArrayList<>(speakers);
+    public void setSpeakers(Map<String, Speaker> speakers) {
+        this.speakers = new HashMap<>(speakers);
     }
 
     public String toString() {

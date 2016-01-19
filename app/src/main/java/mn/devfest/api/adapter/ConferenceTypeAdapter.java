@@ -7,8 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -36,16 +35,16 @@ public class ConferenceTypeAdapter implements JsonDeserializer<Conference> {
         return conference;
     }
 
-    public List<Session> parseSessions(JsonDeserializationContext context, JsonObject object) {
+    public Map<String, Session> parseSessions(JsonDeserializationContext context, JsonObject object) {
         Set<Map.Entry<String,JsonElement>> entrySet = object.entrySet();
-        List<Session> sessions = new ArrayList<>(entrySet.size());
+        Map<String, Session> sessions = new HashMap<>(entrySet.size());
 
         for(Map.Entry<String,JsonElement> entry: entrySet) {
             try {
                 JsonObject obj = object.getAsJsonObject(entry.getKey());
                 Session session = context.deserialize(obj, Session.class);
                 session.setId(entry.getKey());
-                sessions.add(session);
+                sessions.put(session.getId(), session);
             } catch (ClassCastException e) {
                 // Do nothing
             }
@@ -54,19 +53,16 @@ public class ConferenceTypeAdapter implements JsonDeserializer<Conference> {
         return sessions;
     }
 
-    public List<Speaker> parseSpeakers(JsonDeserializationContext context, JsonObject object) {
-//        Gson gson = new GsonBuilder()
-//                .setDateFormat("yyyy-MM-dd'T'HH:mm")
-//                .create();
+    public Map<String, Speaker> parseSpeakers(JsonDeserializationContext context, JsonObject object) {
         Set<Map.Entry<String,JsonElement>> entrySet = object.entrySet();
-        List<Speaker> speakers = new ArrayList<>(entrySet.size());
+        Map<String, Speaker> speakers = new HashMap<>(entrySet.size());
 
         for(Map.Entry<String,JsonElement> entry: entrySet) {
             try {
                 JsonObject obj = object.getAsJsonObject(entry.getKey());
                 Speaker speaker = context.deserialize(obj, Speaker.class);
                 speaker.id = entry.getKey();
-                speakers.add(speaker);
+                speakers.put(speaker.id, speaker);
             } catch (ClassCastException e) {
                 // Do nothing
             }
