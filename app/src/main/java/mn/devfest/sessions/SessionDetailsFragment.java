@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -38,6 +39,8 @@ public class SessionDetailsFragment extends Fragment{
     private static final String ARG_SESSION_PARCEL = "sessionParcel";
     private static final String TIME_FORMAT = "h:mma";
 
+    @Bind(R.id.toggle_in_user_schedule_button)
+    Button mToggleScheduleButton;
     @Bind(R.id.session_details_title)
     TextView mTitleTextview;
     @Bind(R.id.session_details_time)
@@ -125,6 +128,9 @@ public class SessionDetailsFragment extends Fragment{
         //TODO mDifficultyTextview.setText(mSession.);
         mDescriptionTextview.setText(mSession.getDescription());
         displaySpeakers(mSession.getSpeakers());
+        String scheduleButtonText =
+                mDataSource.isInUserSchedule(mSession.getId()) ? "Remove from schedule" : "Add to Schedule";
+        mToggleScheduleButton.setText(scheduleButtonText);
     }
 
     /**
