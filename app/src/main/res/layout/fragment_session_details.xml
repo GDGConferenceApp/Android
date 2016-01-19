@@ -5,6 +5,13 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
+    <!-- TODO remove hard-coded text and replace with appropriate appearance -->
+    <Button
+        android:id="@+id/toggle_in_user_schedule_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add to schedule"/>
+
     <TextView
         android:id="@+id/session_details_title"
         android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 package mn.devfest.sessions;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,7 +20,9 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mn.devfest.DevFestApplication;
 import mn.devfest.R;
+import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.view.SpeakerView;
@@ -35,6 +39,8 @@ public class SessionDetailsFragment extends Fragment{
     private static final String ARG_SESSION_PARCEL = "sessionParcel";
     private static final String TIME_FORMAT = "h:mma";
 
+    @Bind(R.id.toggle_in_user_schedule_button)
+    Button mToggleScheduleButton;
     @Bind(R.id.session_details_title)
     TextView mTitleTextview;
     @Bind(R.id.session_details_time)
@@ -52,6 +58,8 @@ public class SessionDetailsFragment extends Fragment{
     @Bind(R.id.session_details_speaker_layout)
     LinearLayout mSpeakerLayout;
 
+    private DevFestDataSource mDataSource;
+
     private Session mSession;
 
     //TODO remove parcel-related instantiation code
@@ -66,6 +74,14 @@ public class SessionDetailsFragment extends Fragment{
         }
 
         return frag;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (mDataSource == null) {
+            mDataSource = DevFestApplication.get(getActivity()).component().datasource();
+        }
     }
 
     @Nullable
@@ -112,6 +128,7 @@ public class SessionDetailsFragment extends Fragment{
         //TODO mDifficultyTextview.setText(mSession.);
         mDescriptionTextview.setText(mSession.getDescription());
         displaySpeakers(mSession.getSpeakers());
+        upDateScheduleButtonAppearance();
     }
 
     /**
@@ -173,10 +190,30 @@ public class SessionDetailsFragment extends Fragment{
         }
     }
 
+    /**
+     * Updates the button appearance to indicate if the session is in the user's schedule
+     */
+    private void upDateScheduleButtonAppearance() {
+        String scheduleButtonText =
+                mDataSource.isInUserSchedule(mSession.getId()) ? "Remove from schedule" : "Add to Schedule";
+        mToggleScheduleButton.setText(scheduleButtonText);
+    }
+
     @OnClick(R.id.rate_session)
     void onRateClicked() {
         Intent rateSession = new Intent(getContext(), RateSessionActivity.class);
         rateSession.putExtra(RateSessionActivity.EXTRA_SESSION_ID, mSession.getId());
         startActivity(rateSession);
+    }
+
+    @OnClick(R.id.toggle_in_user_schedule_button)
+    public void onToggleInUserScheduleButtonClick(View view) {
+        String sessionId = mSession.getId();
+        if (mDataSource.isInUserSchedule(sessionId)) {
+            mDataSource.removeFromUserSchedule(sessionId);
+        } else {
+            mDataSource.addToUserSchedule(sessionId);
+        }
+        upDateScheduleButtonAppearance();
     }
 }
