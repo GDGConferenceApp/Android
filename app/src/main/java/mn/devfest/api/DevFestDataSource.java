@@ -1,4 +1,5 @@
 package mn.devfest.api;
+
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
@@ -17,8 +18,9 @@ import timber.log.Timber;
  * This is the source of session, schedule, and speaker information. This acts as a general
  * contractor that can coordinate between various subcontractor classes including but not limited to
  * local and remote data sources.
- *
+ * <p>
  * Created by chris.black on 12/5/15.
+ *
  * @author bherbst
  * @author pfuentes
  */
@@ -86,6 +88,36 @@ public class DevFestDataSource implements Callback<Conference> {
         return userSessions;
     }
 
+    /**
+     * Adds the session with the given ID to the user's schedule
+     * TODO decide if we want this pass-through to maintain the general contractor paradigm
+     *
+     * @param sessionId ID of the session to be added
+     */
+    public void addToUserSchedule(String sessionId) {
+        mScheduleRepository.addSession(sessionId);
+    }
+
+    /**
+     * Removes the session with the given ID from the user's schedule
+     * TODO decide if we want this pass-through to maintain the general contractor paradigm
+     *
+     * @param sessionId ID of the session to be removed
+     */
+    public void removeFromUserSchedule(String sessionId) {
+        mScheduleRepository.removeSession(sessionId);
+    }
+
+    /**
+     * Checks if a given session is in the user's schedule
+     * TODO decide if we want this pass-through to maintain the general contractor paradigm
+     * @param sessionId ID of the session to check for inclusion in the list
+     * @return true if the session is in the user's schedule; otherwise false
+     */
+    public boolean isInUserSchedule(String sessionId) {
+        return mScheduleRepository.isInSchedule(sessionId);
+    }
+
     public void setDataSourceListener(DataSourceListener listener) {
         mDataSourceListener = listener;
     }
@@ -114,7 +146,9 @@ public class DevFestDataSource implements Callback<Conference> {
     public interface DataSourceListener {
         //These methods are for updating the listener
         void onSessionsUpdate(List<Session> sessions);
+
         void onSpeakersUpdate(List<Speaker> speakers);
+
         void onUserScheduleUpdate(List<Session> userSchedule);
     }
 }
