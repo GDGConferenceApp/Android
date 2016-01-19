@@ -128,9 +128,7 @@ public class SessionDetailsFragment extends Fragment{
         //TODO mDifficultyTextview.setText(mSession.);
         mDescriptionTextview.setText(mSession.getDescription());
         displaySpeakers(mSession.getSpeakers());
-        String scheduleButtonText =
-                mDataSource.isInUserSchedule(mSession.getId()) ? "Remove from schedule" : "Add to Schedule";
-        mToggleScheduleButton.setText(scheduleButtonText);
+        upDateScheduleButtonAppearance();
     }
 
     /**
@@ -192,6 +190,15 @@ public class SessionDetailsFragment extends Fragment{
         }
     }
 
+    /**
+     * Updates the button appearance to indicate if the session is in the user's schedule
+     */
+    private void upDateScheduleButtonAppearance() {
+        String scheduleButtonText =
+                mDataSource.isInUserSchedule(mSession.getId()) ? "Remove from schedule" : "Add to Schedule";
+        mToggleScheduleButton.setText(scheduleButtonText);
+    }
+
     @OnClick(R.id.rate_session)
     void onRateClicked() {
         Intent rateSession = new Intent(getContext(), RateSessionActivity.class);
@@ -201,6 +208,12 @@ public class SessionDetailsFragment extends Fragment{
 
     @OnClick(R.id.toggle_in_user_schedule_button)
     public void onToggleInUserScheduleButtonClick(View view) {
-        //TODO implement
+        String sessionId = mSession.getId();
+        if (mDataSource.isInUserSchedule(sessionId)) {
+            mDataSource.removeFromUserSchedule(sessionId);
+        } else {
+            mDataSource.addToUserSchedule(sessionId);
+        }
+        upDateScheduleButtonAppearance();
     }
 }
