@@ -91,6 +91,7 @@ public class DevFestDataSource implements Callback<Conference> {
     /**
      * Adds the session with the given ID to the user's schedule
      * TODO decide if we want this pass-through to maintain the general contractor paradigm
+     *
      * @param sessionId ID of the session to be added
      */
     public void addToUserSchedule(String sessionId) {
@@ -100,10 +101,21 @@ public class DevFestDataSource implements Callback<Conference> {
     /**
      * Removes the session with the given ID from the user's schedule
      * TODO decide if we want this pass-through to maintain the general contractor paradigm
+     *
      * @param sessionId ID of the session to be removed
      */
     public void removeFromUserSchedule(String sessionId) {
         mScheduleRepository.removeSession(sessionId);
+    }
+
+    /**
+     * Checks if a given session is in the user's schedule
+     * TODO decide if we want this pass-through to maintain the general contractor paradigm
+     * @param sessionId ID of the session to check for inclusion in the list
+     * @return true if the session is in the user's schedule; otherwise false
+     */
+    public boolean isInUserSchedule(String sessionId) {
+        return mScheduleRepository.isInSchedule(sessionId);
     }
 
     public void setDataSourceListener(DataSourceListener listener) {
