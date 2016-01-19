@@ -27,6 +27,7 @@ import mn.devfest.view.decoration.DividerItemDecoration;
  * Fragment that displays the user's schedule
  *
  * @author bherbst
+ * @author pfuentes
  */
 public class UserScheduleFragment extends Fragment implements DevFestDataSource.DataSourceListener {
 
