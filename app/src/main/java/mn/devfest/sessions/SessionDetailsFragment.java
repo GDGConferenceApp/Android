@@ -1,5 +1,6 @@
 package mn.devfest.sessions;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,7 +19,9 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mn.devfest.DevFestApplication;
 import mn.devfest.R;
+import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.view.SpeakerView;
@@ -52,6 +55,8 @@ public class SessionDetailsFragment extends Fragment{
     @Bind(R.id.session_details_speaker_layout)
     LinearLayout mSpeakerLayout;
 
+    private DevFestDataSource mDataSource;
+
     private Session mSession;
 
     //TODO remove parcel-related instantiation code
@@ -66,6 +71,14 @@ public class SessionDetailsFragment extends Fragment{
         }
 
         return frag;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (mDataSource == null) {
+            mDataSource = DevFestApplication.get(getActivity()).component().datasource();
+        }
     }
 
     @Nullable
