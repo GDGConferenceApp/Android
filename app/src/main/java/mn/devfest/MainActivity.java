@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import mn.devfest.base.BaseActivity;
 import mn.devfest.map.MapFragment;
-import mn.devfest.schedule.ScheduleFragment;
+import mn.devfest.schedule.UserScheduleFragment;
 import mn.devfest.sessions.SessionsFragment;
 import mn.devfest.speakers.SpeakerListFragment;
 
@@ -46,7 +46,7 @@ public class MainActivity extends BaseActivity {
         Fragment destination;
         switch (navItemId) {
             case R.id.nav_schedule:
-                destination = new ScheduleFragment();
+                destination = new UserScheduleFragment();
                 break;
 
             case R.id.nav_sessions:
