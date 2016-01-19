@@ -86,11 +86,6 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         //TODO cleanup resources
     }
 
-    @OnClick(R.id.toggle_in_user_schedule_button)
-    public void onToggleInUserScheduleButtonClick(View view) {
-        //TODO implement
-    }
-
     /**
      * Updates the data set, and notifies the adapter of the data set change
      *

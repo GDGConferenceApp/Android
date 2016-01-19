@@ -179,4 +179,9 @@ public class SessionDetailsFragment extends Fragment{
         rateSession.putExtra(RateSessionActivity.EXTRA_SESSION_ID, mSession.getId());
         startActivity(rateSession);
     }
+
+    @OnClick(R.id.toggle_in_user_schedule_button)
+    public void onToggleInUserScheduleButtonClick(View view) {
+        //TODO implement
+    }
 }
