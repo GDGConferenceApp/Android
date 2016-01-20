@@ -75,7 +75,7 @@ public class SpeakerView extends LinearLayout {
      */
     private void updateTextAndImage() {
         Picasso.with(mContext)
-                .load(mSpeaker.getImage())
+                .load(mSpeaker.getImageUrl())
                 .placeholder(R.drawable.ic_account_circle_white_48dp)
                 .into(mProfileImageview);
         mNameTextview.setText(mSpeaker.getName());
