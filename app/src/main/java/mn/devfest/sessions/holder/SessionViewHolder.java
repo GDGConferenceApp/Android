@@ -2,12 +2,9 @@ package mn.devfest.sessions.holder;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -27,7 +24,7 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
     TextView mTitleTextView;
 
     @Bind(R.id.session_row_tag)
-    ImageView mTagIcon;
+    TextView mTagView;
 
     public SessionViewHolder(View itemView) {
         super(itemView);
@@ -56,13 +53,14 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
         Context context = mTitleTextView.getContext();
         int categoryColorRes = CategoryColorUtil.getColorResForCategory(session.getCategory());
         int categoryColor = ContextCompat.getColor(context, categoryColorRes);
-        mTitleTextView.setTextColor(categoryColor);
-        mTagIcon.setColorFilter(new PorterDuffColorFilter(categoryColor, PorterDuff.Mode.SRC_IN));
+        mTagView.setBackgroundColor(categoryColor);
+
+        mTagView.setText(session.getCategory());
 
         if (session.getCategory() == null) {
-            mTagIcon.setVisibility(View.INVISIBLE);
+            mTagView.setVisibility(View.INVISIBLE);
         } else {
-            mTagIcon.setVisibility(View.VISIBLE);
+            mTagView.setVisibility(View.VISIBLE);
         }
     }
 }

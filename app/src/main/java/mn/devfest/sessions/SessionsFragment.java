@@ -71,6 +71,7 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mSessionRecyclerView.setLayoutManager(linearLayoutManager);
         mSessionRecyclerView.addItemDecoration(new SessionGroupDividerDecoration(getContext()));
+        mSessionRecyclerView.addItemDecoration(new SessionDividerDecoration(getContext()));
     }
 
     @Override
