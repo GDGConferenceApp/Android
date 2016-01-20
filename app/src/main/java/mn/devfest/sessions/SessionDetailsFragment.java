@@ -131,15 +131,11 @@ public class SessionDetailsFragment extends Fragment {
 
     /**
      * Takes an array list of tags and adds new tag views to the Tag layout for each
+     * To clear the tags, call with an empty List of tags for the parameter
      *
      * @param tags an array list of tags associated with the session
      */
-    private void displayTags(@Nullable ArrayList<String> tags) {
-        //TODO uncomment
-//        if (tags == null) {
-//            return;
-//        }
-
+    private void displayTags(@NonNull ArrayList<String> tags) {
         //TODO delete dummy data and use 'tags' parameter instead
         ArrayList<String> dummyData = new ArrayList<>();
         dummyData.add("Cool");
@@ -174,15 +170,7 @@ public class SessionDetailsFragment extends Fragment {
 
         //Add SpeakerViews to the Speaker Layout
         for (String speakerId : speakers) {
-            //TODO Speaker speaker = mDataSourceListener.getSpeaker(speakerId);
-            //TODO delete this dummy speaker
-            Speaker speaker = new Speaker();
-            speaker.setId("DummyID");
-            speaker.setName("John Doe");
-            speaker.bio = getString(R.string.body_copy_placeholder);
-            speaker.company = "Mentor Mate";
-            speaker.twitter = "pfue";
-            speaker.website = "google.com";
+            Speaker speaker = mDataSource.getSpeakerById(speakerId);
             SpeakerView speakerView = new SpeakerView(getActivity());
             speakerView.setSpeaker(speaker);
             mSpeakerLayout.addView(speakerView);
