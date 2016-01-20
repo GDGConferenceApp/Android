@@ -35,7 +35,6 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
 
             Intent sessionDetails = new Intent(context, SessionDetailsActivity.class);
             sessionDetails.putExtra(SessionDetailsActivity.EXTRA_SESSION_ID, mSession.getId());
-            sessionDetails.putExtra(SessionDetailsActivity.EXTRA_SESSION_PARCEL, mSession);
             context.startActivity(sessionDetails);
         });
 

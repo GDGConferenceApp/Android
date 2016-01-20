@@ -62,16 +62,12 @@ public class SessionDetailsFragment extends Fragment{
 
     private Session mSession;
 
-    //TODO remove parcel-related instantiation code
-    public static SessionDetailsFragment newInstance(@NonNull String sessionId, @Nullable Session session) {
+    public static SessionDetailsFragment newInstance(@NonNull String sessionId) {
         Bundle args = new Bundle();
         args.putString(ARG_SESSION_ID, sessionId);
 
         SessionDetailsFragment frag = new SessionDetailsFragment();
         frag.setArguments(args);
-        if (session != null) {
-            args.putParcelable(ARG_SESSION_PARCEL, session);
-        }
 
         return frag;
     }
