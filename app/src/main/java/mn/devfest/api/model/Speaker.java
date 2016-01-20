@@ -7,10 +7,11 @@ import android.os.Parcelable;
  * Created by chris.black on 12/5/15.
  */
 public class Speaker implements Parcelable {
+    private String IMAGE_URL_FORMAT = "https://devfest.fluin.io/speakers/%s/100x400";
+
     public String name;
     public String bio;
     public String company;
-    public String image;
     public String twitter;
     public String website;
     public String id;
@@ -39,8 +40,8 @@ public class Speaker implements Parcelable {
         return company;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageUrl() {
+        return String.format(IMAGE_URL_FORMAT, id);
     }
 
     public String getTwitter() {
@@ -59,7 +60,6 @@ public class Speaker implements Parcelable {
         name = in.readString();
         bio = in.readString();
         company = in.readString();
-        image = in.readString();
         twitter = in.readString();
         website = in.readString();
         id = in.readString();
@@ -70,7 +70,6 @@ public class Speaker implements Parcelable {
         dest.writeString(name);
         dest.writeString(bio);
         dest.writeString(company);
-        dest.writeString(image);
         dest.writeString(twitter);
         dest.writeString(website);
         dest.writeString(id);

@@ -6,7 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -37,7 +40,7 @@ public class SpeakerListAdapter extends RecyclerView.Adapter<SpeakerListAdapter.
         if (speaker == null) {
             return;
         }
-        holder.mNameTextView.setText(speaker.getName());
+        holder.bind(speaker);
     }
 
     @Override
@@ -53,10 +56,14 @@ public class SpeakerListAdapter extends RecyclerView.Adapter<SpeakerListAdapter.
         mSpeakers = speakers;
     }
 
-    public class SpeakerViewHolder extends RecyclerView.ViewHolder{
+    public class SpeakerViewHolder extends RecyclerView.ViewHolder {
+        private Speaker speaker;
 
         @Bind(R.id.speaker_row_name)
         TextView mNameTextView;
+
+        @Bind(R.id.speaker_image)
+        ImageView speakerImage;
 
         public SpeakerViewHolder(View itemView) {
             super(itemView);
@@ -64,13 +71,22 @@ public class SpeakerListAdapter extends RecyclerView.Adapter<SpeakerListAdapter.
 
             itemView.setOnClickListener(view -> {
                 Context context = mNameTextView.getContext();
-                int adapterPosition = getAdapterPosition();
-                Speaker speaker = mSpeakers.get(adapterPosition);
-
                 Intent speakerDetails = new Intent(context, SpeakerDetailsActivity.class);
                 speakerDetails.putExtra(SpeakerDetailsActivity.EXTRA_SPEAKER_ID, speaker.getId());
                 context.startActivity(speakerDetails);
             });
+        }
+
+        public void bind(Speaker speaker) {
+            this.speaker = speaker;
+
+            mNameTextView.setText(speaker.getName());
+
+            Picasso.with(speakerImage.getContext())
+                    .load(speaker.getImageUrl())
+                    .transform(new SpeakerImageTransformation())
+                    .placeholder(R.drawable.ic_account_circle_white_48dp)
+                    .into(speakerImage);
         }
     }
 }

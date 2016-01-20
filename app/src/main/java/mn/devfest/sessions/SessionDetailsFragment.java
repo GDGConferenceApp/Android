@@ -181,7 +181,6 @@ public class SessionDetailsFragment extends Fragment{
             speaker.setName("John Doe");
             speaker.bio = getString(R.string.body_copy_placeholder);
             speaker.company = "Mentor Mate";
-            speaker.image = "http://digventures.com/leiston-abbey/wp-content/uploads/placeholder-man-grid-240x268.png";
             speaker.twitter = "pfue";
             speaker.website = "google.com";
             SpeakerView speakerView = new SpeakerView(getActivity());
