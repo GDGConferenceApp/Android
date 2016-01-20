@@ -21,7 +21,6 @@ import mn.devfest.R;
 import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
-import mn.devfest.view.decoration.DividerItemDecoration;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -42,7 +41,6 @@ public class SpeakerListFragment extends Fragment implements DevFestDataSource.D
     ProgressBar mLoadingView;
 
     private SpeakerListAdapter mAdapter;
-    private LinearLayoutManager mLinearLayoutManager;
 
     private List<Speaker> mSpeakerData = new ArrayList<>();
     private DevFestDataSource mDataSource;
@@ -70,9 +68,9 @@ public class SpeakerListFragment extends Fragment implements DevFestDataSource.D
         mAdapter = new SpeakerListAdapter();
         mAdapter.setSpeakers(mSpeakerData);
         mSpeakerRecyclerView.setAdapter(mAdapter);
-        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mSpeakerRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mSpeakerRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+        //mSpeakerRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
     }
 
     @Override

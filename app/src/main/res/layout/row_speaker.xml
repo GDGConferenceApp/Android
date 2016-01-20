@@ -3,10 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="32dp"
     android:orientation="horizontal"
     android:background="?attr/selectableItemBackground"
     style="@style/ListItem"
-    tools:ignore="UseCompoundDrawables">
+    tools:ignore="RtlHardcoded,RtlSymmetry,UseCompoundDrawables">
 
     <ImageView
         android:id="@+id/speaker_image"

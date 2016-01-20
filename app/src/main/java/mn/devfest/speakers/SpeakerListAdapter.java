@@ -84,6 +84,7 @@ public class SpeakerListAdapter extends RecyclerView.Adapter<SpeakerListAdapter.
 
             Picasso.with(speakerImage.getContext())
                     .load(speaker.getImageUrl())
+                    .transform(new SpeakerImageTransformation())
                     .placeholder(R.drawable.ic_account_circle_white_48dp)
                     .into(speakerImage);
         }

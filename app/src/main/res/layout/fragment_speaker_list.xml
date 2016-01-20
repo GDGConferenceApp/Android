@@ -7,7 +7,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/speaker_list_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_normal"
+        android:clipToPadding="false"/>
 
     <ProgressBar
         android:id="@+id/loading_progress"
