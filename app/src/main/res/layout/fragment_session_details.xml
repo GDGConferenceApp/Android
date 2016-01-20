@@ -60,6 +60,7 @@
         android:layout_height="wrap_content"
         android:text="@string/speaker_heading_plural"/>
 
+    <!-- TODO move to a custom view group -->
     <LinearLayout
         android:id="@+id/session_details_speaker_layout"
         android:layout_width="match_parent"

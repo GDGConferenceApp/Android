@@ -154,7 +154,7 @@ public class SessionDetailsFragment extends Fragment {
     /**
      * Takes an array list of speaker IDs and adds a new SpeakerView to the Speaker layout
      * for each ID
-     *
+     * TODO move to a custom view group
      * @param speakers an array list of speaker IDs representing the speakers
      */
     private void displaySpeakers(@Nullable ArrayList<String> speakers) {
