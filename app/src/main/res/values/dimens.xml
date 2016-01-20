@@ -12,4 +12,7 @@
     <!-- List items -->
     <dimen name="list_item_vertical_padding">8dp</dimen>
     <dimen name="list_item_horizontal_padding">16dp</dimen>
+
+    <!-- Speaker dimens -->
+    <dimen name="speaker_list_image_size">64dp</dimen>
 </resources>

@@ -8,10 +8,18 @@
     style="@style/ListItem"
     tools:ignore="UseCompoundDrawables">
 
+    <ImageView
+        android:id="@+id/speaker_image"
+        android:layout_width="@dimen/speaker_list_image_size"
+        android:layout_height="@dimen/speaker_list_image_size"
+        android:contentDescription="@null" />
+
     <TextView
         android:id="@+id/speaker_row_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/spacing_normal"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
 
 </LinearLayout>
