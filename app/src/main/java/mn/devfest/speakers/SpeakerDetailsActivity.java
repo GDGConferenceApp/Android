@@ -24,7 +24,7 @@ public class SpeakerDetailsActivity extends SinglePaneActivity {
     protected Fragment onCreatePane() {
         Bundle extras = getIntent().getExtras();
         if (extras.containsKey(EXTRA_SPEAKER_ID)) {
-            int speakerId = extras.getInt(EXTRA_SPEAKER_ID);
+            String speakerId = extras.getString(EXTRA_SPEAKER_ID);
             return SpeakerDetailsFragment.newInstance(speakerId);
         } else {
             throw new IllegalStateException("SpeakerDetailsActivity requires an EXTRA_SPEAKER_ID");

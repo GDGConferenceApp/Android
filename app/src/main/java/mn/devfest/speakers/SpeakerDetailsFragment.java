@@ -1,17 +1,21 @@
 package mn.devfest.speakers;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import mn.devfest.DevFestApplication;
 import mn.devfest.R;
+import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Speaker;
+import mn.devfest.view.SpeakerView;
 
 /**
  * Fragment that displays details for a particular session
@@ -21,18 +25,29 @@ import mn.devfest.api.model.Speaker;
 public class SpeakerDetailsFragment extends Fragment {
     private static final String ARG_SPEAKER_ID = "speakerId";
 
-    @Bind(R.id.bio) TextView mBio;
+    @Bind(R.id.speaker_layout)
+    LinearLayout mSpeakerLayout;
 
+    private DevFestDataSource mDataSource;
     private Speaker mSpeaker;
 
-    public static SpeakerDetailsFragment newInstance(int speakerId) {
+
+    public static SpeakerDetailsFragment newInstance(String speakerId) {
         Bundle args = new Bundle();
-        args.putInt(ARG_SPEAKER_ID, speakerId);
+        args.putString(ARG_SPEAKER_ID, speakerId);
 
         SpeakerDetailsFragment frag = new SpeakerDetailsFragment();
         frag.setArguments(args);
 
         return frag;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (mDataSource == null) {
+            mDataSource = DevFestApplication.get(getActivity()).component().datasource();
+        }
     }
 
     @Nullable
@@ -48,18 +63,16 @@ public class SpeakerDetailsFragment extends Fragment {
 
         Bundle args = getArguments();
         if (args != null && args.containsKey(ARG_SPEAKER_ID)) {
-            int speakerId = args.getInt(ARG_SPEAKER_ID);
+            String speakerId = args.getString(ARG_SPEAKER_ID);
 
-            // TODO get real speaker
-            mSpeaker = new Speaker();
-            mSpeaker.setId("test");
-            mSpeaker.setName("Speaker " + speakerId);
+            mSpeaker = mDataSource.getSpeakerById(speakerId);
         } else {
             throw new IllegalStateException("SpeakerDetailsFragment requires a speaker ID passed via newInstance()");
         }
 
-        // Bind to the speaker
-        getActivity().setTitle(mSpeaker.getName());
-        mBio.setText(R.string.body_copy_placeholder);
+        //TODO remove unneeded mSpeakerLayout
+        SpeakerView speakerView = new SpeakerView(getActivity());
+        speakerView.setSpeaker(mSpeaker);
+        mSpeakerLayout.addView(speakerView);
     }
 }
