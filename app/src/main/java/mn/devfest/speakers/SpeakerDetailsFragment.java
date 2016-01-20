@@ -8,9 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,16 +25,16 @@ import mn.devfest.view.SpeakerView;
 public class SpeakerDetailsFragment extends Fragment {
     private static final String ARG_SPEAKER_ID = "speakerId";
 
-    @Bind(R.id.session_details_speaker_layout)
+    @Bind(R.id.speaker_layout)
     LinearLayout mSpeakerLayout;
 
     private DevFestDataSource mDataSource;
     private Speaker mSpeaker;
 
 
-    public static SpeakerDetailsFragment newInstance(int speakerId) {
+    public static SpeakerDetailsFragment newInstance(String speakerId) {
         Bundle args = new Bundle();
-        args.putInt(ARG_SPEAKER_ID, speakerId);
+        args.putString(ARG_SPEAKER_ID, speakerId);
 
         SpeakerDetailsFragment frag = new SpeakerDetailsFragment();
         frag.setArguments(args);
@@ -66,8 +63,7 @@ public class SpeakerDetailsFragment extends Fragment {
 
         Bundle args = getArguments();
         if (args != null && args.containsKey(ARG_SPEAKER_ID)) {
-            //TODO pass and retrieve an string ID instead of a single ID
-            int speakerId = args.getInt(ARG_SPEAKER_ID);
+            String speakerId = args.getString(ARG_SPEAKER_ID);
 
             mSpeaker = mDataSource.getSpeakerById(speakerId);
         } else {
