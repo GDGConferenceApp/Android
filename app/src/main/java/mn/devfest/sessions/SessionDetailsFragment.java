@@ -34,9 +34,8 @@ import mn.devfest.view.SpeakerView;
  * @author bherbst
  * @author pfuentes
  */
-public class SessionDetailsFragment extends Fragment{
+public class SessionDetailsFragment extends Fragment {
     private static final String ARG_SESSION_ID = "sessionId";
-    private static final String ARG_SESSION_PARCEL = "sessionParcel";
     private static final String TIME_FORMAT = "h:mma";
 
     @Bind(R.id.toggle_in_user_schedule_button)
@@ -62,16 +61,12 @@ public class SessionDetailsFragment extends Fragment{
 
     private Session mSession;
 
-    //TODO remove parcel-related instantiation code
-    public static SessionDetailsFragment newInstance(@NonNull String sessionId, @Nullable Session session) {
+    public static SessionDetailsFragment newInstance(@NonNull String sessionId) {
         Bundle args = new Bundle();
         args.putString(ARG_SESSION_ID, sessionId);
 
         SessionDetailsFragment frag = new SessionDetailsFragment();
         frag.setArguments(args);
-        if (session != null) {
-            args.putParcelable(ARG_SESSION_PARCEL, session);
-        }
 
         return frag;
     }
@@ -98,11 +93,9 @@ public class SessionDetailsFragment extends Fragment{
         //Set the session member variable
         Bundle args = getArguments();
         if (args != null && args.containsKey(ARG_SESSION_ID)) {
-            //TODO get session from data layer
-            //TODO remove parcel-related instantiation code
-            if (args.containsKey(ARG_SESSION_PARCEL)) {
-                mSession = args.getParcelable(ARG_SESSION_PARCEL);
-            }
+            //Get session from data layer
+            String sessionId = args.getString(ARG_SESSION_ID);
+            mSession = mDataSource.getSessionById(sessionId);
         } else {
             throw new IllegalStateException("SessionDetailsFragment requires a session ID passed via newInstance()");
         }
@@ -116,6 +109,11 @@ public class SessionDetailsFragment extends Fragment{
      * TODO consider using view binding
      */
     private void bindViewsToSession() {
+        //Don't continue if we have no session data; making data disappear would be disruptive
+        if (mSession == null) {
+            return;
+        }
+
         getActivity().setTitle(mSession.getTitle());
         mTitleTextview.setText(mSession.getTitle());
         String start = mSession.getStartTime().toLocalTime().toString(TIME_FORMAT);
@@ -133,14 +131,11 @@ public class SessionDetailsFragment extends Fragment{
 
     /**
      * Takes an array list of tags and adds new tag views to the Tag layout for each
+     * To clear the tags, call with an empty List of tags for the parameter
+     *
      * @param tags an array list of tags associated with the session
      */
-    private void displayTags(@Nullable ArrayList<String> tags) {
-        //TODO uncomment
-//        if (tags == null) {
-//            return;
-//        }
-
+    private void displayTags(@NonNull ArrayList<String> tags) {
         //TODO delete dummy data and use 'tags' parameter instead
         ArrayList<String> dummyData = new ArrayList<>();
         dummyData.add("Cool");
@@ -159,6 +154,7 @@ public class SessionDetailsFragment extends Fragment{
     /**
      * Takes an array list of speaker IDs and adds a new SpeakerView to the Speaker layout
      * for each ID
+     *
      * @param speakers an array list of speaker IDs representing the speakers
      */
     private void displaySpeakers(@Nullable ArrayList<String> speakers) {
@@ -174,15 +170,7 @@ public class SessionDetailsFragment extends Fragment{
 
         //Add SpeakerViews to the Speaker Layout
         for (String speakerId : speakers) {
-            //TODO Speaker speaker = mDataSourceListener.getSpeaker(speakerId);
-            //TODO delete this dummy speaker
-            Speaker speaker = new Speaker();
-            speaker.setId("DummyID");
-            speaker.setName("John Doe");
-            speaker.bio = getString(R.string.body_copy_placeholder);
-            speaker.company = "Mentor Mate";
-            speaker.twitter = "pfue";
-            speaker.website = "google.com";
+            Speaker speaker = mDataSource.getSpeakerById(speakerId);
             SpeakerView speakerView = new SpeakerView(getActivity());
             speakerView.setSpeaker(speaker);
             mSpeakerLayout.addView(speakerView);
@@ -193,6 +181,7 @@ public class SessionDetailsFragment extends Fragment{
      * Updates the button appearance to indicate if the session is in the user's schedule
      */
     private void upDateScheduleButtonAppearance() {
+        //TODO update appearance appropriately (probably an icon change and/or proper copy change)
         String scheduleButtonText =
                 mDataSource.isInUserSchedule(mSession.getId()) ? "Remove from schedule" : "Add to Schedule";
         mToggleScheduleButton.setText(scheduleButtonText);
