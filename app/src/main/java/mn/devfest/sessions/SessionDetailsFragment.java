@@ -34,9 +34,8 @@ import mn.devfest.view.SpeakerView;
  * @author bherbst
  * @author pfuentes
  */
-public class SessionDetailsFragment extends Fragment{
+public class SessionDetailsFragment extends Fragment {
     private static final String ARG_SESSION_ID = "sessionId";
-    private static final String ARG_SESSION_PARCEL = "sessionParcel";
     private static final String TIME_FORMAT = "h:mma";
 
     @Bind(R.id.toggle_in_user_schedule_button)
@@ -94,11 +93,9 @@ public class SessionDetailsFragment extends Fragment{
         //Set the session member variable
         Bundle args = getArguments();
         if (args != null && args.containsKey(ARG_SESSION_ID)) {
-            //TODO get session from data layer
-            //TODO remove parcel-related instantiation code
-            if (args.containsKey(ARG_SESSION_PARCEL)) {
-                mSession = args.getParcelable(ARG_SESSION_PARCEL);
-            }
+            //Get session from data layer
+            String sessionId = args.getString(ARG_SESSION_ID);
+            mSession = mDataSource.getSessionById(sessionId);
         } else {
             throw new IllegalStateException("SessionDetailsFragment requires a session ID passed via newInstance()");
         }
@@ -112,6 +109,11 @@ public class SessionDetailsFragment extends Fragment{
      * TODO consider using view binding
      */
     private void bindViewsToSession() {
+        //Don't continue if we have no session data; making data disappear would be disruptive
+        if (mSession == null) {
+            return;
+        }
+
         getActivity().setTitle(mSession.getTitle());
         mTitleTextview.setText(mSession.getTitle());
         String start = mSession.getStartTime().toLocalTime().toString(TIME_FORMAT);
@@ -129,6 +131,7 @@ public class SessionDetailsFragment extends Fragment{
 
     /**
      * Takes an array list of tags and adds new tag views to the Tag layout for each
+     *
      * @param tags an array list of tags associated with the session
      */
     private void displayTags(@Nullable ArrayList<String> tags) {
@@ -155,6 +158,7 @@ public class SessionDetailsFragment extends Fragment{
     /**
      * Takes an array list of speaker IDs and adds a new SpeakerView to the Speaker layout
      * for each ID
+     *
      * @param speakers an array list of speaker IDs representing the speakers
      */
     private void displaySpeakers(@Nullable ArrayList<String> speakers) {
