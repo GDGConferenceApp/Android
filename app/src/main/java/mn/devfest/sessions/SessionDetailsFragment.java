@@ -181,6 +181,7 @@ public class SessionDetailsFragment extends Fragment {
      * Updates the button appearance to indicate if the session is in the user's schedule
      */
     private void upDateScheduleButtonAppearance() {
+        //TODO update appearance appropriately (probably an icon change and/or proper copy change)
         String scheduleButtonText =
                 mDataSource.isInUserSchedule(mSession.getId()) ? "Remove from schedule" : "Add to Schedule";
         mToggleScheduleButton.setText(scheduleButtonText);

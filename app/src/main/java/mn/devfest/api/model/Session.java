@@ -9,7 +9,10 @@ import java.util.ArrayList;
 
 /**
  * Represents a session at the conference (e.g. – a talk, workshop, etc)
- * Created by chris.black on 12/5/15.
+ *
+ * @author cblack
+ * @author bherbst
+ * @author pfuentes
  */
 public class Session implements Parcelable {
     private boolean all;
