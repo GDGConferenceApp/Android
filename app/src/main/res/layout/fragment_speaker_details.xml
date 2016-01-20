@@ -6,6 +6,6 @@
               android:orientation="vertical"
               android:padding="@dimen/activity_vertical_margin">
 
-    <!-- TODO transition to a custom viewgroup -->
+    <!-- TODO change root element to a single speakerview -->
 
 </LinearLayout>
