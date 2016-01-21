@@ -26,6 +26,9 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.session_row_tag)
     TextView mTagView;
 
+    @Bind(R.id.session_row_room)
+    TextView mRoomTextView;
+
     public SessionViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -48,6 +51,7 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
     public void bindSession(Session session) {
         mSession = session;
         mTitleTextView.setText(session.getTitle());
+        mRoomTextView.setText(session.getRoom());
 
         Context context = mTitleTextView.getContext();
         int categoryColorRes = CategoryColorUtil.getColorResForCategory(session.getCategory());

@@ -32,7 +32,6 @@
         android:layout_toStartOf="@+id/row_session_toggle_schedule_button"
         android:ellipsize="end"
         android:maxLines="2"
-        android:paddingBottom="@dimen/spacing_small"
         android:paddingLeft="@dimen/padding_normal"
         android:paddingRight="@dimen/padding_normal"
         android:paddingTop="@dimen/spacing_normal"
@@ -52,7 +51,6 @@
         android:paddingBottom="@dimen/padding_normal"
         android:paddingLeft="@dimen/padding_normal"
         android:paddingRight="@dimen/padding_normal"
-        android:paddingTop="@dimen/spacing_small"
         android:singleLine="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         tools:text="Classroom A – 3rd Floor"/>
