@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,6 +20,7 @@ import mn.devfest.util.CategoryColorUtil;
  */
 public class SessionViewHolder extends RecyclerView.ViewHolder {
     private Session mSession;
+    private ToggleInScheduleListener mListener;
 
     @Bind(R.id.session_row_title)
     TextView mTitleTextView;
@@ -46,7 +46,7 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
             context.startActivity(sessionDetails);
         });
 
-        mFab.setOnClickListener(v -> Toast.makeText(mRoomTextView.getContext(), "FAB clicked", Toast.LENGTH_LONG).show());
+        mFab.setOnClickListener(v -> mListener.onToggleScheduleButtonClicked());
     }
 
     /**
@@ -54,8 +54,9 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
      *
      * @param session The session that this ViewHolder will represent
      */
-    public void bindSession(Session session) {
+    public void bindSession(Session session, ToggleInScheduleListener listener) {
         mSession = session;
+        mListener = listener;
         mTitleTextView.setText(session.getTitle());
         mRoomTextView.setText(session.getRoom());
 
@@ -71,5 +72,12 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
         } else {
             mTagView.setVisibility(View.VISIBLE);
         }
+    }
+
+    /**
+     * TODO this approach feels potentially memory-leaky? Evaluate it when we're less concerned w/ shipping
+     */
+    public interface ToggleInScheduleListener {
+        void onToggleScheduleButtonClicked();
     }
 }

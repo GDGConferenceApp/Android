@@ -22,7 +22,7 @@ import mn.devfest.sessions.holder.SessionViewHolder;
  *
  * @author pfuentes
  */
-public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements SessionViewHolder.ToggleInScheduleListener {
     private static final int TYPE_HEADER = 1;
     private static final int TYPE_SESSION = 2;
 
@@ -69,7 +69,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             SessionViewHolder sessionHolder = (SessionViewHolder) holder;
             Session session = mSessions.get(position);
 
-            sessionHolder.bindSession(session);
+            sessionHolder.bindSession(session, this);
         } else if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
             DateTime groupTime = mHeaders.get(position);
@@ -140,4 +140,8 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return headers;
     }
 
+    @Override
+    public void onToggleScheduleButtonClicked() {
+        //TODO handle click
+    }
 }
