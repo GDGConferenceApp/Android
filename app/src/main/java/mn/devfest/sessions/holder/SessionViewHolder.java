@@ -46,7 +46,10 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
             context.startActivity(sessionDetails);
         });
 
-        mFab.setOnClickListener(v -> mListener.onToggleScheduleButtonClicked());
+        mFab.setOnClickListener(view -> {
+            mListener.onToggleScheduleButtonClicked(mSession);
+            //TODO sub-class FAB to toggle & provide modifiers for its appearance and use that here
+        });
     }
 
     /**
@@ -78,6 +81,6 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
      * TODO this approach feels potentially memory-leaky? Evaluate it when we're less concerned w/ shipping
      */
     public interface ToggleInScheduleListener {
-        void onToggleScheduleButtonClicked();
+        void onToggleScheduleButtonClicked(Session session);
     }
 }

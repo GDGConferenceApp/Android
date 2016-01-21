@@ -144,7 +144,12 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public void onToggleScheduleButtonClicked() {
-        //TODO handle click
+    public void onToggleScheduleButtonClicked(Session session) {
+        if (mDataSource.isInUserSchedule(session.getId())) {
+            mDataSource.removeFromUserSchedule(session.getId());
+        } else {
+            mDataSource.addToUserSchedule(session.getId());
+        }
+
     }
 }
