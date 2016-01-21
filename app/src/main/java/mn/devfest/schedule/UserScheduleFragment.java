@@ -15,7 +15,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import mn.devfest.DevFestApplication;
 import mn.devfest.R;
 import mn.devfest.api.DevFestDataSource;
@@ -62,7 +61,7 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        mAdapter = new SessionListAdapter();
+        mAdapter = new SessionListAdapter(mDataSource);
         mAdapter.setSessions(mScheduleSessions);
         mScheduleRecyclerView.setAdapter(mAdapter);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());

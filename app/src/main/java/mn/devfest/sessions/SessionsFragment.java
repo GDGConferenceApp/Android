@@ -66,7 +66,7 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        mAdapter = new SessionListAdapter();
+        mAdapter = new SessionListAdapter(mDataSource);
         mSessionRecyclerView.setAdapter(mAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mSessionRecyclerView.setLayoutManager(linearLayoutManager);

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import mn.devfest.R;
+import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
 import mn.devfest.sessions.holder.HeaderViewHolder;
 import mn.devfest.sessions.holder.SessionViewHolder;
@@ -27,6 +28,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private static final int TYPE_SESSION = 2;
 
     private List<Session> mSessions;
+    private DevFestDataSource mDataSource;
 
     /*
      * This map is a list of session grouping names, keyed by where they will be inserted
@@ -35,7 +37,8 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      */
     private Map<Integer, DateTime> mHeaders;
 
-    public SessionListAdapter() {
+    public SessionListAdapter(DevFestDataSource dataSource) {
+        mDataSource = dataSource;
         mSessions = new ArrayList<>(0);
     }
 
