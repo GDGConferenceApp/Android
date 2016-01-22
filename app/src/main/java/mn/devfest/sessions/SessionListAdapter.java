@@ -1,5 +1,6 @@
 package mn.devfest.sessions;
 
+import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -143,13 +144,15 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return headers;
     }
 
+    @DrawableRes
     @Override
-    public void onToggleScheduleButtonClicked(Session session) {
+    public int onToggleScheduleButtonClicked(Session session) {
         if (mDataSource.isInUserSchedule(session.getId())) {
             mDataSource.removeFromUserSchedule(session.getId());
+            return R.drawable.ic_add;
         } else {
             mDataSource.addToUserSchedule(session.getId());
+            return R.drawable.ic_remove;
         }
-
     }
 }

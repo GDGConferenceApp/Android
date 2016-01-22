@@ -2,6 +2,7 @@ package mn.devfest.sessions.holder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.DrawableRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -47,8 +48,8 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
         });
 
         mFab.setOnClickListener(view -> {
-            mListener.onToggleScheduleButtonClicked(mSession);
-            //TODO sub-class FAB to toggle & provide modifiers for its appearance and use that here
+            int resourceId = mListener.onToggleScheduleButtonClicked(mSession);
+            mFab.setImageDrawable(ContextCompat.getDrawable(mFab.getContext(), resourceId));
         });
     }
 
@@ -79,8 +80,10 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
 
     /**
      * TODO this approach feels potentially memory-leaky? Evaluate it when we're less concerned w/ shipping
+     * TODO document when we finalize the approach
      */
     public interface ToggleInScheduleListener {
-        void onToggleScheduleButtonClicked(Session session);
+        @DrawableRes
+        int onToggleScheduleButtonClicked(Session session);
     }
 }
