@@ -56,15 +56,16 @@
         tools:text="Classroom A – 3rd Floor"/>
 
     <!-- TODO update appearance (yes, I know using a FAB in a list is horrible) -->
-    <android.support.design.widget.FloatingActionButton
+    <ImageButton
         android:id="@+id/row_session_toggle_schedule_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_margin="@dimen/padding_normal"
+        android:background="?android:selectableItemBackground"
         android:minHeight="44dp"
         android:minWidth="44dp"
-        android:src="@android:drawable/ic_dialog_email"/>
+        android:src="@drawable/ic_add"/>
 
 </RelativeLayout>

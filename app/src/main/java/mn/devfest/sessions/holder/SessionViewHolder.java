@@ -3,10 +3,10 @@ package mn.devfest.sessions.holder;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.DrawableRes;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -33,7 +33,7 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
     TextView mRoomTextView;
 
     @Bind(R.id.row_session_toggle_schedule_button)
-    FloatingActionButton mFab;
+    ImageButton mToggleScheduleButton;
 
     public SessionViewHolder(View itemView) {
         super(itemView);
@@ -47,9 +47,9 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
             context.startActivity(sessionDetails);
         });
 
-        mFab.setOnClickListener(view -> {
+        mToggleScheduleButton.setOnClickListener(view -> {
             int resourceId = mListener.onToggleScheduleButtonClicked(mSession);
-            mFab.setImageDrawable(ContextCompat.getDrawable(mFab.getContext(), resourceId));
+            mToggleScheduleButton.setImageDrawable(ContextCompat.getDrawable(mToggleScheduleButton.getContext(), resourceId));
         });
     }
 
@@ -65,7 +65,7 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
         mListener = listener;
         mTitleTextView.setText(session.getTitle());
         mRoomTextView.setText(session.getRoom());
-        mFab.setImageDrawable(ContextCompat.getDrawable(mFab.getContext(), drawableRes));
+        mToggleScheduleButton.setImageDrawable(ContextCompat.getDrawable(mToggleScheduleButton.getContext(), drawableRes));
 
         Context context = mTitleTextView.getContext();
         int categoryColorRes = CategoryColorUtil.getColorResForCategory(session.getCategory());
