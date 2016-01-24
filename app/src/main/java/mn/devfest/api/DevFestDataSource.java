@@ -118,7 +118,6 @@ public class DevFestDataSource implements Callback<Conference> {
 
     /**
      * Adds the session with the given ID to the user's schedule
-     * TODO decide if we want this pass-through to maintain the general contractor paradigm
      *
      * @param sessionId ID of the session to be added
      */
@@ -128,7 +127,6 @@ public class DevFestDataSource implements Callback<Conference> {
 
     /**
      * Removes the session with the given ID from the user's schedule
-     * TODO decide if we want this pass-through to maintain the general contractor paradigm
      *
      * @param sessionId ID of the session to be removed
      */
@@ -138,7 +136,7 @@ public class DevFestDataSource implements Callback<Conference> {
 
     /**
      * Checks if a given session is in the user's schedule
-     * TODO decide if we want this pass-through to maintain the general contractor paradigm
+     *
      * @param sessionId ID of the session to check for inclusion in the list
      * @return true if the session is in the user's schedule; otherwise false
      */
@@ -160,14 +158,18 @@ public class DevFestDataSource implements Callback<Conference> {
     @Override
     public void success(Conference conference, Response response) {
         mConference = conference;
-        //TODO update the local store with the conference data
+        mConferenceRepository.setConference(conference);
         onConferenceUpdated();
+
+        //TODO remove this after debugging is complete
+        mConferenceRepository.getConference();
     }
 
     @Override
     public void failure(RetrofitError error) {
         Timber.e(error, "Failed to retrieve conference info.");
-        //TODO fall back on the local store of conference data
+        mConference = mConferenceRepository.getConference();
+        onConferenceUpdated();
     }
 
     /**

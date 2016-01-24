@@ -7,7 +7,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import org.joda.time.DateTime;
+
+import mn.devfest.api.adapter.ConferenceTypeAdapter;
+import mn.devfest.api.adapter.DateTimeTypeAdapter;
 import mn.devfest.api.model.Conference;
 
 /**
@@ -27,7 +32,10 @@ public class ConferenceRepository {
     public ConferenceRepository(@NonNull Context context) {
         mContext = context;
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        mGson = new Gson();
+        mGson = new GsonBuilder()
+                .registerTypeAdapter(Conference.class, new ConferenceTypeAdapter())
+                .registerTypeAdapter(DateTime.class, new DateTimeTypeAdapter())
+                .create();
     }
 
     /**
