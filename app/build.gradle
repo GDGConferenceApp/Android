@@ -16,7 +16,10 @@ android {
 
         // TODO set up for easy configuration for other conferences
         buildConfigField "String", "API_BASE", "\"https://devfest.fluin.io\""
-
+        resValue "string", "sw_corner_latitude", swCornerLatitude
+        resValue "string", "sw_corner_longitude", swCornerLongitude
+        resValue "string", "ne_corner_latitude", neCornerLatitude
+        resValue "string", "ne_corner_longitude", neCornerLongitude
     }
 
     buildTypes {
