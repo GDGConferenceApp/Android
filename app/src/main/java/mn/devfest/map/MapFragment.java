@@ -33,11 +33,7 @@ import mn.devfest.R;
  * @author bherbst
  */
 public class MapFragment extends Fragment implements OnMapReadyCallback, View.OnClickListener {
-    //TODO extract constants to an easy to update file
-    private static final double CONFERENCE_CENTER_SOUTHWEST_CORNER_LAT = 44.97395;
-    private static final double CONFERENCE_CENTER_SOUTHWEST_CORNER_LONG = -93.2783;
-    private static final double CONFERENCE_CENTER_NORTHEAST_CORNER_LAT = 44.974725;
-    private static final double CONFERENCE_CENTER_NORTHEAST_CORNER_LONG = -93.27668;
+
     private static final float CONFERENCE_CENTER_ZOOM_LEVEL = 18.5f;
     private static final int[] FLOOR_OVERLAY_ID_ARRAY = {R.drawable.schultze_level_one, R.drawable.schultze_level_two, R.drawable.schultze_level_three};
 
@@ -120,9 +116,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
      * @return The Lat-Long bounds of the conference center
      */
     private LatLngBounds getConferenceCenterBounds() {
+        float swLatitude = Float.parseFloat(getString(R.string.sw_corner_latitude));
+        float swLongitude = Float.parseFloat(getString(R.string.sw_corner_longitude));
+        float neLatitude = Float.parseFloat(getString(R.string.ne_corner_latitude));
+        float neLongitude = Float.parseFloat(getString(R.string.ne_corner_longitude));
         return new LatLngBounds(
-                new LatLng(CONFERENCE_CENTER_SOUTHWEST_CORNER_LAT, CONFERENCE_CENTER_SOUTHWEST_CORNER_LONG),
-                new LatLng(CONFERENCE_CENTER_NORTHEAST_CORNER_LAT, CONFERENCE_CENTER_NORTHEAST_CORNER_LONG));
+                new LatLng(swLatitude, swLongitude),
+                new LatLng(neLatitude, neLongitude));
     }
 
     /**
