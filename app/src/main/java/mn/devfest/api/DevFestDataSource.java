@@ -37,10 +37,16 @@ public class DevFestDataSource implements Callback<Conference> {
     public DevFestDataSource(DevFestApi api, UserScheduleRepository scheduleRepository) {
         this.mApi = api;
         this.mScheduleRepository = scheduleRepository;
+        updateConferenceInfo();
+    }
 
-        // TODO this is a terrible place to fetch the API data.
-        // It isn't clear what thread this is called on, typically shouldn't happen in a constructor,
-        // and doesn't allow for easy refreshing if data if that is necessary in the future.
+    /**
+     * Checks the API for fresh info.
+     * If fresh info is available, it's persisted locally for future reference
+     * If fresh info isn't available, we fall back to the local store
+     */
+    public void updateConferenceInfo() {
+        //Check the API for fresh info
         mApi.getConferenceInfo(this);
     }
 
@@ -151,12 +157,14 @@ public class DevFestDataSource implements Callback<Conference> {
     @Override
     public void success(Conference conference, Response response) {
         mConference = conference;
+        //TODO update the local store with the conference data
         onConferenceUpdated();
     }
 
     @Override
     public void failure(RetrofitError error) {
         Timber.e(error, "Failed to retrieve conference info.");
+        //TODO fall back on the local store of conference data
     }
 
     /**
