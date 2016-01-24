@@ -7,6 +7,7 @@ import dagger.Provides;
 import mn.devfest.DevFestApplication;
 import mn.devfest.api.DevFestApi;
 import mn.devfest.api.DevFestDataSource;
+import mn.devfest.persistence.ConferenceRepository;
 import mn.devfest.persistence.UserScheduleRepository;
 
 /**
@@ -30,7 +31,13 @@ public class DataModule {
 
     @Provides
     @Singleton
-    public DevFestDataSource provideDevFestDataSource(DevFestApi api, UserScheduleRepository scheduleRepository) {
-        return new DevFestDataSource(api, scheduleRepository);
+    public ConferenceRepository provideConferenceRepository() {
+        return new ConferenceRepository(mApplication);
+    }
+
+    @Provides
+    @Singleton
+    public DevFestDataSource provideDevFestDataSource(DevFestApi api, UserScheduleRepository scheduleRepository, ConferenceRepository conferenceRepository) {
+        return new DevFestDataSource(api, scheduleRepository, conferenceRepository);
     }
 }

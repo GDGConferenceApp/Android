@@ -9,6 +9,7 @@ import java.util.List;
 import mn.devfest.api.model.Conference;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
+import mn.devfest.persistence.ConferenceRepository;
 import mn.devfest.persistence.UserScheduleRepository;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -29,14 +30,16 @@ public class DevFestDataSource implements Callback<Conference> {
 
     private final DevFestApi mApi;
     private final UserScheduleRepository mScheduleRepository;
+    private final ConferenceRepository mConferenceRepository;
 
     private Conference mConference;
     //TODO move to an array of listeners?
     private DataSourceListener mDataSourceListener;
 
-    public DevFestDataSource(DevFestApi api, UserScheduleRepository scheduleRepository) {
+    public DevFestDataSource(DevFestApi api, UserScheduleRepository scheduleRepository, ConferenceRepository conferenceRepository) {
         this.mApi = api;
         this.mScheduleRepository = scheduleRepository;
+        this.mConferenceRepository = conferenceRepository;
         updateConferenceInfo();
     }
 
