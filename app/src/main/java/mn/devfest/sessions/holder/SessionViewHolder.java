@@ -55,14 +55,17 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
 
     /**
      * Bind to a new session
-     *
+     * TODO this got gross. Come up with a better approach to in-schedule-status when we're not rushing in small bursts of time.
      * @param session The session that this ViewHolder will represent
+     * @param drawableRes The
+     * @param listener
      */
-    public void bindSession(Session session, ToggleInScheduleListener listener) {
+    public void bindSession(Session session, @DrawableRes int drawableRes, ToggleInScheduleListener listener) {
         mSession = session;
         mListener = listener;
         mTitleTextView.setText(session.getTitle());
         mRoomTextView.setText(session.getRoom());
+        mFab.setImageDrawable(ContextCompat.getDrawable(mFab.getContext(), drawableRes));
 
         Context context = mTitleTextView.getContext();
         int categoryColorRes = CategoryColorUtil.getColorResForCategory(session.getCategory());
@@ -79,7 +82,7 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
     }
 
     /**
-     * TODO this approach feels potentially memory-leaky? Evaluate it when we're less concerned w/ shipping
+     * TODO this approach feels bad in general? Evaluate it when we're less concerned w/ shipping
      * TODO document when we finalize the approach
      */
     public interface ToggleInScheduleListener {
