@@ -7,7 +7,7 @@ import dagger.Provides;
 import mn.devfest.DevFestApplication;
 import mn.devfest.api.DevFestApi;
 import mn.devfest.api.DevFestDataSource;
-import mn.devfest.schedule.UserScheduleRepository;
+import mn.devfest.persistence.UserScheduleRepository;
 
 /**
  * Provides data-layer dependencies

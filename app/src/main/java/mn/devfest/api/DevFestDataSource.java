@@ -9,7 +9,7 @@ import java.util.List;
 import mn.devfest.api.model.Conference;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
-import mn.devfest.schedule.UserScheduleRepository;
+import mn.devfest.persistence.UserScheduleRepository;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
