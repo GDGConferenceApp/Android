@@ -2,9 +2,11 @@ package mn.devfest.sessions.holder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -19,12 +21,19 @@ import mn.devfest.util.CategoryColorUtil;
  */
 public class SessionViewHolder extends RecyclerView.ViewHolder {
     private Session mSession;
+    private ToggleInScheduleListener mListener;
 
     @Bind(R.id.session_row_title)
     TextView mTitleTextView;
 
     @Bind(R.id.session_row_tag)
     TextView mTagView;
+
+    @Bind(R.id.session_row_room)
+    TextView mRoomTextView;
+
+    @Bind(R.id.row_session_toggle_schedule_button)
+    ImageButton mToggleScheduleButton;
 
     public SessionViewHolder(View itemView) {
         super(itemView);
@@ -38,16 +47,25 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
             context.startActivity(sessionDetails);
         });
 
+        mToggleScheduleButton.setOnClickListener(view -> {
+            int resourceId = mListener.onToggleScheduleButtonClicked(mSession);
+            mToggleScheduleButton.setImageDrawable(ContextCompat.getDrawable(mToggleScheduleButton.getContext(), resourceId));
+        });
     }
 
     /**
      * Bind to a new session
-     *
+     * TODO this got gross. Come up with a better approach to in-schedule-status when we're not rushing in small bursts of time.
      * @param session The session that this ViewHolder will represent
+     * @param drawableRes The
+     * @param listener
      */
-    public void bindSession(Session session) {
+    public void bindSession(Session session, @DrawableRes int drawableRes, ToggleInScheduleListener listener) {
         mSession = session;
+        mListener = listener;
         mTitleTextView.setText(session.getTitle());
+        mRoomTextView.setText(session.getRoom());
+        mToggleScheduleButton.setImageDrawable(ContextCompat.getDrawable(mToggleScheduleButton.getContext(), drawableRes));
 
         Context context = mTitleTextView.getContext();
         int categoryColorRes = CategoryColorUtil.getColorResForCategory(session.getCategory());
@@ -61,5 +79,14 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
         } else {
             mTagView.setVisibility(View.VISIBLE);
         }
+    }
+
+    /**
+     * TODO this approach feels bad in general? Evaluate it when we're less concerned w/ shipping
+     * TODO document when we finalize the approach
+     */
+    public interface ToggleInScheduleListener {
+        @DrawableRes
+        int onToggleScheduleButtonClicked(Session session);
     }
 }
