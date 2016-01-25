@@ -160,9 +160,6 @@ public class DevFestDataSource implements Callback<Conference> {
         mConference = conference;
         mConferenceRepository.setConference(conference);
         onConferenceUpdated();
-
-        //TODO remove this after debugging is complete
-        mConferenceRepository.getConference();
     }
 
     @Override
