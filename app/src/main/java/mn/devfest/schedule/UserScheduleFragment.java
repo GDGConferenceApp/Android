@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -20,8 +19,13 @@ import mn.devfest.R;
 import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
+import mn.devfest.data.sort.SessionTimeSort;
 import mn.devfest.sessions.SessionListAdapter;
 import mn.devfest.view.decoration.DividerItemDecoration;
+import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Fragment that displays the user's schedule
@@ -37,8 +41,8 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
     private SessionListAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
 
-    private List<Session> mScheduleSessions = new ArrayList<>();
     private DevFestDataSource mDataSource;
+    private Subscription mDataUpdateSubscription;
 
     @Override
     public void onAttach(Context context) {
@@ -62,8 +66,7 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        mAdapter = new SessionListAdapter(mDataSource);
-        mAdapter.setSessions(mScheduleSessions);
+        mAdapter = new SessionListAdapter(mDataSource);x
         mScheduleRecyclerView.setAdapter(mAdapter);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mScheduleRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -77,6 +80,15 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         setSchedule(mDataSource.getUserSchedule());
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (mDataUpdateSubscription != null) {
+            mDataUpdateSubscription.unsubscribe();
+        }
+    }
+
     /**
      * TODO update documentation
      */
@@ -87,15 +99,26 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
     }
 
     /**
-     * Updates the data set, and notifies the adapter of the data set change
+     * Notify this fragment that we have a new list of sessions for the user's schedule
      *
      * @param sessions the sessions to update the UI with
      */
     public void setSchedule(List<Session> sessions) {
-        mScheduleSessions = sessions;
-        if (mAdapter != null) {
-            mAdapter.notifyDataSetChanged();
-        }
+        mDataUpdateSubscription = Observable.from(sessions)
+                .toSortedList(new SessionTimeSort())
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::updateDisplayedSessions);
+    }
+
+    /**
+     * Update the which sessions are displayed
+     *
+     * @param sessions The sessions to display
+     */
+    private void updateDisplayedSessions(List<Session> sessions) {
+        mAdapter.setSessions(sessions);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
