@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/speaker_layout"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:padding="@dimen/activity_vertical_margin">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <!-- TODO change root element to a single speakerview -->
+    <LinearLayout
+        android:id="@+id/speaker_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_vertical_margin">
 
-</LinearLayout>
+        <!-- TODO change root element to a single speakerview -->
+
+    </LinearLayout>
+</ScrollView>
