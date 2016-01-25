@@ -2,14 +2,16 @@ package mn.devfest.sessions;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,7 +41,7 @@ public class SessionDetailsFragment extends Fragment {
     private static final String TIME_FORMAT = "h:mma";
 
     @Bind(R.id.toggle_in_user_schedule_button)
-    Button mToggleScheduleButton;
+    FloatingActionButton mToggleScheduleButton;
     @Bind(R.id.session_details_title)
     TextView mTitleTextview;
     @Bind(R.id.session_details_time)
@@ -181,10 +183,10 @@ public class SessionDetailsFragment extends Fragment {
      * Updates the button appearance to indicate if the session is in the user's schedule
      */
     private void upDateScheduleButtonAppearance() {
-        //TODO update appearance appropriately (probably an icon change and/or proper copy change)
-        String scheduleButtonText =
-                mDataSource.isInUserSchedule(mSession.getId()) ? "Remove from schedule" : "Add to Schedule";
-        mToggleScheduleButton.setText(scheduleButtonText);
+        int resourceId = (mDataSource.isInUserSchedule(mSession.getId()))
+                ? R.drawable.ic_remove_outline : R.drawable.ic_add_outline;
+        Drawable icon = ContextCompat.getDrawable(getContext(), resourceId);
+        mToggleScheduleButton.setImageDrawable(icon);
     }
 
     @OnClick(R.id.rate_session)
