@@ -1,29 +1,574 @@
 {
-  "name": "Dev Fest 2016",
-  "id": "devfest123",
-  "version": 0.1,
-  "publishDate": "2015-12-05T00:00:00.000Z",
-  "sessions": [
-    {
-      "start": "2015-12-05T09:30:00.000Z",
-      "end": "2015-12-05T10:30:00.000Z",
-      "id": "session1",
-      "speakers": [
-        {
-          "name": "John Doe",
-          "id": "jdoe123",
-          "twitter": "jdoe",
-          "website": "www.jdoe.com",
-          "bio": "John Doe is a web developer",
-          "image": "www.jdoe.com/profile.jpg"
-        }
-      ],
-      "description": "Sample session description",
-      "room": "Main Auditorium",
-      "tags": [
-        "android",
-        "beginner"
-      ]
+  "schedule": {
+    "0": {
+      "all": true,
+      "category": "android",
+      "description": "",
+      "endTime": "2016-02-06T16:00Z",
+      "room": "auditorium",
+      "speakers": ["-K5hCRIE2iUhkqglIwtL"],
+      "startTime": "2016-02-06T15:00Z",
+      "title": "Keynote: Android Development"
+    },
+    "1": {
+      "all": true,
+      "endTime": "2016-02-06T19:00Z",
+      "room": "Second Floor Cafeteria",
+      "startTime": "2016-02-06T18:00Z",
+      "title": "Lunch"
+    },
+    "2": {
+      "all": true,
+      "endTime": "2016-02-06T15:00Z",
+      "room": "Ground Floor Entry",
+      "startTime": "2016-02-06T14:00Z",
+      "title": "Registration"
+    },
+    "-K3IgGoJZeTNgNbj6HIP": {
+      "all": true,
+      "description": "",
+      "endTime": "2016-02-07T00:00Z",
+      "room": "auditorium",
+      "startTime": "2016-02-06T23:00Z",
+      "title": "Closing Remarks"
+    },
+    "-K66xliH2GhCOmYl9krE": {
+      "category": "iot",
+      "description": "Brillo is Google's latest embedded offering, based on Android, intended for low-power devices in the IoT market. How does it compare to the full Android stack? Will the tools be familiar to Android developers? In this session, we'll see exactly what makes Brillo tick and what that means for developers eager to test it out.",
+      "endTime": "2016-02-06T17:00Z",
+      "room": "auditorium",
+      "speakers": ["-K5hBKegarSocp4a3GM9"],
+      "startTime": "2016-02-06T16:00Z",
+      "title": "Brillo Under the Covers"
+    },
+    "-K66xpcvA16w6CfhaYf0": {
+      "category": "android",
+      "description": "Ok, how about 2X? All the cool kids are finally figuring out how to do some real testing on Android, and you should too.  Good tests starts with a good application design.  I'll demonstrate how to setup unit, integration and UI tests with Espresso, and how to manage your application architecture using Dagger 2, to make it easier to test.  Then we'll look at how to test some common solution choices, like RxJava and Retrofit.",
+      "endTime": "2016-02-06T18:00Z",
+      "room": "auditorium",
+      "speakers": ["-K5hCLBJyblQuKXvTd3s"],
+      "startTime": "2016-02-06T17:00Z",
+      "title": "10X Android Development"
+    },
+    "-K66xxir2yf66iddzOr-": {
+      "category": "cloud",
+      "description": "Have you seen Cloud Spin?  It's a demo that Google Cloud Developer Advocates (Ray Tsang, Bret McGowen, and Francesc Campoy) developed for the Google Cloud Platform Next event series. \n\nThe demo, consists of 19 Nexus 6 cameras that were placed around a half-circle pointing inwards to take a picture of the subject at the same moment in time, to create a 180 degree animated GIF - see them at @googlecloudspin twitter!\n\nBut wait, the Android cameras introduces some unknown delays when taking a photo - how did we make all the cameras take pictures at the same time?  What did we use to process and stitch the photos together?  And most importantly, how did we pull it off in a matter of 3 weeks?\n\nJoin this session to learn more about what we did behind the scenes, and how we leveraged open source technology, Google Cloud Platform, and Firebase to help us develop the demo rapidly.",
+      "endTime": "2016-02-06T21:00Z",
+      "room": "auditorium",
+      "speakers": ["-K5hCShssI9LS-9KJRWk", "-K7CucLj01M7lB7cyJHs"],
+      "startTime": "2016-02-06T20:00Z",
+      "title": "Creating 180-degree Matrix-like video with Android phones and Google Cloud Platform"
+    },
+    "-K66y2lf7zN1UZRZukQf": {
+      "category": "android",
+      "description": "\"Dependency injection\" and \"inversion of control\" sound like difficult, complex patterns but are actually quite simple! In fact, you probably use them all the time without realizing it. By understanding it you can begin to truly harness its power.  This talk will go over what it means to use dependency injection and why it's an important pattern in software development. Then we'll dive into the practical application of dependency injection via the Dagger library.",
+      "endTime": "2016-02-06T22:00Z",
+      "room": "auditorium",
+      "speakers": ["-K5hBiGqAn12b-Qc58Q9"],
+      "startTime": "2016-02-06T21:00Z",
+      "title": "Dependency Injection"
+    },
+    "-K66yGPXVpMtVSluNuoR": {
+      "category": "android",
+      "description": "Android was built from the very beginning with multitasking in mind and this core idea directly shapes the lifecycle of an Android application. In this talk I\u2019ll revisit some fundamental concepts of Android in order to provide a better understanding of how best to manage an app\u2019s state during this process, focusing in particular on how to properly save and restore that state and why this is necessary.",
+      "endTime": "2016-02-06T23:00Z",
+      "room": "auditorium",
+      "speakers": ["-K5hBJJHU00LNS3oPtzi"],
+      "startTime": "2016-02-06T22:00Z",
+      "title": "Matters of Life and Death : Truly Understanding the Android Application Lifecycle"
+    },
+    "-K66yKqwItBWjylyuvED": {
+      "category": "android",
+      "description": "Google Nearby is an easy-to-implement, device agnostic set of APIs for discovering other devices around you using Bluetooth, WiFi and Ultrasound networking technology. This workshop will give you a brief introduction to the Nearby APIs and how to enable them in your Google Developer account. Then we\u2019ll dive in and create an app that can discover other Nearby app users and exchange P2P data with them.",
+      "endTime": "2016-02-06T17:00Z",
+      "room": "lab",
+      "speakers": ["-K5hBg0E3Nd9y-8IfZuV"],
+      "startTime": "2016-02-06T16:00Z",
+      "title": "Won\u2019t You Be My Neighbor? Making Friends with Google Nearby."
+    },
+    "-K66yPn5gsX4q46i__fq": {
+      "category": "reach",
+      "description": "Biases are the unconscious judgments and decisions you make every day, without even realizing what you\u2019re doing. While biases can be helpful in life-threatening situations where quick responses are necessary, these same biases produce a harmful impact on employee diversity. Learn more about unconscious bias, what you can do to combat its negative effects, and how to improve diversity at your workplace.",
+      "endTime": "2016-02-06T18:00Z",
+      "room": "lab",
+      "speakers": ["-K5hBMTn-ea8fZecBJVt"],
+      "startTime": "2016-02-06T17:00Z",
+      "title": "The Science Behind Sexism: How Unconscious Bias Hinders Diversity in Tech"
+    },
+    "-K66yTMdARVqDKhXH0e4": {
+      "category": "chromeweb",
+      "description": "A year ago Angular community had been surprised, because Google decided to use TypeScript to build new version of one of the most powerful JavaScript frameworks nowadays. And even more, TypeScript became the recommended language to be used to build Angular 2.0 application. It is time to learn it, isn\u2019t it?  TypeScript is an open source programming language designed for development of large single-page applications. It is a strict superset of JavaScript with optional static typing and class-based object oriented programming support.  On the following session I am going to introduce the audience to TypeScript programming language. We will talk about classes, interfaces, modules, generics, decorators and many other features available in the language. At the end the audience will have a solid TypeScript foundation and, more importantly, when they should use it and how to start using the language in existing JavaScript projects.",
+      "endTime": "2016-02-06T20:00Z",
+      "room": "lab",
+      "speakers": ["-K5hBBLiPtWsAjarjUjr"],
+      "startTime": "2016-02-06T19:00Z",
+      "title": "Scaling up JavaScript with TypeScript"
+    },
+    "-K66yZxgMCPjHgL4uuYe": {
+      "category": "android",
+      "description": "We are releasing a BuzzFeed video player that uses BuzzFeed created and curated videos.  - We are using Exoplayer (one possible talk) - MVP (Model View Presenter) -  Short Talk of the project start to finish (in 10 minutes) with videos, of course - The Kotlin programming language (for Android)",
+      "endTime": "2016-02-06T21:00Z",
+      "room": "lab",
+      "speakers": ["-K5hBZm2D9fXZxiB3HEZ", "-K7TANsuQLlkTahf-xdP"],
+      "startTime": "2016-02-06T20:00Z",
+      "title": "BuzzFeed's Video App - Exoplayer and Adaptive Video"
+    },
+    "-K66yek-mOKEQBdeBO-p": {
+      "category": "iot",
+      "description": "I've built several party hats that incorporate an addressable LED strip, an Arduino controller, and a Bluetooth receiver (which connects to an Android proxy service). In this workshop we will build a Google Cloud Services web interface that allows you to control the hat colors and patterns. Attendees will be able to experiment with algorithms to create interesting colorful designs. I will bring about 5 hats with me to share, and provide a bill of materials for constructing your own (only costs about $20 + a thrift store hat).",
+      "endTime": "2016-02-06T22:00Z",
+      "room": "lab",
+      "speakers": ["-K5hCHQT5HaLGs3iGyZQ"],
+      "startTime": "2016-02-06T21:00Z",
+      "title": "Welcome to the Internet of Hats"
+    },
+    "-K66yq9j7k1BHeWU6ZWk": {
+      "category": "chromeweb",
+      "description": "Remember the simpler times, when all you needed in your web development toolkit was jQuery and an FTP server? Today, web developers have to navigate a sea of new frameworks, tools, and ever changing standards to get from \"New File...\" to <h1>Hello World<\/h1>. In this talk we will take a light-hearted journey through the recent history of modern web application development, examine where we are today, and look ahead to what's in store for us in the future.",
+      "endTime": "2016-02-06T20:00Z",
+      "room": "auditorium",
+      "speakers": ["-K5hB_hoPwORujf7NQ5q"],
+      "startTime": "2016-02-06T19:00Z",
+      "title": "Modern Web Development"
+    },
+    "-K66z4xFd9BHWGVq62HP": {
+      "category": "android",
+      "description": "Build your first Google Cardboard app. In this presentation we'll talk about how you can draw objects in 3D space using OpenGL and build a heads up display (HUD) using standard Android views. We'll also cover some techniques to test Google Cardboard projects in the Android emulator.",
+      "endTime": "2016-02-06T18:00Z",
+      "room": "smallauditorium",
+      "speakers": ["-K5hCl4gB4EhYZ1JobeY"],
+      "startTime": "2016-02-06T17:00Z",
+      "title": "Getting Started with Google Cardboard"
+    },
+    "-K66zFP0ctj6frgdIx43": {
+      "category": "android",
+      "description": "Meaningful animated transitions between different screens is a key component of Material design. Learn how to leverage the support library to animate content between different screens in your applications.",
+      "endTime": "2016-02-06T20:00Z",
+      "room": "smallauditorium",
+      "speakers": ["-K5hBY01Tw42PlxTfuj3"],
+      "startTime": "2016-02-06T19:00Z",
+      "title": "Making Beautifully Animated Transitions"
+    },
+    "-K66zN_dfy2rlwQ_ULvx": {
+      "category": "design",
+      "description": "Designers and developers need to work well together to make a good app. However, some of the most frustrating interactions on a project happen when these two groups can\u2019t communicate effectively with each other. This talk will cover tactics for developers to effectively collaborate with designers to create assets that will make both sides happy.",
+      "endTime": "2016-02-06T22:00Z",
+      "room": "smallauditorium",
+      "speakers": ["-K5hCK8Q8wL67vpC7HCA"],
+      "startTime": "2016-02-06T21:00Z",
+      "title": "How to Speak Designer"
+    },
+    "-K66zRZYS5EQfEEJfmY9": {
+      "category": "android",
+      "description": "Almost all android apps need to find views and set data.   Learn how to write less cruft and develop more quickly using Google\u2019s new Data Binding Library and other third party libraries such as Butter Knife.",
+      "endTime": "2016-02-06T23:00Z",
+      "room": "smallauditorium",
+      "speakers": ["-K5hBHbH6YZE7zmPoMKK"],
+      "startTime": "2016-02-06T22:00Z",
+      "title": "@Binding Android: View and Data Binding"
+    },
+    "-K66zkh0RiVi8m-ubh3D": {
+      "category": "iot",
+      "description": "Bluetooth Low Energy (BLE) beacons are small, wireless, electronic devices that repeatedly broadcast short messages. These messages can be received by appropriately configured, BLE-capable smartphones. Retailers, including Target locally, are starting to deploy beacons in retail stores, with the goal of increasing consumer engagement. This session will start with a brief description of BLE beacons, and the history of Apple and Google beacon products. Following that will be a summary of how of how BLE beacons interact with Google\u2019s Physical Web app, the smartphone user, and various servers, as well as an overview of the Google Eddystone protocol. This session will conclude with a few code examples of several beacon-related Android APIs, including the Bluetooth and Bluetooth LE APIs, the Proximity Beacon API, the Nearby Messages API, and the Places API",
+      "endTime": "2016-02-06T18:00Z",
+      "room": "classroom3",
+      "speakers": ["-K5hBVEbhyGsh_lEOzTS"],
+      "startTime": "2016-02-06T17:00Z",
+      "title": "Bluetooth Low Energy (BLE) Beacon Technologies from Google:  Physical Web, Eddystone, and More"
+    },
+    "-K66zqjCwPwQwBFp5Qql": {
+      "category": "chromeweb",
+      "description": "This presentation will cover creation of a Chrome Extension which includes a background page and content scripts to manipulate a target page DOM, injecting third party scripts, creating and reacting to events between the elements. The page elements will be scraped, filtered and sent to a back-end server such as a local MongoDB database and\/or a Firebase instance. Also cover the options for unit testing including PhantomJS, Chrome-Sinon, Mocha and Chai frameworks..",
+      "endTime": "2016-02-06T18:00Z",
+      "room": "classroom1",
+      "speakers": ["-K5hBCdjBIdXHja_gvyB"],
+      "startTime": "2016-02-06T17:00Z",
+      "title": "Chrome Extension for Page Scraping & Analysis"
+    },
+    "-K66zu3zFo70cSqYXPu3": {
+      "category": "chromeweb",
+      "description": "An Introduction to backend web development in the Go language from the perspective of a JavaScript developer. This session will cover the basics of backend development in Go and use comparable examples written in Node.js to help bootstrap your familiarity with this increasingly popular programming language.",
+      "endTime": "2016-02-06T21:00Z",
+      "room": "classroom1",
+      "speakers": ["-K5hBEhFK-Z47kMOmEyQ"],
+      "startTime": "2016-02-06T20:00Z",
+      "title": "Introductory Go for JavaScript Developers"
+    },
+    "-K66zxCb5g8T6C1dAe4P": {
+      "category": "cloud",
+      "description": "We all would like to predict the future at some point in our lives. Well thanks to Google we can now be one step closer! This talk will give an overview of what the Google Prediction API is, how you can use it to analyze data sets, it's strengths and weaknesses and we'll run some sample data through the system.",
+      "endTime": "2016-02-06T22:00Z",
+      "room": "classroom2",
+      "speakers": ["-K5hCPq-Vcri3eF7hTOw"],
+      "startTime": "2016-02-06T21:00Z",
+      "title": "Looking into the Crystal Ball: Usiing Google's Prediction API"
+    },
+    "-K66zzn3uFNtfkEebuXN": {
+      "category": "chromeweb",
+      "description": "With Angular, React, Ember & Others taking up the whole web world, I want to demonstrate how we should think in terms of modern web applications for the future. I want the viewers to get a strong understanding of how to setup architectures for SPA using Micro Services & Component Based architecture for both front and back-end.",
+      "endTime": "2016-02-06T22:00Z",
+      "room": "classroom1",
+      "speakers": ["-K5hBXCV14RflEhUKL8Z"],
+      "startTime": "2016-02-06T21:00Z",
+      "title": "Modern Web Application Architecture"
+    },
+    "-K67-1lZhWPrNpQ0vMN1": {
+      "category": "android",
+      "description": "Rule engines are not just for enterprise business rules. A lightweight rule engine can help control asynchronous Android API events during app initialization and is general enough to help with other programming challenges, too. For an example this session will look at a moderately complex app initialization Activity (splash screen) which sets up various APIs that have mutual dependencies. We will see how rules can facilitate the asynchronous nature of waiting for API initialization to complete and trigger the next step in the initialization flow, while maximizing parallel execution.",
+      "endTime": "2016-02-06T23:00Z",
+      "room": "classroom1",
+      "speakers": ["-K5hBbS4VY8KjC352O5D"],
+      "startTime": "2016-02-06T22:00Z",
+      "title": "Android Rulez - a lightweight rule engine to tame app initialization complexity and more"
+    },
+    "-K67-97CFf4ScXOpCTPL": {
+      "category": "android",
+      "description": "Starting with Android 4.3, Security-Enhanced Linux (SELinux) is used to further define the boundaries of the Android application sandbox.Android 5.0 (Lollipop) and 6.1 (Marshmallow) moves to full enforcement of SELinux. .We will explore new development from the  Android Open Source Project with demos.",
+      "endTime": "2016-02-06T17:00Z",
+      "room": "classroom2",
+      "speakers": ["-K5hBcVSMcWXzZcDkcXO"],
+      "startTime": "2016-02-06T16:00Z",
+      "title": "Security-Enhanced Android"
+    },
+    "-K67-BTU00FSKiX37uVR": {
+      "category": "android",
+      "description": "With its recent updates to Google Play Services, Android now has Mobile Vision APIs for developers to use.  See how things like facial detection and barcode scanning can now easily be included in your app.",
+      "endTime": "2016-02-06T20:00Z",
+      "room": "classroom1",
+      "speakers": ["-K5hBdg52alfqeXQbCZP"],
+      "startTime": "2016-02-06T19:00Z",
+      "title": "Android Vision: Detecting everything from faces to barcodes"
+    },
+    "-K67-ECm8kpnxbE8TGvv": {
+      "category": "cloud",
+      "description": "\"Introduction to Salesforce AppCloud Force.com Platform for enterprise cloud application development Demo of building a enterprise cloud application in 15 mins without code Demonstration of Mobile application using Force.com Platform  \"",
+      "endTime": "2016-02-06T18:00Z",
+      "room": "classroom2",
+      "speakers": ["-K5hBjv0NKXnjm1xYLDd"],
+      "startTime": "2016-02-06T17:00Z",
+      "title": "Build Cloud & Mobile Application in 15 mins on Force.com Platform"
+    },
+    "-K67-HYmvsPjT-x_r94c": {
+      "category": "reach",
+      "description": "This will be a two part presentation that focuses on making the IT workplace more accessible physically as well as culturally to both older workers and workers who need accommodations. While there can be overlap between the two groups regarding physical accommodations, it's the attitudes and assumptions that most often drive away older or disabled workers. We'll be talking about these issues as well as discussing ways to make your workplace accessible to an experienced  and diverse workforce.",
+      "endTime": "2016-02-06T21:00Z",
+      "room": "classroom2",
+      "speakers": ["-K5hCItqOpdiB7j2yEKF", "-K7X45Mg88f-qFFJdOWY"],
+      "startTime": "2016-02-06T20:00Z",
+      "title": "Accessibility and Aging in Tech"
+    },
+    "-K67-Katb6bZfqVcouHG": {
+      "category": "reach",
+      "endTime": "2016-02-06T23:00Z",
+      "room": "classroom2",
+      "speakers": ["-K5hCRIE2iUhkqglIwtL"],
+      "startTime": "2016-02-06T22:00Z",
+      "title": "Comedy Special"
+    },
+    "-K67-OOQac-7v3zKAU6h": {
+      "category": "iot",
+      "description": "How do you build a highly scalable IoT products or solutions on Google\u2019s Cloud Platform?  Google provides numerous services and APIs under the Google Cloud Platform banner.  Explore how to architect and leverage Google\u2019s Cloud Platform to fulfill the requirements of a highly scalable IoT solution.   We\u2019ll look architecture options and analyze a reference architecture for IoT that addresses some broad use cases.",
+      "endTime": "2016-02-06T17:00Z",
+      "room": "classroom3",
+      "speakers": ["-K5hCNXcklP_5y7Sah77", "-K7mAF2Ob8aQEBB_30T-"],
+      "startTime": "2016-02-06T16:00Z",
+      "title": "IoT on Google Cloud Platform"
+    },
+    "-K67-RAyCLTFFpTg1SVg": {
+      "category": "cloud",
+      "endTime": "2016-02-06T17:00Z",
+      "room": "smallauditorium",
+      "speakers": ["-K5hCWGYGdKxgFKVM6-2"],
+      "startTime": "2016-02-06T16:00Z",
+      "title": "Building a Firebase game and becoming a better parent"
+    },
+    "-K67-U_nbJiqYueT23-B": {
+      "category": "design",
+      "description": "Start a project Design-First or Development-First? Both have their challenges and can set a project up for failure. Follow one designer on her journey to discovering the best collaboration techniques for design and development to work together effectively.",
+      "endTime": "2016-02-06T20:00Z",
+      "room": "classroom3",
+      "speakers": ["-K5hCcA4BLSRRdcqGlm5"],
+      "startTime": "2016-02-06T19:00Z",
+      "title": "Why Designers Are so Hard to Work With"
+    },
+    "-K67-Xkc7Y_-08B-5d6G": {
+      "category": "design",
+      "endTime": "2016-02-06T23:00Z",
+      "room": "classroom3",
+      "speakers": ["-K5hC_LJ-uCJEOxw_mV3"],
+      "startTime": "2016-02-06T22:00Z",
+      "title": "Design Talk"
+    },
+    "-K6lGrQmgS1yn6kzKuFH": {
+      "category": "android",
+      "description": "When it comes to writing a custom camera app on Android, official documentation may sometimes appear blurry and out of focus. Even an exhaustive search of Google may still leave you stranded on many advanced topics. Learn from one of the masters who developed the video recorder in Vidku-- likely the best video app in town. Learn about how best to program your camera when writing camera apps on Android. We will examine all of the Android API classes and methods from easiest to most challenging. Learn how best to make use of Camera1 and Camera2 in your app.",
+      "endTime": "2016-02-06T21:00Z",
+      "room": "smallauditorium",
+      "speakers": ["-K6lGm9bT1oToOoacjye"],
+      "startTime": "2016-02-06T20:00Z",
+      "title": "Get the Picture on Android Camera"
+    },
+    "-K7SI6TDo-gEePIoawNU": {
+      "category": "chromeweb",
+      "description": "The OWASP Top 10 provides a list of the 10 most critical web application security risks. How do these relate to AngularJS applications? What security vulnerabilities should developers be aware of beyond XSS and CSRF? This session will review the OWASP Top 10 with a front-end development focus on HTML and JavaScript. It will look at patterns to implement and others to consider avoiding. We will also explore several built-in features of AngularJS that help secure your application.",
+      "endTime": "2016-02-06T21:00Z",
+      "room": "classroom3",
+      "speakers": ["-K7SBLLZdC5ai988T2H2"],
+      "startTime": "2016-02-06T20:00Z",
+      "title": "ng-owasp: OWASP Top 10 for AngularJS Applications"
+    },
+    "-K7iF94YlbAsJoymtSoD": {
+      "category": "chromeweb",
+      "description": "The DevFest.MN Website was built using AngularJS, Firebase. Come learn about the process that we went through to build and iterate on the website.",
+      "endTime": "2016-02-06T22:00Z",
+      "room": "classroom3",
+      "speakers": ["-K5hCagC-1jNZ-c022E3", "-K7wzi5jEPB7C2xGCjb_"],
+      "startTime": "2016-02-06T21:00Z",
+      "title": "Building the DevFest.MN Website"
+    },
+    "-K7m717l2NS3KOxU5iiN": {
+      "category": "reach",
+      "description": "This talk is meant for beginner developers or experienced developers who are looking for a change in pace. We review Google resources plus our own career advice.",
+      "endTime": "2016-02-06T20:00Z",
+      "room": "classroom2",
+      "speakers": ["-K5hCWGYGdKxgFKVM6-2"],
+      "startTime": "2016-02-06T19:00Z",
+      "title": "How Google can help your career in tech"
+    },
+    "-K80fa8l4RWNMJGlEXqm": {
+      "category": "cloud",
+      "description": "Ever wondered about the technology behind Google Photos? Or wanted to build an app that performs complex image analysis, like detecting objects, faces, emotions, and landmarks? The new Google Cloud Vision API (currently in alpha) exposes the machine learning models that power Google Photos and Google Image Search. Developers can now access these features with just a simple REST API call. We\u2019ll learn how to make a request to the Vision API, and then we\u2019ll see it classify images, extract text, and even identify landmarks like Harry Potter World. We\u2019ll end the talk by live coding an iOS app that implements image detection with the Vision API.",
+      "endTime": "2016-02-06T23:00Z",
+      "room": "lab",
+      "speakers": ["-K7xTULuZaTG8doRG7cx"],
+      "startTime": "2016-02-06T22:00Z",
+      "title": "Analyzing Images with Google\u2019s Cloud Vision API"
     }
-  ]
+  },
+  "speakers": {
+    "-K5hBBLiPtWsAjarjUjr": {
+      "bio": "As a software engineer and software development manager in finance and e-commerce sectors, Ilya gained more than 10 years of experience in leading the development of complex software in teams, large and small. Before moving to Minnesota, he worked in Europe for several multinational companies such as Monster and Barclays.\n\nIlya Verbitskiy is currently the Lead Developer at Cazarin Interactive, where he is leading software development department and promoting Agile principles and practices. In addition, he is happy husband and father.",
+      "company": "Cazarin Interactive",
+      "name": "Ilya Verbitskiy",
+      "twitter": "ilich_x86",
+      "website": "https:\/\/github.com\/ilich"
+    },
+    "-K5hBCdjBIdXHja_gvyB": {
+      "bio": "Baskin Tapkan is a lead software developer \/ applications architect with a proven record of iterated and tested web application development and delivery. Baskin has over eighteen years of application development experience in digital media, system automation, data storage, manufacturing, healthcare, education, publishing and service industries. Recently having worked on a large Angular 1.2, WebAPI and ASP.NET MVC with realtime notifications, he is currently working on integrating third party script integration using JavaScript, Chrome SDK, HTML, CSS and various backend technologies. He can be seen as a regular attendee & speaker in local user groups.",
+      "company": "ReachLocal, Inc.",
+      "name": "Baskin Tapkan",
+      "twitter": "baskint",
+      "website": "http:\/\/tapkan.com\/"
+    },
+    "-K5hBEhFK-Z47kMOmEyQ": {
+      "bio": "Scott Ernst is the co-founder of CodeTour, a company focused on improving the ways developers communicate and socialize their code. He escaped from academia with a PhD in computational physics and has worked as a data science and engineer in addition to developer roles in web, mobile, game, and VFX development at numerous startups.",
+      "company": "Code Tour",
+      "name": "Scott Ernst"
+    },
+    "-K5hBHbH6YZE7zmPoMKK": {
+      "bio": "Chris Davis is an independent software developer with over 18 years experience. He currently specializes in Android and ChromeOS development.",
+      "company": "RPGObjects, LLC",
+      "name": "Chris Davis"
+    },
+    "-K5hBJJHU00LNS3oPtzi": {
+      "bio": "Brian is an Android Developer with Livefront and one of the hosts of TC Mobile Hack Night (http:\/\/tchacknight.com). With a Ph.D. in theoretical particle physics, he brings his desire for deep understanding and love of problem solving to every project.",
+      "company": "Livefront",
+      "name": "Brian Yencho",
+      "twitter": "brianyencho",
+      "website": "livefront.com"
+    },
+    "-K5hBKegarSocp4a3GM9": {
+      "bio": "Dave Smith (@devunwired) is a Google Developer Expert for Android and the Android Lead at NewCircle, where he is focused on developing courseware materials to train beginning and advanced Android developers alike. He has been working with the Android platform at all levels since 2009, developing custom applications and system components to run Android on embedded platforms or interact with external embedded devices. He is the author of the popular developer cookbook \u201cAndroid Recipes: A Problem Solution Approach\u201d from Apress, and regularly provides developer tips and sample code through the NewCircle Stream (https:\/\/newcircle.com\/s) and his personal blog (http:\/\/www.wiresareobsolete.com).",
+      "company": "NewCircle",
+      "name": "Dave Smith",
+      "twitter": "devunwired",
+      "website": "http:\/\/newcircle.com"
+    },
+    "-K5hBMTn-ea8fZecBJVt": {
+      "bio": "Sarah Olson is a Senior Software Engineer at The Nerdery, currently focused on mobile development. As Director of Women Who Code Twin Cities, she leads a variety of initiatives and events to address the myriad of issues surrounding diversity in tech.",
+      "company": "Nerdery",
+      "name": "Sarah Olson",
+      "twitter": "saraheolson"
+    },
+    "-K5hBVEbhyGsh_lEOzTS": {
+      "bio": "Mr. Timothy J. Salo is the founder and president of Salo IT Solutions, Inc. (SaloITS). His current projects include developing an Android system that will use Bluetooth beacons to deliver NOAA contextual data products to public users\u2019 smartphones. He has previously served as the principal investigator for research contracts awarded by the Air Force Research Laboratory (AFRL) and the National Oceanic and Atmospheric Administration (NOAA), National Aeronautics and Space Administration (NASA), the National Science Foundation (NSF), and the Defense Advanced Projects Agency (DARPA). Mr. Salo has earned degrees from the University of Minnesota and the University of St. Thomas; he is currently a graduate student in computer science at the University of Minnesota.",
+      "company": "Salo IT Solutions, Inc.",
+      "name": "Timothy J. Salo"
+    },
+    "-K5hBXCV14RflEhUKL8Z": {
+      "bio": "Anas is a JavaScript Ninja and MEAN Stack Architect. He is currently working @ PayPal HQ where he is changing the world with one line of code at a time. He is an active Angular JS community contributor and active member of open source communities in Silicon Valley. His areas of interest include software architecture, design pattern and user experience on web.",
+      "company": "PayPal Corp.",
+      "name": "Anas Raza Firdousi",
+      "twitter": "AnasFirdousi"
+    },
+    "-K5hBY01Tw42PlxTfuj3": {
+      "bio": "Bryan is an Android engineer at Target on the Cartwheel team. He has been developing Android applications since 2010, and has previously worked with a number of technologies, including Google Glass and Xamarin.",
+      "company": "Target",
+      "name": "Bryan Herbst",
+      "website": "http:\/\/bryanherbst.com\/"
+    },
+    "-K5hBZm2D9fXZxiB3HEZ": {
+      "bio": "Steve is a Android lead developer at BuzzFeed.  Yes, that BuzzFeed with the lists and quizzes.  Steve is currently leading the team developing their Android video app  His portfolio ranges from designing ICs, writing Wall Street trading algorithms, to Operations Manager for a V\/C backed medical device start-up.  5+ years ago Steve picked Android (or did Android pick him?).\n\nHe is passionate about all things Android and is currently embracing the Kotlin language.",
+      "company": "BuzzFeed",
+      "name": "Steve Peterson"
+    },
+    "-K5hB_hoPwORujf7NQ5q": {
+      "bio": "Mark is a software developer living in Minneapolis with his amazing wife and two beautiful daughters. He is currently employed at LeadPages, making cutting edge web software with amazing people. Mark has been developing software for the past 10 years for a variety of platforms, but primarily on the web where he has done his best to stay on the cutting edge. Incidentally, this has resulted in a disturbingly wide variety of unhealthy and destructive habits such as switching frameworks every year, rewriting perfectly good applications from scratch multiple times, and pretending to actually know what he's talking about at conferences and meet-ups. Mark also enjoys motorcycles and data that flows in one direction.",
+      "company": "LeadPages",
+      "name": "Mark Nutter"
+    },
+    "-K5hBbS4VY8KjC352O5D": {
+      "bio": "Uli is an independent software developer currently working on a new breed of social location-based mobile games. Prior to this latest marble of his 16-year full-stack software development career he was a medical software engineer at Toshiba, working on everything from UI to enterprise backend, and workstation software to web development. With a background in artificial intelligence, Uli has provided expertise on rule-based software systems and other advanced technologies to various market-changing businesses.",
+      "company": "Independent Developer",
+      "name": "Uli Bubenheimer"
+    },
+    "-K5hBcVSMcWXzZcDkcXO": {
+      "bio": "Our incredible Open Source\/Libra software journey started in 1988 selling UNIX and Unix-like took kits to the world via a concept call \u201cShareware\u201d under the Cranston Software business model as a progressive business .We moved to Linux with the first kennel and Slackware 1 as an ISP. In the early 1990s an association was formed with IBM as a Developer and reseller that has lasted unit this day. And in the 1998 world of UserBlue an IBM developer and user conference across the US to propagandising from Linux Open Source and community based-interest services as road map for address the digital divide. The result was a billion dollar investment in Linux from IBM.\nToday we look to mobile with Android and the \u201cCloud\u201d.\nWhites, African Americans and Latino have similar rates of smartphone ownership, minorities tend to rely more heavily on their phone for internet access, according to Pew Research Center\u2019s recent report on smartphone adoption. Some 13% of Latino and 12% of African Americans are smartphone-dependent, meaning they don\u2019t have a broadband connection at home and have few options for going online other than their smartphones Pew Research Centre",
+      "company": "Cranston Software",
+      "name": "M A al-Kabir"
+    },
+    "-K5hBdg52alfqeXQbCZP": {
+      "bio": "Sean has been working with web technology for more than ten years and mobile technology for a bit less than that.  Currently he works at Livefront where he focuses on Android development.  He also helps host TC Mobile Hack (http:\/\/tchacknight.com) every month at Smart Factory.",
+      "company": "Livefront",
+      "name": "Sean Weiser",
+      "twitter": "weisers"
+    },
+    "-K5hBg0E3Nd9y-8IfZuV": {
+      "bio": "Richard Banasiak is a Senior Android Nerd at The Nerdery who prides himself on his ability to void warranties. Previously, he was the lead Android developer for CoreLogic\u2019s Mobile Innovation Center. Prior to his infatuation with Android, he was a Senior Engineer at Imation and Intel Security with a background in enterprise Java applications and network security.",
+      "company": "The Nerdery",
+      "name": "Richard Banasiak",
+      "twitter": "RichardBanasiak",
+      "website": "http:\/\/www.banasiak.com\/"
+    },
+    "-K5hBiGqAn12b-Qc58Q9": {
+      "bio": "Dan has been working on Android for over six years. He first started at Mobiata, went on to lead the Android team at Expedia, and is currently working at Trello. He's a Google Developer Expert for Android and has been giving talks at the local Twin Cities GDG for years. He's released a couple of open source Android libraries and several open source apps on Github (http:\/\/github.com\/dlew). He also writes regularly about development (http:\/\/blog.danlew.net\/).",
+      "company": "Trello",
+      "name": "Dan Lew",
+      "twitter": "danlew42",
+      "website": "danlew.net"
+    },
+    "-K5hBjv0NKXnjm1xYLDd": {
+      "bio": "Trusted IT professional and strategist with over 16 years of progressive IT responsibilities, hands-on enterprise application architecture and development experience of complex computer systems, and more than 8 years of technical consulting experience helping sell enterprise applications, managing software implementations and cross functional teams in various industry settings including fortune 500 companies in retail, services, insurance, healthcare, higher education, and banking\/financial industries. \n\nDecade experienced with Customer Relationship Management (CRM) systems, involved in leading and managing numerous Salesforce, PeopleSoft, and other CRM systems implementations. Demonstrated success with stakeholder engagement, collaboration and aligning business strategy across organization, driving change, standardization, business process improvement, people, process, and technology. \n\nKashi is an Architect and Evangelist for CRM, Salesforce, Social, Cloud, and Mobile technologies. He offers strong business acumen, executive presence, and program management skills. He has proven track record of successful on-time, within budget, projects leveraging internal and external resources.\n\nA collaborative business partner, change agent, self-motivator, result oriented leader, and a creative strategist whose career history has been consistently characterized by exceptional performance in each venture undertaken. Soft skills include; superb oral and written communication skills, ability to present information to all levels appropriately, and leading technology teams.\n\nCompetencies:\n* Strategy\/Roadmap Development\n* Sales Force Automation\n* Salesforce Sales, Service, & Marketing Cloud\n* Business Process Improvements\n* Social and Multi-Channel Customer Engagement Models\n* Business Architecture and Requirements\n* Stakeholder Facilitation \n* Leading cross-functional teams\n* Project Management and SDLC Methodology\n* Application Architecture and Integration\n\nCertified Salesforce Administrator and Developer",
+      "company": "Salesforce.com",
+      "name": "Kashi Ahmed",
+      "website": "http:\/\/www.kashifahmed.com\/"
+    },
+    "-K5hCHQT5HaLGs3iGyZQ": {
+      "bio": "Daniel Feldman is a senior software engineer at Veritas Technologies, an information management and data engineering company. He is currently working on a storage platform for analytics applications. He lives in Minneapolis.",
+      "company": "Veritas Technologies",
+      "name": "Daniel Feldman"
+    },
+    "-K5hCItqOpdiB7j2yEKF": {
+      "bio": "Valerie Lockhart is the owner of Ninja Media International, providing services including web and mobile application development, and content creation. She is also the head of the MN Women in Tech \/ Google Women Techmakers and regularly presents on web accessibility, universal design, and Google Apps.",
+      "company": "Minnesota Women in Tech",
+      "name": "Valerie Lockhart"
+    },
+    "-K5hCK8Q8wL67vpC7HCA": {
+      "company": "The Nerdery",
+      "name": "Ben Dolmar"
+    },
+    "-K5hCLBJyblQuKXvTd3s": {
+      "bio": "Brad Armstrong has been a professional software developer for over 17 years and is currently Staff Software Engineer at Code 42 Software, providing technical leadership and solutions for their data security and protection platform. He was an early adopter of the Android platform and has spent several years as a leader of the Android User Group of MN and the Twin Cities Google Developer Group. He continues to be a regular contributor in the local tech community as a returning speaker at Minnedemo, Minnebar, Mobile March and Google DevFest, and as a freelance Android developer through his company BitFarm Software.",
+      "company": "Code 42 Software",
+      "name": "Brad Armstrong",
+      "twitter": "hashbrown1"
+    },
+    "-K5hCNXcklP_5y7Sah77": {
+      "bio": "As Agosto's CTO, Lundberg is responsible for product development vision, intellectual property strategies and leveraging open source and proprietary technologies. Lundberg oversees product development for clients and for commercialization by Agosto. He is a member of the Google Cloud Platform Partner Advisory Board, contributing and gaining visibility into Google\u2019s computing platform roadmap.\n\nRecent awards for Paul and Agosto include first place in the Google Work in the Future Development Contest, as well as recognition for Agosto's Google Cloud Platform development work.",
+      "company": "Agosto",
+      "name": "Paul Lundberg",
+      "twitter": "goAgosto"
+    },
+    "-K5hCPq-Vcri3eF7hTOw": {
+      "bio": "Justin Grammens is an entrepreneur, educator and community leader on the subject of the Internet of Things. Grammens is the founder of Recursive Awesome, an IoT data analytics consulting company, and IoT Weekly, a publication covering current trends on the Internet of Things. He is an adjunct professor teaching a graduate level course on the Internet of Things at the University of Saint Thomas, an Industry Analyst on real-time IoT data collection for RTInsights and co-founded IoT Fuse as a non-profit to align the Midwest toward a vision of where the IoT is today and how it can be used to improve the world in which we live.",
+      "company": "Recursive Awesome",
+      "name": "Justin Grammens",
+      "twitter": "justingrammens"
+    },
+    "-K5hCRIE2iUhkqglIwtL": {
+      "bio": "Chet is the lead of the Android UI Toolkit team at Google, where he works on animations, graphics, and performance. He also writes technical articles, writes and performs comedy, and gives presentations at developer conferences like this one.",
+      "company": "Google",
+      "name": "Chet Haase"
+    },
+    "-K5hCShssI9LS-9KJRWk": {
+      "bio": "Ray is a Developer Advocate for the Google Cloud Platform. Ray had extensive hands on cross-industry enterprise systems integration delivery and management experiences during his time at Accenture, managed full stack application development, DevOps, and ITOps. Ray specialized in middleware, big data, and PaaS products during his time at Red Hat while contributing to open source projects, such as Infinispan. Aside from technology, Ray enjoys traveling and adventures.",
+      "company": "Google",
+      "name": "Ray Tsang",
+      "twitter": "saturnism"
+    },
+    "-K5hCWGYGdKxgFKVM6-2": {
+      "company": "Google",
+      "name": "Martin Omander"
+    },
+    "-K5hC_LJ-uCJEOxw_mV3": {
+      "company": "ReVamp Creative",
+      "name": "Chelsie Ellingson"
+    },
+    "-K5hCagC-1jNZ-c022E3": {
+      "bio": "Stephen Fluin is an enthusiastic Minnesota-based Executive Technologist, Entrepreneur, and Mobile Expert. Acting as an advisor and consultant to hundreds of startup, mid-sized, and Fortune 500 companies, he combines a deep understanding of modern technology and business practices to build great software products, strategies, and experiences.",
+      "company": "Trello",
+      "name": "Stephen Fluin",
+      "twitter": "stephenfluin"
+    },
+    "-K5hCcA4BLSRRdcqGlm5": {
+      "company": "MentorMate",
+      "name": "Stefanie Trimble"
+    },
+    "-K5hCl4gB4EhYZ1JobeY": {
+      "bio": "Chris is a Senior Software Engineer at MentorMate. He has a degree in Computer Science from the University of Wisconsin \u2013 Eau Claire. Chris has taught a number of courses on interactive development as adjunct faculty at the Art Institutes International and MCAD. He also has an interest in connecting mobile devices to physical hardware through the use of Arduino boards.",
+      "company": "MentorMate",
+      "name": "Chris Black"
+    },
+    "-K6lGm9bT1oToOoacjye": {
+      "bio": "Colin Lee has been writing software for thirty years and professionally for almost twenty. As an early adopter of the Android platform, he is a frequent speaker on And",
+      "company": "Vidku",
+      "name": "Colin Lee",
+      "twitter": "colinmlee",
+      "website": "http:\/\/colintheshots.com"
+    },
+    "-K7CucLj01M7lB7cyJHs": {
+      "bio": "Bret McGowen is a software developer at Rackspace, designing and building RackConnect, which lets customers have the best of both traditional and cloud hosting. Bret has spent most of his professional life writing software using Microsoft\u2019s .NET framework but is beginning to see the light and has started to dabble in open source technologies. When he\u2019s not on the jogging trail or volleyball court he enjoys working on and reading about tech startups.",
+      "company": "Google",
+      "name": "Bret McGowen"
+    },
+    "-K7SBLLZdC5ai988T2H2": {
+      "bio": "Kevin Hakanson is an Sr. Software Architect for Thomson Reuters where he is focused on highly scalable web applications, especially the JavaScript and security aspects. His background includes both .NET and Java, but he is most nostalgic about Lotus Notes. He has been developing professionally since 1994 and holds a Master\u2019s degree in Software Engineering. When not staring at a computer screen, he is probably staring at another screen, either watching TV or playing video games with his family.",
+      "company": "Thomson Reuters",
+      "name": "Kevin Hakanson",
+      "twitter": "hakanson"
+    },
+    "-K7TANsuQLlkTahf-xdP": {
+      "bio": "Paul is an Android developer at BuzzFeed working on their Video team. He has been developing on the platform for 3+ years and previously worked as a freelance mobile developer. He also has an extensive background in music. For nearly a decade, Paul ran his own music production studio and has received awards and nominations for his work as a producer and audio engineer.",
+      "company": "BuzzFeed",
+      "name": "Paul Marino"
+    },
+    "-K7X45Mg88f-qFFJdOWY": {
+      "bio": "Catherine Lundoff is a Senior Lead Data Engineer at a Twin Cities-based healthcare company. She has worked in IT for 17 years in QA and Data Analysis and has written about aging in IT for Model View Culture and about aging in other arenas for a variety of other publications.",
+      "name": "Catherine Lundoff"
+    },
+    "-K7mAF2Ob8aQEBB_30T-": {
+      "bio": "Aaron Olson is a full-stack software engineer at Agosto. He works is currently working on the Company's Skykit Display product. He is focused on building highly scalable web applications using Google Cloud Platform. His background includes video game development, robotics, and web development.",
+      "company": "Agosto",
+      "name": "Aaron Olson"
+    },
+    "-K7wzi5jEPB7C2xGCjb_": {
+      "company": "Macalester College",
+      "name": "Lloyd Cledwyn"
+    },
+    "-K7xTULuZaTG8doRG7cx": {
+      "bio": "Sara is a Developer Advocate on Google's Cloud Platform team, where she helps with developer relations through online content, outreach and events. She has a bachelor\u2019s degree in Business and International Studies from Brandeis University. When she's not programming, she can be found running, listening to country music, or finding the best ice cream in SF.",
+      "company": "Google",
+      "name": "Sara Robinson"
+    }
+  },
+  "sponsors": {
+    "-K3Hz85rLHe000OFS6Tx": {
+      "company": "MentorMate",
+      "description": "MentorMate",
+      "image": "data:image\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAAB4CAYAAAAuVYzDAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVNnVFPpFj333vRCS4iAlEtvUhUIIFJCi4AUkSYqIQkQSoghodkVUcERRUUEG8igiAOOjoCMFVEsDIoK2AfkIaKOg6OIisr74Xuja9a89+bN\/rXXPues852zzwfACAyWSDNRNYAMqUIeEeCDx8TG4eQuQIEKJHAAEAizZCFz\/SMBAPh+PDwrIsAHvgABeNMLCADATZvAMByH\/w\/qQplcAYCEAcB0kThLCIAUAEB6jkKmAEBGAYCdmCZTAKAEAGDLY2LjAFAtAGAnf+bTAICd+Jl7AQBblCEVAaCRACATZYhEAGg7AKzPVopFAFgwABRmS8Q5ANgtADBJV2ZIALC3AMDOEAuyAAgMADBRiIUpAAR7AGDIIyN4AISZABRG8lc88SuuEOcqAAB4mbI8uSQ5RYFbCC1xB1dXLh4ozkkXKxQ2YQJhmkAuwnmZGTKBNA\/g88wAAKCRFRHgg\/P9eM4Ors7ONo62Dl8t6r8G\/yJiYuP+5c+rcEAAAOF0ftH+LC+zGoA7BoBt\/qIl7gRoXgugdfeLZrIPQLUAoOnaV\/Nw+H48PEWhkLnZ2eXk5NhKxEJbYcpXff5nwl\/AV\/1s+X48\/Pf14L7iJIEyXYFHBPjgwsz0TKUcz5IJhGLc5o9H\/LcL\/\/wd0yLESWK5WCoU41EScY5EmozzMqUiiUKSKcUl0v9k4t8s+wM+3zUAsGo+AXuRLahdYwP2SycQWHTA4vcAAPK7b8HUKAgDgGiD4c93\/+8\/\/UegJQCAZkmScQAAXkQkLlTKsz\/HCAAARKCBKrBBG\/TBGCzABhzBBdzBC\/xgNoRCJMTCQhBCCmSAHHJgKayCQiiGzbAdKmAv1EAdNMBRaIaTcA4uwlW4Dj1wD\/phCJ7BKLyBCQRByAgTYSHaiAFiilgjjggXmYX4IcFIBBKLJCDJiBRRIkuRNUgxUopUIFVIHfI9cgI5h1xGupE7yAAygvyGvEcxlIGyUT3UDLVDuag3GoRGogvQZHQxmo8WoJvQcrQaPYw2oefQq2gP2o8+Q8cwwOgYBzPEbDAuxsNCsTgsCZNjy7EirAyrxhqwVqwDu4n1Y8+xdwQSgUXACTYEd0IgYR5BSFhMWE7YSKggHCQ0EdoJNwkDhFHCJyKTqEu0JroR+cQYYjIxh1hILCPWEo8TLxB7iEPENyQSiUMyJ7mQAkmxpFTSEtJG0m5SI+ksqZs0SBojk8naZGuyBzmULCAryIXkneTD5DPkG+Qh8lsKnWJAcaT4U+IoUspqShnlEOU05QZlmDJBVaOaUt2ooVQRNY9aQq2htlKvUYeoEzR1mjnNgxZJS6WtopXTGmgXaPdpr+h0uhHdlR5Ol9BX0svpR+iX6AP0dwwNhhWDx4hnKBmbGAcYZxl3GK+YTKYZ04sZx1QwNzHrmOeZD5lvVVgqtip8FZHKCpVKlSaVGyovVKmqpqreqgtV81XLVI+pXlN9rkZVM1PjqQnUlqtVqp1Q61MbU2epO6iHqmeob1Q\/pH5Z\/YkGWcNMw09DpFGgsV\/jvMYgC2MZs3gsIWsNq4Z1gTXEJrHN2Xx2KruY\/R27iz2qqaE5QzNKM1ezUvOUZj8H45hx+Jx0TgnnKKeX836K3hTvKeIpG6Y0TLkxZVxrqpaXllirSKtRq0frvTau7aedpr1Fu1n7gQ5Bx0onXCdHZ4\/OBZ3nU9lT3acKpxZNPTr1ri6qa6UbobtEd79up+6Ynr5egJ5Mb6feeb3n+hx9L\/1U\/W36p\/VHDFgGswwkBtsMzhg8xTVxbzwdL8fb8VFDXcNAQ6VhlWGX4YSRudE8o9VGjUYPjGnGXOMk423GbcajJgYmISZLTepN7ppSTbmmKaY7TDtMx83MzaLN1pk1mz0x1zLnm+eb15vft2BaeFostqi2uGVJsuRaplnutrxuhVo5WaVYVVpds0atna0l1rutu6cRp7lOk06rntZnw7Dxtsm2qbcZsOXYBtuutm22fWFnYhdnt8Wuw+6TvZN9un2N\/T0HDYfZDqsdWh1+c7RyFDpWOt6azpzuP33F9JbpL2dYzxDP2DPjthPLKcRpnVOb00dnF2e5c4PziIuJS4LLLpc+Lpsbxt3IveRKdPVxXeF60vWdm7Obwu2o26\/uNu5p7ofcn8w0nymeWTNz0MPIQ+BR5dE\/C5+VMGvfrH5PQ0+BZ7XnIy9jL5FXrdewt6V3qvdh7xc+9j5yn+M+4zw33jLeWV\/MN8C3yLfLT8Nvnl+F30N\/I\/9k\/3r\/0QCngCUBZwOJgUGBWwL7+Hp8Ib+OPzrbZfay2e1BjKC5QRVBj4KtguXBrSFoyOyQrSH355jOkc5pDoVQfujW0Adh5mGLw34MJ4WHhVeGP45wiFga0TGXNXfR3ENz30T6RJZE3ptnMU85ry1KNSo+qi5qPNo3ujS6P8YuZlnM1VidWElsSxw5LiquNm5svt\/87fOH4p3iC+N7F5gvyF1weaHOwvSFpxapLhIsOpZATIhOOJTwQRAqqBaMJfITdyWOCnnCHcJnIi\/RNtGI2ENcKh5O8kgqTXqS7JG8NXkkxTOlLOW5hCepkLxMDUzdmzqeFpp2IG0yPTq9MYOSkZBxQqohTZO2Z+pn5mZ2y6xlhbL+xW6Lty8elQfJa7OQrAVZLQq2QqboVFoo1yoHsmdlV2a\/zYnKOZarnivN7cyzytuQN5zvn\/\/tEsIS4ZK2pYZLVy0dWOa9rGo5sjxxedsK4xUFK4ZWBqw8uIq2Km3VT6vtV5eufr0mek1rgV7ByoLBtQFr6wtVCuWFfevc1+1dT1gvWd+1YfqGnRs+FYmKrhTbF5cVf9go3HjlG4dvyr+Z3JS0qavEuWTPZtJm6ebeLZ5bDpaql+aXDm4N2dq0Dd9WtO319kXbL5fNKNu7g7ZDuaO\/PLi8ZafJzs07P1SkVPRU+lQ27tLdtWHX+G7R7ht7vPY07NXbW7z3\/T7JvttVAVVN1WbVZftJ+7P3P66Jqun4lvttXa1ObXHtxwPSA\/0HIw6217nU1R3SPVRSj9Yr60cOxx++\/p3vdy0NNg1VjZzG4iNwRHnk6fcJ3\/ceDTradox7rOEH0x92HWcdL2pCmvKaRptTmvtbYlu6T8w+0dbq3nr8R9sfD5w0PFl5SvNUyWna6YLTk2fyz4ydlZ19fi753GDborZ752PO32oPb++6EHTh0kX\/i+c7vDvOXPK4dPKy2+UTV7hXmq86X23qdOo8\/pPTT8e7nLuarrlca7nuer21e2b36RueN87d9L158Rb\/1tWeOT3dvfN6b\/fF9\/XfFt1+cif9zsu72Xcn7q28T7xf9EDtQdlD3YfVP1v+3Njv3H9qwHeg89HcR\/cGhYPP\/pH1jw9DBY+Zj8uGDYbrnjg+OTniP3L96fynQ89kzyaeF\/6i\/suuFxYvfvjV69fO0ZjRoZfyl5O\/bXyl\/erA6xmv28bCxh6+yXgzMV70VvvtwXfcdx3vo98PT+R8IH8o\/2j5sfVT0Kf7kxmTk\/8EA5jz\/GMzLdsAAAAgY0hSTQAAeiUAAICDAAD5\/wAAgOkAAHUwAADqYAAAOpgAABdvkl\/FRgAAHN5JREFUeNrsnU9vG0l6xh\/NeD0ZeGL17AYJsMCwe5gNcsjBbeQDmLoTMPUJRH0BWvoElj6BZN5yEnXNxTTCWwKIPgUIduH2IcgmwNBsBpGRwLPTO561x4IN5cCil6uhxH6rq6qrxecHGPCM2dX1962n3nq7au38\/ByEEEIIIcQcn7AKCCGEEEIosAghhBBCvOaGycTW1tacZbweho1r2B7JKE0zdktCCCHEPSbDptaMJuZAYNXDMAbwGEB0Tdu3B2CXQosQQgihwHIpsL4DEFzzNs4AbIzSNGF3J4QQQqonsCoVg6W2BYMVaOMAwBG7OiGEEFJNGOTuL3E9DNusBkIIIYQCyzbjFWuf++yihBBCCAWWVUZpOl4xkdVgFyWEEEIosFwwXKH2CdRXk4QQQgihwLLK0xVrowa7KSGEEEKBZZvhirXRPXZTQgghhALLKozDIoQQQggFlh2GK9RGjMMihBBCKLCcwDgsQgghhFBgGWa4Yu3EOCxCCCGEAssuKg4rWaF2arCrEkIIIRRYLhiuUDsxDosQQgipEDd8yERnMAkAtCG4GiZLfxu9+o9fe1ux715\/h1f\/9Wu8Ph2ZSrKB1fLaEUIIIZVl7fz83Fxia2s64qoN4ABAIHnu\/MN7\/N+\/\/5v3FfzqP3+DF8N\/NJFUf5Smm+yyhBBCiB1MaqJStwg7g0kM4EgqrgBg7dMbuPH5Le8b6y\/+9u\/x57+sm0iqwa5PCCGEVIOyY7AOijx889btSlTy7V\/+tYlkGIdFCCGEUGBdjYq7ahQSWF+sr1p7NdhlCSGEEAqsq4iLJlAVD5ZBeB4WIYQQQoF1JUHRBKoSh\/Xm1amppBrssoQQQggF1lXEJhKpghfr\/dlbY6KUcViEEEIIBdZVhEYEVgXisAyehQXQi0UIIYRQYF1BZERgMQ6LEEIIIRRYH4lNJOJ7HJZh7xVADxYhhBBCgXUFgamEfPZiGYy\/+lhvjMMihBBCKLB+gjrB3Rg+x2G9\/faljWQb7LqEEEKIv5R12XNgVGD57MF699ZGsvcAHPpUTuVVa+k8O0rTPYv5akFvO3o8StMeTQQh2gvpNvRibZNus9a3mC9de9PvNmsJW7Yy\/e9A2f4IwBjAbrdZSzqDyTMA2\/Nt2RlMXgDYNN2+ZQmshsnEZnFY79\/+wbtGfvPtqY1kWx725xaAh5oiKBmlqS2DeqBp5DMAFFiEFBt7OovpMQAr9qAzmGjbqZn4Y7NWg26ztjsT1N1mbV5UBwAeANie6xMZDDt+gPLvIjSGr16ss9ffWUm3HoYNz4pa5NiN+5bqKIb+16oBCCFF0B1DkekwEkO2JmSTVpvOYBIBOL4wL9wH8AgWQm\/K8mAZP2rg5hfrePPqpXcN+s6SwFKdYehRUaMCz7ZmqwnDbBUVsaM0HYJ4jVps5DaONrekyceJrGFg7CYWstYqycZVvT0lY2bYbdZ8tZuzNjxWnqtZPocA2tdFYBn3DvjowbIorqyI1IIUWXEG9TBsWdgmbPnWT4m1xYZk24cCy39aAHYNi4RWwTEdr3B7SLdVfRZYicrfkeoPT7vN2rgzmBifU8vaIjTeUX08D+vMrsBqeNZxi4oRo527HoaRgRXnKhtUQsq0T5HazjFJ0VAELriqTwQg6zZrmfrvLViK9ytFYFkYNB\/xzYtlKcB9XkR4IbIMncvVsrACLgpjLgjRY92TMWx0UWpg65OUyx38cev5CYDxnNiqvsCCxX1s387D+nD2o++rRFOYWNlFhg9Q3fK5rxJyzYk9GcMzYRQbGs8Bm7Zy9Ob+vj8TVN1mrQdgf+7fdk2\/+HoJLM88WN+ffmP7Fb7EYZkSekYMqtoeNGHgYxBCyrLzscEdD1NijTahYnSbtfHc35O8\/0aBdQHf7yX0WNgUxZTrsOVZOlytElKunffNJqyzaYnPAuuOzcR98mJZuOj5J3gSh2VqVWdqm3DLYP1yxUqIAMNnWN03lB9Tgo\/2gHgtsKx6BXyJw\/pw9tbVq3wQWJEv5TG4PeikvxJyDTE5ZhqdwaRoelsG8xOxeYnPAsvqCsAXD5bDQ099iMMyaXSKGsPWNRSwhFQJ02OmVfLzFFikMgLLqkfAlzis9yviwbKwhRYrL5QvgpMxF4SUO2a0twlVkLxRUWTxGh9CgVWoYzoRAz54sd5+6+7anpLjsGwI5pZmPQQw78GiMSWk3DHTKrBN2LJQvoBNTLwTWK46pg9xWO9e\/87l68oUWDberbtNaMOYRiCEVHLRBbPxVz7YW1IhXN9F6MQb4IMHy\/I9hBe5d836ZVwPw2CUppnwufsW8uJMYCkPXKz+XJykxupPolEvcFiGWf4v1lsGYDhK02QVDKuqh+CSyXgIIKtCXahyNFRZhjkvP7dh5+\/hTw+MXIraHrSRFycreLUVORtL63NlyQA8V39PACTz5zldd5Q3c1Yvi+xMgukJ7aXXiWuB5aRjzuKw3r\/9Q2kV6zDIvewVlUTcDQV5bUkMqnB7MJEY3noYxrYmQ7W9u6XqJcr5zBjT+7Oe5JzwlqV3IKiP41Ga9i48HwF4oOo\/WvKuTOV9f5SmY0N5jYRpnOQpl4Y4bimR38DVXpyHc3UxxPTKjr4p4axE0UHe34\/SdGNBWXZUv4wWjOFlosYGLQDbGs\/kZSzoR9YcBUpUbeUYS60Lz41V2zwqcmBmZzBpo7jXb2vRxcndZm2jQL5mNqaRt\/47g8nM1jzpNmv9VRBYsasX3bx1u1SB5fCYho8TtYnJVoNA8NtEILDuC1esEmM6FPbFwEJ7tdVEqzMhRWoC3FFia3eUpv2C4zJvuzy9UI69mWAQ1GUbQLsehodKaGWW8ipZkDzVbMdIlb+l0U9moqwF4Kgehj1d4bkg3YZmeWIAj6HvuZU+l3fRFXQGk5ZwopQIhUSQd+MiUsUnPyzQt6PZuOoMJkNMr4QZaqZTdHxFpuqoYL0Ec3UyVuLz0OXk6DoGK3L1os\/Wf1GauLJ9ybNg0vBNND+XCCa1ks7LfUv5MFq39TCM62H4DMCRofEQAXhcD8MTYX0VLUegyvGwQDI7AJzm23D59wC8UEbcRBnaAF7Uw3CvjDpRov9ZwX4psQdDobDNPcaF24OZ0CYYm8c6g0nQGUwOAJwYtDMNACedweSxgTPESkHVy2OD9RIBOOgMJs9cfgV6bQVWmXFYH979WMZrncdhaRynMFZ\/cossSyJoWEYD1cNwR01gNgZ4Q03OsYNyxEpYmHhXrPIdoSKo8p8UFJdX8RDAM5e3CNTDsKVEf1GkE3piyR60hHkQ2QQTW6Fqoj9RCw0btJTQilEhlNfqBex8tBSrOmlfK4FlcW\/+cpFV0teEr1+Oynhto4R36rSpxJDlWrGqySGvYc\/UFowkH4XFaz0MjyCIiykwuZ1YnpjXMd1CCgzn+3EVPFnKy3MC++EOkWrLtoMyRYbElc5YkYzDQHDUjyQfTzXbx4S4st2PZoKiEgsYJXxOYPfEgQDAkQuR5dKD5V5geXQvoSPj71pkSY1DIjRmecsj2R4cag7IouKq7ahNZiLLloHasTSWY9jzCJkUV0dwdw5SgGlslu2+Y7JMonS6zVoGmRdr6VhX22ItyzZBWxgpsXPiuB95v12oBM+Rw1ce2fbuuRRYsesG+1lJHqzvT78pq4+6FliiAauCmUUrVuWdWobEmM4EXuai76rJsV1Cuzyu4Bphx9etQrV4OSrp9Uc5x4EPdkMyVsYaAse0PUC3WRtqBIQXESumPcCVX8AooVPG+LIqPF0KLOfquSwPVkkxWID7OCzx+9T23NjUilW4PThvzEWB7joTv9qqK2tSbrjYXrKAd5OAavuyBeuR73FqGttQ6YVFTx6iHF4H2x5tbVurtjjjkppox8etQiVwyhpfkU2b41JglXIYZhlxWCV9RWh6JWpaNCdzf+8bXLFKjOm4wHlWOoapiLjKlPFPCqThWqwUzS8wPb7Bt0nA5bbgVWPtCH6j1W7q6IVM8MjWksm6JUjrySU2yorDQHnK7goXmdd6AQP942pM2R1rwvMTXHNce7Ecn+C+aLXtUmRJVmLzBvRYYsiWbI9IjGm\/wMo1FrZDW3Olegjg7ihNvxyl6cYoTe8C+BLTQxalRjly4MUaAtgcpemagfzqtKnt8dQuuHAZqzqa\/SkysfrulYw0+o7pRZe07\/QvsVFG7cEFkZUokdUX1NP+3J9egX7U9ikWSwmbHY1H+wA2us3aWrdZ2+g2a3e7zdoagE3oeSWtCE+XB402ymjAn32xDvzvfzt731nJAkvV89D2SzSCqD8ahFGaJuqAzLwG+d4iY6TEpCQfxwWKHFgesGMlVH6yElOxaz0APXWSucQgbUF4xYiA7UWnn8\/yWw\/DvvK6SCe9+0po+rK61uEQwKNFh4aqreMH0IvNe2ixPS\/rl2PkO8qgiBfgiaA+os5gEl1yFYrEo33xihmRaLkiD3lEVgZgszOY7ODyr4sPMT0cc3zJ+9vqWaltaggFrU\/jKwOwfdmBs+r\/9zUC5luQ3xTgh8AqUzGvmgcL7rZipSu4dMEKZEfQ+XcLGtOL24OJrXpVHrdIaDQ28pzgPUrT3XoYQlB3jXoYRgZOB7\/I7rKrZZTQ2lQHksYm+tbFa11Ufe9JDPUoTddytmNbQzQkSiiPr3h\/AmC7HoaP1CQgqZuoHobtItf65OyPPUyvD5KMkzsadfVxYlRXmwQCm3BYcCF\/vMRGLW0LFNzq6zZrh+rk9fl+cKWImHu2p559JhRZ9y4TWN1mbQ\/A3oI5\/FyQ\/r5KJ48ukC4yNvN8kKDqBgKRpXNTwFJcbRHGKBGXcVhnP3jhwXKBdOLJlhi3ZZNKfImRzUt\/weQvQWLApJdOb0sE0ChNd4UC0XSfGI7S9FBSPmldexKH9UBDMGzkbUslXjY0xP4Di2UeYrpFvasRryhaSCsvzqVjdAlbCybsljAP\/SU2ysm8prYMN\/BHz+R23oleebc2qzQfzyEVV6Lrf7rNWg8yb+990wV0JbBKNZYuvVhvXp2W3msdxWHprOwvTi6S1d\/WhTLGwjwcL8uTQaMkEX5DzXsEHwlXrCbZl\/xYtXW\/SjZDCTxJm2dKXGXCusnUBCl5LrYkQHsqjm6s+bzE7ix6xxNJHSwITC6yPSi1B2JBuUxsdpu1bQBfS70oSnQkZeS7IPeF4+tQ4x37lvovBdYMl+dhvXd8ybOrjrKAOwbSkBiS1rIV7FWD85LVuGgyzBN3poSfxIBpxYUJt4hMrlgzzUvFn6JaSMfQroZXdNaWY6Fglor4XIJjlKbaMSgaYSDjBUKhLxyTrQJ1cmygzu6Y7nS6MV2Qxd3GFRxj\/QUez7z1mbduItPhTK6C3MMyW9GtB+ulLyuDPcvvEHXESyblY+SPJYrqYRjPCSWJMe0LVtHLDNPQoNEAgAf1MNzSbIMsZzuYNKiJo+fy1LVNJF6\/sYGYqENMt\/7yjivTk\/tuwedjjb572VhtC+zcoRJ4Leidhzc\/GQ9V3I4VG1hEuOYQF7+v0upFcOXRR7vaGUxONF8XlWV3XAmsqOwGvfnFOs5+sN8HP\/jhwYrrYRjorqgtrfAXiS7p14QNAInG9uBlWw+phX4sXUw4WU1eEKdFGDvqw0HJY0jSv\/oGxkKmvrpsW8jfUvGr6ZUskp\/nV4zVvHXQ6AwmgRIfog9eVNxT6TZwTnDEatF4T9VldOHfLxOIT5VYDVEtIo3fRx7mywuBFZfdmjdv3bYusF6fjnzqwA1Y+hRX44iGZMnktCNcsbYkK+UrYpwyC4Mvhp+YEiwpVgNJO5ra\/nwqERcGy2piu8zUxCQVei1MA5klNqG\/xFblbvs5gacjqgLV3g806q9hoR\/4LLAqmS9XMVhlr0adxGF5En81w+ZxDVIRcZUBkgS2NjTKtsyYSrgDsioEhvq3hHFJZU0MpCEdGwuFlBIrkoXhHeX9kbTXscG21FpQqS3NF5ieYxVxuF1PrHuwbN9WnRcXcVhvv33pU9vaXNlIDcKlE8coTYf1MMzyGkj1haSkbE8Mljuo8FinEfdboJRJ5tnYeIL8HqkYsntFl20Pjm2OK+W1OoD7C+BJCbjwYHkzKdk+D+v9O688WLHGVp6tyXrZtpJkxSr9erB\/lbjzSLRSYLFuS8FQbJ50IZ0YsgcNyLxny9JObbW9ElcnFFcUWCbxZlKy7cUq8ZJn13UvDahctkJ+YqlMfdMFtyhaSXVhnyh+yOjFf5OMXYlgWRZvNhaWWyLuDuBvjCaxgIsg93VfCmv7XkIP7iG8yD3YCXSXrtiTJSvovmCbUPLuJznzJjF6Ma4OxM0EaY1hJsA4D0OaOxFjQV+LDdWvZPGQ+VJRGp\/cj3OO3ZZhcZfn60GpwApy1lEL9FwVYd\/Re4zaSRcCyxvFbtuD9c4\/gdWoUJv2DRugLOcJ6dKJaplBfS6YGKJRmu7RdlZeYN2DmcupJd6QxKO6CjTqNo89ODKcTxv2IK+NPSiQ5+cLJv5A2eFQ9dNGxcbXELKLnvuGjtZYyqPzc2Np3fBw8NkVWZbOw\/JQXAH2zsMStWnOWCfJ+TemjKnOijVekrYoPYPnUxGzPBVMWq2iF2qrq29agkd86jPSBddSe9Rt1rLOYNKH2RPrj3O8NxEeNrr0qAblvYqEeT3E9O69LI+NU4dwVklkScdKAxX8mOQTDwefXYFlyYt15qfAgulBZ+ueQ+VtMikE855NJA1qXRZ\/NhSmtwXiI1Jj\/rDg+x5a6t8ukMZk5v3qz+QXwGOLHpBlc5z0EuHdbrO2m\/d8LbVFWyVxNbvCRmLvK2knrQqsBZdxlo6t87A8DHCfYfo8rMDiRNU3mM+8aUlFXbREKI6Fq7N20cD5ehi26mF4AFKm4G\/rLj7Uc23hY0OPqktq57MS7MHQYt0uG7+SfpF0m7VDx+K+LCTtG2vE+v1Ej3QGkyPT9w2WJrDg4efLtjxYH85+9LUTm17ZxMLfSyYpUyvWvmBbNLFQfonhCFAg1kRdG3QEYKcehs\/UfxP3EwAAPJbWv\/r9Y+F7epavwbJtE3KNOY2vCV3YFp3yR7by2RlM9nRsvEuRYbBNDnTzrZ57rBYyL4qKNQqsq0SWBS\/W96ff+DpJmD4PS7odMLboNSjDmOapy0fCNFv1MNzRFFcnc3mKAZzopEWMtGMA4Fne+le\/O4HcK3zsWT3ZnKxNjOWs26xJhJp00WXyHsDcaXUGkzb0vVcHZYss1SYSex9D42MBtZN2MieEAwAnncHEutd\/NQWWg1PdPaNRYptKY5xMrFhzp6Fzye2yrSC1TShN96Aehkd5xHA9DIN6GO4BeLZgcgtUWo95Zlcx1McHQ41HD+ph+KIehjsX+0o9DGP1\/2fXpEjbaGjgYmZj6HgCus3a0Fd7oJB+BWVynmstC63pDCZBZzA5QrGvLNsAvusMJuedweS8xC4kXcS0O4PJs7zhR53BZEfZyXjBP++otGJbhbP9FaGXd7fZOA\/Ls4ueL2LyPCxpZ8yEvy\/6NWHfwfZJnklxVw1sqdFr1cOwr+ohmX2ZprxVEaYBs60ceWgBaNTDcNOnCbmC6LTjbNI9UG1nOj8rg6GvCaVesLFlm7jMtpx0BpPdi143JSramF4OfV0WT4ca5Ykx3ebrYfqxx1AFzc\/qaN5ORjnSOukMJvsasW+lCywvO4FpD9YHvy55XkSjxDZNhF4DyaGjJozpLI+xcID3l3k\/6mF4CGBHo37bM5FZcHIOMN0y3Mx5JhhZ3I778COQeN\/DIz0aNu3B3JjWFVjS7UEdgbXMVg2F9RQBeKyOixjO2Zzguo0vJaB3oeeN+2gnpUdrLGi\/g85gEnabNaMLmE88G3zuRJbBOKw3r1763o+NxGE5DKDuO342E\/4+r+rZ1zDWpslQ\/cuIyxZZeyj\/q73E00Np1y2PtSrYg2VbpUXiyBrqT3Bdx1e3WevBzo0jLhbnpQosbzHpxXrvvwfLlNgVD3LN7Sndjq67PSgVQVHOsmcANlHutSabRQ7AJH+sxxKFagJgw9fFm+WxVvRrwica79Np56tsY8+RDRiiuldibZe8ENwVxgaWK7BcfQapi8nzsN5++7IKHdjEeVhO2rTA14S6wkwaiB8JyjKbHMsQWduMvzLWJzPVjq4ngQTAhmfHMmiNBc2xVmRs62wPGheaSiA+svz+sVoE7FdxfKk6KmN8AUDPRvyVVYEFz12aN2\/dxtqnZkLQ3r3+XRX6sAlxJFWlRSZ3HcOo+z7p5CWaVEoSWdujNO1RGlVaZPkurnQEVubQHhQRV1Jbsixs4NBiv8kAbHabtUx5YQ6rOL5KElm9brO2bStxmwIr9r1BTW0TvvP3mpw\/aQ8DcVgu21S6Yk0KbIWJB7Q0Hk2JrLuw78LP1KRMcWVJZI3S9K4DT8H+KE3v+iyuND9v15o81eSbWLYh1oSmRfGQANiY39ZUgdqVHP9z9eQi\/9s2xZVtgbXue2OaCnQ\/q4bAAop7sSKNwa87kUlXn64PXww0yjQepekGpp\/a25g4ewC+5ragE6G1Z0kwDwHc9TSgvfAYKMixRl0WES5GbeOceDDVZw4viqu5d22jwtuFKv8bsPOR0BDAXRVcbxV6sAzwrjoCq2gcllRg\/b7g+\/qWfntxstQxeI0C7zsE8LUSWiYMSA9Tr9W259tJ101kJUowm1hxz9pww8OjGIyNgYKBxCJ7kPeyZEO2K8pZ\/qzbrG1gGtQ9LlAPd5ddCN1t1vaUnemh3A9tdIXWsNusfQ1zAfBDJUg3LF78\/SfYPAcr8r0Bb3x+C2uf3sD5h\/faaXh8ybNRUaDY1+jQRXgE4HmO32UGvpRzWjYlhA4BHKrtxpYSwDHynaszxvSQPRMHqx6rtGyWeyys46HDflZUaA0BDOthuKvG2KwdG0vynKh6HxoWxmO48V44rfduszZWZyYFDvI2tFyWHoBeZzBpYXooZuOKOTNTfeWJEo5jSZ0pgbKtPjwLNJ0f+2XV3VxdRXN2spGjHyTzdlJSb6ZYOz83d0r+2trax7+XfPx+brLxb\/Hue\/0g9denI\/z2n\/6hSiLrS3o5\/GfRdTzc+qtsW84mtYRjj1yFimsL5sQFx7ygvkzUmVFNZENgqUI\/q0IDvXn1Eq9PX2g\/f\/qbf8H\/\/Pqfq9Qneao3IYQQYllg2YrBCqpSmSt48fM9DiFCCCHELrYEVlyVCpjFYeny\/ek3VWvzBrs9IYQQUk2BFVSpEop4sT68+7FqbW7kXkJCCCGEuBdYldqGKnIeVsW+IpzRYNcnhBBCqiewKoWuB+tDNS55rrwAJoQQQiiwpjSqVAm6cVhvXr2sars32PUJIYSQCgmszmASVLEi\/uz2z8XPVOgE94vE7PqEEEJIhQRWVSfvW3\/1ldiLdfZDZQVWxq5PCCGEVEtgRVWsiE9vfoaf1\/9OJLLevDqtarv32PUJIYQQCiwn3Pj8Fn7xN3fw+Zd\/mev376sZ5H44StNddn1CCCHEoqawkGZY5Qr59OZnuP3Vr3D7q1\/h7A\/fL\/v5RpXKxrvsCCGEkOoKrOi6VM6y4xue\/+sJBQshhBBCfgKD3PWhuCKEEEKIM4EVrEjdZew+hBBCCLEusDqDSWOF6u45uw8hhBBCrAusFSNjFRBCCCHEhcBqrFDdJew+hBBCCHEhsNZXqO7G7D6EEEIIcSGw4lWpuG6zRoFFCCGEECcCK1iRekvYdQghhBDiSmDFK1JvGbsOIYQQQlwJrFUhYRUQQgghxJXAylak3h6x6xBCCCHElcBaBeGxzQB3QgghhDgTWN1mbQ\/A4TWtqzGAzW6z1mO3IYQQQshVrJ2fn5tLbG0NANAZTAJcr4D3rNusJewuhBBCyPXFqCYymRghhBBCCOFXhIQQQgghFFiEEEIIIb7z\/wMANuyCBHNRRDgAAAAASUVORK5CYII=",
+      "level": "Bronze",
+      "link": "http:\/\/mentormate.com"
+    }
+  },
+  "versionNum": 24
 }
