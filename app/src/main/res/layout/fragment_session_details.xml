@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textAppearance="?android:textAppearanceLarge"
             tools:text="Juggling Cats in Space"/>
 
         <TextView
@@ -28,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textAppearance="?android:textAppearanceMedium"
             tools:text="10:00 - 10:50am"/>
 
         <TextView
@@ -35,6 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textAppearance="?android:textAppearanceMedium"
             tools:text="Classroom A – 3rd Floor"/>
 
         <TextView
@@ -42,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textAppearance="?android:textAppearanceMedium"
             tools:text="Advanced"/>
 
         <TextView
