@@ -47,6 +47,7 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
             mDataSource = DevFestApplication.get(getActivity()).component().datasource();
         }
         mDataSource.setDataSourceListener(this);
+        mDataSource.updateConferenceInfo();
         setSchedule(mDataSource.getUserSchedule());
     }
 
@@ -99,7 +100,8 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
 
     @Override
     public void onSessionsUpdate(List<Session> sessions) {
-        setSchedule(sessions);
+        //TODO handle redundant onSession and onSchedule updates
+        setSchedule(mDataSource.getUserSchedule());
     }
 
     @Override

@@ -9,7 +9,8 @@ import java.util.List;
 import mn.devfest.api.model.Conference;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
-import mn.devfest.schedule.UserScheduleRepository;
+import mn.devfest.persistence.ConferenceRepository;
+import mn.devfest.persistence.UserScheduleRepository;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -29,18 +30,25 @@ public class DevFestDataSource implements Callback<Conference> {
 
     private final DevFestApi mApi;
     private final UserScheduleRepository mScheduleRepository;
+    private final ConferenceRepository mConferenceRepository;
 
     private Conference mConference;
     //TODO move to an array of listeners?
     private DataSourceListener mDataSourceListener;
 
-    public DevFestDataSource(DevFestApi api, UserScheduleRepository scheduleRepository) {
+    public DevFestDataSource(DevFestApi api, UserScheduleRepository scheduleRepository, ConferenceRepository conferenceRepository) {
         this.mApi = api;
         this.mScheduleRepository = scheduleRepository;
+        this.mConferenceRepository = conferenceRepository;
+    }
 
-        // TODO this is a terrible place to fetch the API data.
-        // It isn't clear what thread this is called on, typically shouldn't happen in a constructor,
-        // and doesn't allow for easy refreshing if data if that is necessary in the future.
+    /**
+     * Checks the API for fresh info.
+     * If fresh info is available, it's persisted locally for future reference
+     * If fresh info isn't available, we fall back to the local store
+     */
+    public void updateConferenceInfo() {
+        //Check the API for fresh info
         mApi.getConferenceInfo(this);
     }
 
@@ -109,7 +117,6 @@ public class DevFestDataSource implements Callback<Conference> {
 
     /**
      * Adds the session with the given ID to the user's schedule
-     * TODO decide if we want this pass-through to maintain the general contractor paradigm
      *
      * @param sessionId ID of the session to be added
      */
@@ -119,7 +126,6 @@ public class DevFestDataSource implements Callback<Conference> {
 
     /**
      * Removes the session with the given ID from the user's schedule
-     * TODO decide if we want this pass-through to maintain the general contractor paradigm
      *
      * @param sessionId ID of the session to be removed
      */
@@ -129,7 +135,7 @@ public class DevFestDataSource implements Callback<Conference> {
 
     /**
      * Checks if a given session is in the user's schedule
-     * TODO decide if we want this pass-through to maintain the general contractor paradigm
+     *
      * @param sessionId ID of the session to check for inclusion in the list
      * @return true if the session is in the user's schedule; otherwise false
      */
@@ -151,12 +157,15 @@ public class DevFestDataSource implements Callback<Conference> {
     @Override
     public void success(Conference conference, Response response) {
         mConference = conference;
+        mConferenceRepository.setConference(conference);
         onConferenceUpdated();
     }
 
     @Override
     public void failure(RetrofitError error) {
         Timber.e(error, "Failed to retrieve conference info.");
+        mConference = mConferenceRepository.getConference();
+        onConferenceUpdated();
     }
 
     /**
