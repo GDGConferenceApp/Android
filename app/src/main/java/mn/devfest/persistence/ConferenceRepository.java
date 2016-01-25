@@ -64,11 +64,29 @@ public class ConferenceRepository {
     @NonNull
     public Conference getConference() {
         String jsonString = mSharedPreferences.getString(CONFERENCE_KEY, null);
+        //Fallback if SharedPreferences is empty
         if (jsonString == null) {
-            //TODO update this to return the locally stored conference data & update the documentation
-            return new Conference();
+            return getFallbackConference();
         }
-        return mGson.fromJson(jsonString, Conference.class);
+
+        Conference conference = mGson.fromJson(jsonString, Conference.class);
+        //Fallback if something went wrong getting the conference object 
+        if (conference == null || conference.getSchedule().isEmpty()) {
+            return getFallbackConference();
+        }
+
+        return conference;
+    }
+
+    /**
+     * Provides a conference object constructed from the JSON that ships with the app
+     *
+     * @return conference data that ships stored locally w/ the app
+     */
+    @NonNull
+    private Conference getFallbackConference() {
+        //TODO implement
+        return new Conference();
     }
 
 }
