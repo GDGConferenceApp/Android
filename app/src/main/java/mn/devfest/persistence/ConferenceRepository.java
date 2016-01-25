@@ -95,6 +95,7 @@ public class ConferenceRepository {
      */
     @NonNull
     private Conference getFallbackConference() {
+        //TODO make the raw conference easily replaceable for other GDG chapters
         InputStream inputStream = mContext.getResources().openRawResource(R.raw.conference);
 
         //Try to read a JSON string from the raw file

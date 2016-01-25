@@ -40,7 +40,6 @@ public class DevFestDataSource implements Callback<Conference> {
         this.mApi = api;
         this.mScheduleRepository = scheduleRepository;
         this.mConferenceRepository = conferenceRepository;
-        updateConferenceInfo();
     }
 
     /**
