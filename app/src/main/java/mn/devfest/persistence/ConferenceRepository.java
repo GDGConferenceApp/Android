@@ -5,12 +5,22 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.joda.time.DateTime;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
+
+import mn.devfest.R;
 import mn.devfest.api.adapter.ConferenceTypeAdapter;
 import mn.devfest.api.adapter.DateTimeTypeAdapter;
 import mn.devfest.api.model.Conference;
@@ -70,7 +80,7 @@ public class ConferenceRepository {
         }
 
         Conference conference = mGson.fromJson(jsonString, Conference.class);
-        //Fallback if something went wrong getting the conference object 
+        //Fallback if something went wrong getting the conference object
         if (conference == null || conference.getSchedule().isEmpty()) {
             return getFallbackConference();
         }
@@ -85,8 +95,34 @@ public class ConferenceRepository {
      */
     @NonNull
     private Conference getFallbackConference() {
-        //TODO implement
-        return new Conference();
+        InputStream inputStream = mContext.getResources().openRawResource(R.raw.conference);
+
+        //Try to read a JSON string from the raw file
+        Writer writer = new StringWriter();
+        char[] charBuffer = new char[1024];
+        try {
+            Reader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            int n;
+            while ((n = reader.read(charBuffer)) != -1) {
+                writer.write(charBuffer, 0, n);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        String jsonString = writer.toString();
+
+        //Return an empty conference if reading failed
+        if (TextUtils.isEmpty(jsonString)) {
+            return new Conference();
+        }
+
+        return mGson.fromJson(jsonString, Conference.class);
     }
 
 }
