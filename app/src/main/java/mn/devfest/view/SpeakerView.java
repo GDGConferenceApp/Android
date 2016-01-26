@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
+import mn.devfest.api.ProfilePictureApi;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.speakers.SpeakerImageTransformation;
 
@@ -75,11 +76,15 @@ public class SpeakerView extends LinearLayout {
      * TODO maybe replace this method with data binding
      */
     private void updateTextAndImage() {
+        int pictureSizePx = mProfileImageview.getResources().getDimensionPixelSize(R.dimen.speaker_details_image_size);
+        String pictureUrl = ProfilePictureApi.getImageUrl(mSpeaker, pictureSizePx);
+
         Picasso.with(mContext)
-                .load(mSpeaker.getImageUrl())
+                .load(pictureUrl)
                 .placeholder(R.drawable.ic_account_circle_white_48dp)
                 .transform(new SpeakerImageTransformation())
                 .into(mProfileImageview);
+
         mNameTextview.setText(mSpeaker.getName());
         mBioTextview.setText(mSpeaker.getBio());
         if (mSpeaker.getCompany() == null || mSpeaker.getCompany().isEmpty()) {
