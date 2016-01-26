@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,12 +24,11 @@ import mn.devfest.view.SpeakerView;
 public class SpeakerDetailsFragment extends Fragment {
     private static final String ARG_SPEAKER_ID = "speakerId";
 
-    @Bind(R.id.speaker_layout)
-    LinearLayout mSpeakerLayout;
+    @Bind(R.id.speaker)
+    SpeakerView mSpeakerView;
 
     private DevFestDataSource mDataSource;
     private Speaker mSpeaker;
-
 
     public static SpeakerDetailsFragment newInstance(String speakerId) {
         Bundle args = new Bundle();
@@ -70,9 +68,6 @@ public class SpeakerDetailsFragment extends Fragment {
             throw new IllegalStateException("SpeakerDetailsFragment requires a speaker ID passed via newInstance()");
         }
 
-        //TODO remove unneeded mSpeakerLayout
-        SpeakerView speakerView = new SpeakerView(getActivity());
-        speakerView.setSpeaker(mSpeaker);
-        mSpeakerLayout.addView(speakerView);
+        mSpeakerView.setSpeaker(mSpeaker);
     }
 }
