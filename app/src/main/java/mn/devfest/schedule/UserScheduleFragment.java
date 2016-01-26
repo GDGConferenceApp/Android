@@ -66,7 +66,7 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        mAdapter = new SessionListAdapter(mDataSource);x
+        mAdapter = new SessionListAdapter(mDataSource);
         mScheduleRecyclerView.setAdapter(mAdapter);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mScheduleRecyclerView.setLayoutManager(mLinearLayoutManager);

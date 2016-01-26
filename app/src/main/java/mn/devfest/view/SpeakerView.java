@@ -1,6 +1,8 @@
 package mn.devfest.view;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mn.devfest.R;
 import mn.devfest.api.ProfilePictureApi;
 import mn.devfest.api.model.Speaker;
@@ -32,14 +35,10 @@ public class SpeakerView extends LinearLayout {
     TextView mCompanyTextview;
     @Bind(R.id.speaker_view_bio)
     TextView mBioTextview;
-    @Bind(R.id.twitter_heading)
-    TextView mTwitterHeading;
-    @Bind(R.id.speaker_twitter)
-    TextView mTwitterTextview;
-    @Bind(R.id.website_heading)
-    TextView mWebsiteHeading;
-    @Bind(R.id.speaker_website)
-    TextView mWebsiteTextview;
+    @Bind(R.id.twitter_button)
+    ImageView mTwitterButton;
+    @Bind(R.id.website_button)
+    ImageView mWebsiteButton;
 
     Context mContext;
     Speaker mSpeaker;
@@ -93,17 +92,25 @@ public class SpeakerView extends LinearLayout {
             mCompanyTextview.setText(mSpeaker.getCompany());
         }
         if (mSpeaker.getTwitter() == null || mSpeaker.getTwitter().isEmpty()) {
-            mTwitterHeading.setVisibility(GONE);
-            mTwitterTextview.setVisibility(GONE);
-        } else {
-            mTwitterTextview.setText(mSpeaker.getTwitter());
+            mTwitterButton.setVisibility(GONE);
         }
         if (mSpeaker.getWebsite() == null || mSpeaker.getWebsite().isEmpty()) {
-            mWebsiteHeading.setVisibility(GONE);
-            mWebsiteTextview.setVisibility(GONE);
-        } else {
-            mWebsiteTextview.setText(mSpeaker.getWebsite());
+            mWebsiteButton.setVisibility(GONE);
         }
+    }
+
+    @OnClick(R.id.website_button)
+    void onWebsiteClicked() {
+        Intent webIntent = new Intent(Intent.ACTION_VIEW);
+        webIntent.setData(Uri.parse(mSpeaker.getWebsite()));
+        mContext.startActivity(webIntent);
+    }
+
+    @OnClick(R.id.twitter_button)
+    void onTwitterClicked() {
+        Intent webIntent = new Intent(Intent.ACTION_VIEW);
+        webIntent.setData(Uri.parse("https://twitter.com/#!/" + mSpeaker.getTwitter()));
+        mContext.startActivity(webIntent);
     }
 
 }

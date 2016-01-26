@@ -13,8 +13,8 @@
     <string name="start_to_end_time">%1$s - %2$s</string>
 
     <!-- Speaker View -->
-    <string name="twitter_heading">Twitter:</string>
-    <string name="website_heading">Website:</string>
+    <string name="twitter_description">Twitter button</string>
+    <string name="website_description">Website button</string>
 
     <!-- Map -->
     <string name="floor_selection_button_text">"Floor %d"</string>
