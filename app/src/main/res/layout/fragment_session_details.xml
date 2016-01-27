@@ -2,11 +2,14 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:fillViewport="true"
         android:orientation="vertical">
 
         <LinearLayout
@@ -22,6 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:layout_margin="@dimen/activity_horizontal_margin"
                 android:src="@drawable/ic_add_outline"/>
 
             <android.support.design.widget.FloatingActionButton
@@ -29,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:layout_margin="@dimen/activity_horizontal_margin"
                 android:src="@drawable/ic_feedback"/>
         </LinearLayout>
 
@@ -48,8 +53,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/session_details_title"
             android:layout_toStartOf="@+id/fab_layout"
-            android:gravity="center"
+            android:fontFamily="sans-serif-condensed"
             android:textAppearance="?android:textAppearanceMedium"
+            android:gravity="center"
             tools:text="10:00 - 10:50am"/>
 
         <TextView
@@ -58,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/session_details_time"
             android:layout_toStartOf="@+id/fab_layout"
+            android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:textAppearance="?android:textAppearanceMedium"
             tools:text="Classroom A – 3rd Floor"/>
@@ -68,6 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/session_details_location"
             android:layout_toStartOf="@+id/fab_layout"
+            android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:textAppearance="?android:textAppearanceMedium"
             tools:text="Advanced"/>
@@ -77,7 +85,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/fab_layout"
-            android:gravity="center"
+            android:layout_marginTop="32dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="start"
             tools:text="@string/body_copy_placeholder"/>
 
         <!-- TODO delete the background color & set the vertical & horizontal spacing -->
@@ -93,7 +103,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/session_details_tag_layout"
-            android:text="@string/speaker_heading_plural"/>
+            android:layout_marginTop="32dp"
+            android:text="@string/speaker_heading_plural"
+            android:textAppearance="?android:textAppearanceLarge"/>
 
         <!-- TODO move to a custom view group -->
         <LinearLayout
@@ -101,6 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/session_details_speaker_heading"
+            android:fillViewport="true"
             android:orientation="vertical"/>
 
     </RelativeLayout>
