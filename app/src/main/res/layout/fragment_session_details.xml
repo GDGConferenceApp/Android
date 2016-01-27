@@ -4,29 +4,40 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/toggle_in_user_schedule_button"
+        <LinearLayout
+            android:id="@+id/fab_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_outline"
-            android:layout_gravity="end"/>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/rate_session"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_feedback"
-            android:layout_gravity="end"/>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/toggle_in_user_schedule_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_add_outline"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/rate_session"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_feedback"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/session_details_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/fab_layout"
             android:gravity="center"
             android:textAppearance="?android:textAppearanceLarge"
             tools:text="Juggling Cats in Space"/>
@@ -35,6 +46,8 @@
             android:id="@+id/session_details_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/session_details_title"
+            android:layout_toStartOf="@+id/fab_layout"
             android:gravity="center"
             android:textAppearance="?android:textAppearanceMedium"
             tools:text="10:00 - 10:50am"/>
@@ -43,6 +56,8 @@
             android:id="@+id/session_details_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/session_details_time"
+            android:layout_toStartOf="@+id/fab_layout"
             android:gravity="center"
             android:textAppearance="?android:textAppearanceMedium"
             tools:text="Classroom A – 3rd Floor"/>
@@ -51,6 +66,8 @@
             android:id="@+id/session_details_difficulty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/session_details_location"
+            android:layout_toStartOf="@+id/fab_layout"
             android:gravity="center"
             android:textAppearance="?android:textAppearanceMedium"
             tools:text="Advanced"/>
@@ -59,6 +76,7 @@
             android:id="@+id/session_details_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/fab_layout"
             android:gravity="center"
             tools:text="@string/body_copy_placeholder"/>
 
@@ -67,12 +85,14 @@
             android:id="@+id/session_details_tag_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/session_details_description"
             android:background="@android:color/holo_blue_bright"/>
 
         <TextView
             android:id="@+id/session_details_speaker_heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/session_details_tag_layout"
             android:text="@string/speaker_heading_plural"/>
 
         <!-- TODO move to a custom view group -->
@@ -80,7 +100,8 @@
             android:id="@+id/session_details_speaker_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/session_details_speaker_heading"
             android:orientation="vertical"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>
