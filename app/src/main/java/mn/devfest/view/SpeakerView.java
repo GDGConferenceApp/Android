@@ -101,15 +101,25 @@ public class SpeakerView extends LinearLayout {
 
     @OnClick(R.id.website_button)
     void onWebsiteClicked() {
+        Uri website = Uri.parse(mSpeaker.getWebsite());
+
+        if (website.getScheme() == null) {
+            // Some people (*coughdanlewcough*) didn't include a scheme, and our backend isn't
+            // cleaning these URLs
+            website = website.buildUpon().scheme("http").build();
+        }
+
         Intent webIntent = new Intent(Intent.ACTION_VIEW);
-        webIntent.setData(Uri.parse(mSpeaker.getWebsite()));
+        webIntent.setData(website);
         mContext.startActivity(webIntent);
     }
 
     @OnClick(R.id.twitter_button)
     void onTwitterClicked() {
+        Uri twitterUri = Uri.parse("https://twitter.com/#!/" + mSpeaker.getTwitter());
+
         Intent webIntent = new Intent(Intent.ACTION_VIEW);
-        webIntent.setData(Uri.parse("https://twitter.com/#!/" + mSpeaker.getTwitter()));
+        webIntent.setData(twitterUri);
         mContext.startActivity(webIntent);
     }
 
