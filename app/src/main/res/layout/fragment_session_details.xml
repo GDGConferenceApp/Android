@@ -9,12 +9,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- TODO remove hard-coded text and replace with appropriate appearance -->
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/toggle_in_user_schedule_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_solid"/>
+            android:src="@drawable/ic_add_outline"
+            android:layout_gravity="end"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/rate_session"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_feedback"
+            android:layout_gravity="end"/>
 
         <TextView
             android:id="@+id/session_details_title"
@@ -74,13 +81,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"/>
-
-        <Button
-            android:id="@+id/rate_session"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Rate a session"/>
 
     </LinearLayout>
 </ScrollView>
