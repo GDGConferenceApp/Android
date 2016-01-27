@@ -15,24 +15,30 @@
         android:id="@+id/speaker_view_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:textAppearanceLarge"
         tools:text="Frank Fauxman"/>
 
     <TextView
         android:id="@+id/speaker_view_company"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:textAppearance="?android:textAppearanceMedium"
         tools:text="Mentor Mate"/>
 
     <TextView
         android:id="@+id/speaker_view_bio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
         tools:text="Frank is an astronaut and a circus performer. What more do you want?"/>
 
     <TextView
         android:id="@+id/twitter_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:textAppearance="?android:textAppearanceMedium"
         android:text="@string/twitter_heading"/>
 
     <TextView
@@ -45,6 +51,8 @@
         android:id="@+id/website_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:textAppearance="?android:textAppearanceMedium"
         android:text="@string/website_heading"/>
 
     <TextView
