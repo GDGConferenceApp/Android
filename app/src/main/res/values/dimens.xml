@@ -15,4 +15,5 @@
 
     <!-- Speaker dimens -->
     <dimen name="speaker_list_image_size">48dp</dimen>
+    <dimen name="speaker_details_image_size">96dp</dimen>
 </resources>

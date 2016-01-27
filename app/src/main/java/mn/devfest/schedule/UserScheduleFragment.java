@@ -52,7 +52,6 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         }
         mDataSource.setDataSourceListener(this);
         mDataSource.updateConferenceInfo();
-        setSchedule(mDataSource.getUserSchedule());
     }
 
     @Nullable
@@ -66,11 +65,13 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        mAdapter = new SessionListAdapter(mDataSource);x
+        mAdapter = new SessionListAdapter(mDataSource);
         mScheduleRecyclerView.setAdapter(mAdapter);
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mScheduleRecyclerView.setLayoutManager(mLinearLayoutManager);
         mScheduleRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+
+        setSchedule(mDataSource.getUserSchedule());
     }
 
     @Override
