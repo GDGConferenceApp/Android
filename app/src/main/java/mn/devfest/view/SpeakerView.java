@@ -1,6 +1,8 @@
 package mn.devfest.view;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +14,9 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mn.devfest.R;
+import mn.devfest.api.ProfilePictureApi;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.speakers.SpeakerImageTransformation;
 
@@ -31,14 +35,10 @@ public class SpeakerView extends LinearLayout {
     TextView mCompanyTextview;
     @Bind(R.id.speaker_view_bio)
     TextView mBioTextview;
-    @Bind(R.id.twitter_heading)
-    TextView mTwitterHeading;
-    @Bind(R.id.speaker_twitter)
-    TextView mTwitterTextview;
-    @Bind(R.id.website_heading)
-    TextView mWebsiteHeading;
-    @Bind(R.id.speaker_website)
-    TextView mWebsiteTextview;
+    @Bind(R.id.twitter_button)
+    ImageView mTwitterButton;
+    @Bind(R.id.website_button)
+    ImageView mWebsiteButton;
 
     Context mContext;
     Speaker mSpeaker;
@@ -75,11 +75,15 @@ public class SpeakerView extends LinearLayout {
      * TODO maybe replace this method with data binding
      */
     private void updateTextAndImage() {
+        int pictureSizePx = mProfileImageview.getResources().getDimensionPixelSize(R.dimen.speaker_details_image_size);
+        String pictureUrl = ProfilePictureApi.getImageUrl(mSpeaker, pictureSizePx);
+
         Picasso.with(mContext)
-                .load(mSpeaker.getImageUrl())
+                .load(pictureUrl)
                 .placeholder(R.drawable.ic_account_circle_white_48dp)
                 .transform(new SpeakerImageTransformation())
                 .into(mProfileImageview);
+
         mNameTextview.setText(mSpeaker.getName());
         mBioTextview.setText(mSpeaker.getBio());
         if (mSpeaker.getCompany() == null || mSpeaker.getCompany().isEmpty()) {
@@ -88,17 +92,35 @@ public class SpeakerView extends LinearLayout {
             mCompanyTextview.setText(mSpeaker.getCompany());
         }
         if (mSpeaker.getTwitter() == null || mSpeaker.getTwitter().isEmpty()) {
-            mTwitterHeading.setVisibility(GONE);
-            mTwitterTextview.setVisibility(GONE);
-        } else {
-            mTwitterTextview.setText(mSpeaker.getTwitter());
+            mTwitterButton.setVisibility(GONE);
         }
         if (mSpeaker.getWebsite() == null || mSpeaker.getWebsite().isEmpty()) {
-            mWebsiteHeading.setVisibility(GONE);
-            mWebsiteTextview.setVisibility(GONE);
-        } else {
-            mWebsiteTextview.setText(mSpeaker.getWebsite());
+            mWebsiteButton.setVisibility(GONE);
         }
+    }
+
+    @OnClick(R.id.website_button)
+    void onWebsiteClicked() {
+        Uri website = Uri.parse(mSpeaker.getWebsite());
+
+        if (website.getScheme() == null) {
+            // Some people (*coughdanlewcough*) didn't include a scheme, and our backend isn't
+            // cleaning these URLs
+            website = website.buildUpon().scheme("http").build();
+        }
+
+        Intent webIntent = new Intent(Intent.ACTION_VIEW);
+        webIntent.setData(website);
+        mContext.startActivity(webIntent);
+    }
+
+    @OnClick(R.id.twitter_button)
+    void onTwitterClicked() {
+        Uri twitterUri = Uri.parse("https://twitter.com/#!/" + mSpeaker.getTwitter());
+
+        Intent webIntent = new Intent(Intent.ACTION_VIEW);
+        webIntent.setData(twitterUri);
+        mContext.startActivity(webIntent);
     }
 
 }

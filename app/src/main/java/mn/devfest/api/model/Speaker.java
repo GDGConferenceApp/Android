@@ -7,7 +7,6 @@ import android.os.Parcelable;
  * Created by chris.black on 12/5/15.
  */
 public class Speaker implements Parcelable {
-    private String IMAGE_URL_FORMAT = "https://devfest.fluin.io/speakers/%s/100x400";
 
     public String name;
     public String bio;
@@ -38,10 +37,6 @@ public class Speaker implements Parcelable {
 
     public String getCompany() {
         return company;
-    }
-
-    public String getImageUrl() {
-        return String.format(IMAGE_URL_FORMAT, id);
     }
 
     public String getTwitter() {

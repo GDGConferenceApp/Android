@@ -5,26 +5,40 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/speaker_view_image"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:src="@drawable/ic_account_circle_white_48dp"/>
+        android:layout_marginBottom="@dimen/margin_medium">
 
-    <TextView
-        android:id="@+id/speaker_view_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:textAppearanceLarge"
-        tools:text="Frank Fauxman"/>
 
-    <TextView
-        android:id="@+id/speaker_view_company"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-condensed"
-        android:textAppearance="?android:textAppearanceMedium"
-        tools:text="Mentor Mate"/>
+        <ImageView
+            android:id="@+id/speaker_view_image"
+            android:layout_width="@dimen/speaker_details_image_size"
+            android:layout_height="@dimen/speaker_details_image_size"
+            android:layout_marginRight="@dimen/margin_medium"
+            android:contentDescription="@null"
+            tools:src="@drawable/ic_account_circle_white_48dp"/>
+
+        <TextView
+            android:id="@+id/speaker_view_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_toRightOf="@+id/speaker_view_image"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            tools:ignore="RtlHardcoded"
+            tools:text="Frank Fauxman"/>
+
+        <TextView
+            android:id="@+id/speaker_view_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/speaker_view_name"
+            android:layout_toRightOf="@+id/speaker_view_image"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            tools:text="Mentor Mate"/>
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/speaker_view_bio"
@@ -34,35 +48,32 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:text="Frank is an astronaut and a circus performer. What more do you want?"/>
 
-    <TextView
-        android:id="@+id/twitter_heading"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-condensed"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:text="@string/twitter_heading"
-        android:textAppearance="?android:textAppearanceMedium"/>
+        android:layout_marginTop="@dimen/margin_medium"
+        android:gravity="right"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/speaker_twitter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="pfue"/>
+        <ImageView
+            android:id="@+id/website_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/padding_normal"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/website_description"
+            android:padding="4dp"
+            android:src="@drawable/ic_public_black_24dp"/>
 
-    <TextView
-        android:id="@+id/website_heading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-condensed"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:text="@string/website_heading"
-        android:textAppearance="?android:textAppearanceMedium"/>
+        <ImageView
+            android:id="@+id/twitter_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/twitter_description"
+            android:padding="4dp"
+            android:src="@drawable/ic_twitter"/>
 
-    <TextView
-        android:id="@+id/speaker_website"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="google.com"/>
-
+    </LinearLayout>
 
 </LinearLayout>
