@@ -67,7 +67,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             Button button = new Button(getActivity());
             int floorNumber = i + 1;
             button.setText(String.format(getResources().getString(R.string.floor_selection_button_text), floorNumber));
-            button.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1.0f));
             button.setTag(i);
             button.setOnClickListener(this);
             mFloorSelectorLayout.addView(button);
