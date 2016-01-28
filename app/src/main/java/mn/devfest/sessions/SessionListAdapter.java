@@ -74,7 +74,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             Session session = mSessions.get(position);
 
             int drawableRes =
-                    mDataSource.isInUserSchedule(session.getId()) ? R.drawable.ic_remove : R.drawable.ic_add;
+                    mDataSource.isInUserSchedule(session.getId()) ? R.drawable.ic_remove_solid : R.drawable.ic_add_solid;
 
 
             sessionHolder.bindSession(session, drawableRes, this);
@@ -153,10 +153,10 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public int onToggleScheduleButtonClicked(Session session) {
         if (mDataSource.isInUserSchedule(session.getId())) {
             mDataSource.removeFromUserSchedule(session.getId());
-            return R.drawable.ic_add;
+            return R.drawable.ic_add_solid;
         } else {
             mDataSource.addToUserSchedule(session.getId());
-            return R.drawable.ic_remove;
+            return R.drawable.ic_remove_solid;
         }
     }
 }

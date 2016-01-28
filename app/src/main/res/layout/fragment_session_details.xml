@@ -1,77 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-    <!-- TODO remove hard-coded text and replace with appropriate appearance -->
-    <Button
-        android:id="@+id/toggle_in_user_schedule_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add to schedule"/>
-
-    <TextView
-        android:id="@+id/session_details_title"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        tools:text="Juggling Cats in Space"/>
+        android:padding="@dimen/activity_horizontal_margin"
+        android:fillViewport="true"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/session_details_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        tools:text="10:00 - 10:50am"/>
+        <LinearLayout
+            android:id="@+id/fab_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/session_details_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        tools:text="Classroom A – 3rd Floor"/>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/toggle_in_user_schedule_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:src="@drawable/ic_add_outline"/>
 
-    <TextView
-        android:id="@+id/session_details_difficulty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        tools:text="Advanced"/>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/rate_session"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:src="@drawable/ic_feedback"/>
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/session_details_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        tools:text="@string/body_copy_placeholder"/>
+        <TextView
+            android:id="@+id/session_details_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/fab_layout"
+            android:gravity="center"
+            android:textAppearance="?android:textAppearanceLarge"
+            tools:text="Juggling Cats in Space"/>
 
-<!-- TODO delete the background color & set the vertical & horizontal spacing -->
-    <com.liangfeizc.flowlayout.FlowLayout
-        android:id="@+id/session_details_tag_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/holo_blue_bright"/>
+        <TextView
+            android:id="@+id/session_details_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/session_details_title"
+            android:layout_toStartOf="@+id/fab_layout"
+            android:fontFamily="sans-serif-condensed"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:gravity="center"
+            tools:text="10:00 - 10:50am"/>
 
-    <TextView
-        android:id="@+id/session_details_speaker_heading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/speaker_heading_plural"/>
+        <TextView
+            android:id="@+id/session_details_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/session_details_time"
+            android:layout_toStartOf="@+id/fab_layout"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:textAppearance="?android:textAppearanceMedium"
+            tools:text="Classroom A – 3rd Floor"/>
 
-    <!-- TODO move to a custom view group -->
-    <LinearLayout
-        android:id="@+id/session_details_speaker_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"/>
+        <TextView
+            android:id="@+id/session_details_difficulty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/session_details_location"
+            android:layout_toStartOf="@+id/fab_layout"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:textAppearance="?android:textAppearanceMedium"
+            tools:text="Advanced"/>
 
-    <Button
-        android:id="@+id/rate_session"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Rate a session"/>
+        <TextView
+            android:id="@+id/session_details_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fab_layout"
+            android:layout_marginTop="32dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="start"
+            tools:text="@string/body_copy_placeholder"/>
 
-</LinearLayout>
+        <!-- TODO delete the background color & set the vertical & horizontal spacing -->
+        <com.liangfeizc.flowlayout.FlowLayout
+            android:id="@+id/session_details_tag_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/session_details_description"
+            android:background="@android:color/holo_blue_bright"/>
+
+        <TextView
+            android:id="@+id/session_details_speaker_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/session_details_tag_layout"
+            android:layout_marginTop="32dp"
+            android:text="@string/speaker_heading_plural"
+            android:textAppearance="?android:textAppearanceLarge"/>
+
+        <!-- TODO move to a custom view group -->
+        <LinearLayout
+            android:id="@+id/session_details_speaker_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/session_details_speaker_heading"
+            android:fillViewport="true"
+            android:orientation="vertical"/>
+
+    </RelativeLayout>
+</ScrollView>
