@@ -3,6 +3,7 @@ package mn.devfest.map;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,9 @@ import mn.devfest.R;
  * @author bherbst
  */
 public class MapFragment extends Fragment implements OnMapReadyCallback, View.OnClickListener {
+    private static final int DEFAULT_VISIBLE_FLOOR_INDEX = 0;
 
+    //TODO extract these variables to be easily modified by other GDGs
     private static final float CONFERENCE_CENTER_ZOOM_LEVEL = 18.5f;
     private static final int[] FLOOR_OVERLAY_ID_ARRAY = {R.drawable.schultze_level_one, R.drawable.schultze_level_two, R.drawable.schultze_level_three};
 
@@ -72,6 +75,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             button.setOnClickListener(this);
             mFloorSelectorLayout.addView(button);
         }
+
+        updateButtonAppearance(DEFAULT_VISIBLE_FLOOR_INDEX);
     }
 
     @Override
@@ -104,7 +109,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             GroundOverlayOptions floorOverlayOptions = new GroundOverlayOptions()
                     .image(BitmapDescriptorFactory.fromResource(FLOOR_OVERLAY_ID_ARRAY[i]))
                     .zIndex(i)
-                    .visible((i == 0)) //Only the lowest floor is visible by default
+                    .visible((i == DEFAULT_VISIBLE_FLOOR_INDEX)) //Only the lowest floor is visible by default
                     .positionFromBounds(getConferenceCenterBounds());
             mFloorOverlayArray.add(mMap.addGroundOverlay(floorOverlayOptions));
         }
@@ -137,10 +142,45 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     public void onClick(View v) {
         //Only address views in the floor selector layout
         if (v.getParent() == mFloorSelectorLayout) {
+            //Show/hide floor overlays to match new selection
             for (int i = 0; i < FLOOR_OVERLAY_ID_ARRAY.length; i++) {
+                //Change the visibility of each overlay appropriately
                 GroundOverlay groundOverlay = mFloorOverlayArray.get(i);
-                groundOverlay.setVisible((Integer)i == v.getTag());
+                groundOverlay.setVisible((Integer) i == v.getTag());
             }
+
+            //Update the appearance of the buttons to reflect the new selection
+            updateButtonAppearance((Integer) v.getTag());
+        }
+    }
+
+    /**
+     * Update the appearance of all of the buttons to reflect which one is selected
+     *
+     * @param selectedButtonIndex the index of the button that should appear selected
+     */
+    private void updateButtonAppearance(int selectedButtonIndex) {
+        Button button;
+        int backgroundColorId;
+        int backgroundColor;
+        int textColorId;
+        int textColor;
+
+        //Change the color of each button appropriately
+        for (int i = 0; i < FLOOR_OVERLAY_ID_ARRAY.length; i++) {
+            button = (Button) mFloorSelectorLayout.getChildAt(i);
+
+            if ((selectedButtonIndex == i)) {
+                backgroundColorId = R.color.colorAccent;
+                textColorId = R.color.colorBlack;
+            } else {
+                backgroundColorId = R.color.colorPrimary;
+                textColorId = R.color.colorWhite;
+            }
+            backgroundColor = ContextCompat.getColor(getContext(), backgroundColorId);
+            textColor = ContextCompat.getColor(getContext(), textColorId);
+            button.setBackgroundColor(backgroundColor);
+            button.setTextColor(textColor);
         }
     }
 }

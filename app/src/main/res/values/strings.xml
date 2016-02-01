@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DevFestMN 2016</string>
+    <string name="app_name">DevFest</string>
 
     <!-- Nav drawer -->
     <string name="drawer_item_my_schedule">My Schedule</string>

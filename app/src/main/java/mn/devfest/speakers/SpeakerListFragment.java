@@ -137,7 +137,9 @@ public class SpeakerListFragment extends Fragment implements DevFestDataSource.D
     @Override
     public void onSpeakersUpdate(List<Speaker> speakers) {
         setSpeakers(speakers);
-        mLoadingView.setVisibility(View.GONE);
+        if (mLoadingView != null) {
+            mLoadingView.setVisibility(View.GONE);
+        }
     }
 
     @Override
