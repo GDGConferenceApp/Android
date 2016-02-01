@@ -138,29 +138,45 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     public void onClick(View v) {
         //Only address views in the floor selector layout
         if (v.getParent() == mFloorSelectorLayout) {
+            //Show/hide floor overlays to match new selection
             for (int i = 0; i < FLOOR_OVERLAY_ID_ARRAY.length; i++) {
                 //Change the visibility of each overlay appropriately
                 GroundOverlay groundOverlay = mFloorOverlayArray.get(i);
-                groundOverlay.setVisible((Integer)i == v.getTag());
-
-                //Change the color of each button appropriately
-                Button button = (Button) mFloorSelectorLayout.getChildAt(i);
-                int backgroundColorId;
-                int textColorId;
-                if (((Integer)i == v.getTag())) {
-                    backgroundColorId = R.color.colorAccent;
-                    textColorId = R.color.colorBlack;
-                } else {
-                    backgroundColorId = R.color.colorPrimary;
-                    textColorId = R.color.colorWhite;
-                }
-                int backgroundColor = ContextCompat.getColor(getContext(), backgroundColorId);
-                int textColor = ContextCompat.getColor(getContext(), textColorId);
-                button.setBackgroundColor(backgroundColor);
-                button.setTextColor(textColor);
+                groundOverlay.setVisible((Integer) i == v.getTag());
             }
 
+            //Update the appearance of the buttons to reflect the new selection
+            updateButtonAppearance((Integer) v.getTag());
+        }
+    }
 
+    /**
+     * Update the appearance of all of the buttons to reflect which one is selected
+     *
+     * @param selectedButtonIndex the index of the button that should appear selected
+     */
+    private void updateButtonAppearance(int selectedButtonIndex) {
+        Button button;
+        int backgroundColorId;
+        int backgroundColor;
+        int textColorId;
+        int textColor;
+
+        //Change the color of each button appropriately
+        for (int i = 0; i < FLOOR_OVERLAY_ID_ARRAY.length; i++) {
+            button = (Button) mFloorSelectorLayout.getChildAt(i);
+
+            if ((selectedButtonIndex == i)) {
+                backgroundColorId = R.color.colorAccent;
+                textColorId = R.color.colorBlack;
+            } else {
+                backgroundColorId = R.color.colorPrimary;
+                textColorId = R.color.colorWhite;
+            }
+            backgroundColor = ContextCompat.getColor(getContext(), backgroundColorId);
+            textColor = ContextCompat.getColor(getContext(), textColorId);
+            button.setBackgroundColor(backgroundColor);
+            button.setTextColor(textColor);
         }
     }
 }
