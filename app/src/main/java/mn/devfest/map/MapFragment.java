@@ -3,6 +3,7 @@ package mn.devfest.map;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -138,9 +139,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         //Only address views in the floor selector layout
         if (v.getParent() == mFloorSelectorLayout) {
             for (int i = 0; i < FLOOR_OVERLAY_ID_ARRAY.length; i++) {
+                //Change the visibility of each overlay appropriately
                 GroundOverlay groundOverlay = mFloorOverlayArray.get(i);
                 groundOverlay.setVisible((Integer)i == v.getTag());
+
+                //Change the background color of each button appropriately
+                Button button = (Button) mFloorSelectorLayout.getChildAt(i);
+                int colorId = ((Integer)i == v.getTag()) ?  R.color.colorAccent : R.color.colorPrimary;
+                int color = ContextCompat.getColor(getContext(), colorId);
+                button.setBackgroundColor(color);
             }
+
+
         }
     }
 }
