@@ -21,12 +21,15 @@
         android:src="@drawable/ic_schedule_white_24dp"
         android:visibility="visible"/>
 
+    <!-- TODO update text color and placement in layout -->
     <TextView
         android:id="@+id/empty_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="@color/darkGray"
         android:text="@string/empty_schedule"
         android:visibility="visible"/>
 
