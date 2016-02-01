@@ -9,6 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -37,6 +40,15 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
 
     @Bind(R.id.schedule_recyclerview)
     RecyclerView mScheduleRecyclerView;
+
+    @Bind(R.id.loading_progress)
+    ProgressBar mLoadingView;
+
+    @Bind(R.id.empty_image)
+    ImageView mEmptyImage;
+
+    @Bind(R.id.empty_text)
+    TextView mEmptyText;
 
     private SessionListAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
