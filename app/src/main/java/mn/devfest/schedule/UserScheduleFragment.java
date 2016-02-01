@@ -144,10 +144,20 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         mLoadingView.setVisibility(View.GONE);
     }
 
+    /**
+     * Updates the UI to show if the list is empty or not
+     */
+    private void showEmptyView(boolean listIsEmpty) {
+        mEmptyImage.setVisibility(listIsEmpty ? View.VISIBLE : View.GONE);
+        mEmptyText.setVisibility(listIsEmpty ? View.VISIBLE : View.GONE);
+        mScheduleRecyclerView.setVisibility(listIsEmpty ? View.GONE : View.VISIBLE);
+    }
+
     @Override
     public void onSessionsUpdate(List<Session> sessions) {
         //TODO handle redundant onSession and onSchedule updates
         setSchedule(mDataSource.getUserSchedule());
+        showEmptyView(sessions.isEmpty());
     }
 
     @Override
@@ -159,5 +169,6 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
     public void onUserScheduleUpdate(List<Session> userSchedule) {
         setSchedule(userSchedule);
         mLoadingView.setVisibility(View.GONE);
+        showEmptyView(userSchedule.isEmpty());
     }
 }
