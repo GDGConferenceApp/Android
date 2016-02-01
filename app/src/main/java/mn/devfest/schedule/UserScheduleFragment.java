@@ -118,8 +118,10 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
      * @param sessions The sessions to display
      */
     private void updateDisplayedSessions(List<Session> sessions) {
-        mAdapter.setSessions(sessions);
-        mAdapter.notifyDataSetChanged();
+        if (mAdapter != null) {
+            mAdapter.setSessions(sessions);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
