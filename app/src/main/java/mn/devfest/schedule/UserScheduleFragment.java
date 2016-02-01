@@ -16,7 +16,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mn.devfest.DevFestApplication;
+import mn.devfest.MainActivity;
 import mn.devfest.R;
 import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
@@ -149,6 +151,13 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         mEmptyView.setVisibility(listIsEmpty ? View.VISIBLE : View.GONE);
         mScheduleRecyclerView.setVisibility(listIsEmpty ? View.GONE : View.VISIBLE);
     }
+
+    @OnClick(R.id.go_to_sessions_button)
+    protected void onGoToSessionsClicked() {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.navigateToTopLevelFragment(R.id.nav_sessions, true);
+    }
+
 
     @Override
     public void onSessionsUpdate(List<Session> sessions) {
