@@ -92,9 +92,11 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         //Refresh the UI with the latest data
         List<Session> userSchedule = mDataSource.getUserSchedule();
         if (userSchedule.size() == 0) {
+            showEmptyView(true);
             mLoadingView.setVisibility(View.VISIBLE);
             mDataSource.updateConferenceInfo();
         } else {
+            showEmptyView(false);
             setSchedule(userSchedule);
         }
 
