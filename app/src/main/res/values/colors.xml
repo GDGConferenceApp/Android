@@ -13,6 +13,7 @@
     <color name="nav_drawer_selected">@color/colorPrimary</color>
 
     <!-- Generic colors -->
+    <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="lightGray">#eee</color>
     <color name="mediumGray">#BDBDBD</color>

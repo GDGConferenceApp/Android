@@ -143,11 +143,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                 GroundOverlay groundOverlay = mFloorOverlayArray.get(i);
                 groundOverlay.setVisible((Integer)i == v.getTag());
 
-                //Change the background color of each button appropriately
+                //Change the color of each button appropriately
                 Button button = (Button) mFloorSelectorLayout.getChildAt(i);
-                int colorId = ((Integer)i == v.getTag()) ?  R.color.colorAccent : R.color.colorPrimary;
-                int color = ContextCompat.getColor(getContext(), colorId);
-                button.setBackgroundColor(color);
+                int backgroundColorId;
+                int textColorId;
+                if (((Integer)i == v.getTag())) {
+                    backgroundColorId = R.color.colorAccent;
+                    textColorId = R.color.colorBlack;
+                } else {
+                    backgroundColorId = R.color.colorPrimary;
+                    textColorId = R.color.colorWhite;
+                }
+                int backgroundColor = ContextCompat.getColor(getContext(), backgroundColorId);
+                int textColor = ContextCompat.getColor(getContext(), textColorId);
+                button.setBackgroundColor(backgroundColor);
+                button.setTextColor(textColor);
             }
 
 
