@@ -24,8 +24,6 @@
             android:id="@+id/empty_image"
             android:layout_width="160dp"
             android:layout_height="160dp"
-            android:layout_above="@+id/empty_text"
-            android:layout_centerHorizontal="true"
             android:contentDescription="@string/empty_schedule_content_description"
             android:src="@drawable/ic_schedule_white_24dp"
             android:visibility="visible"/>
