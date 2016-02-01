@@ -17,7 +17,7 @@
         android:layout_height="80dp"
         android:layout_margin="16dp"
         android:layout_gravity="top|left"
-        android:src="@drawable/ic_account_circle_white_48dp"/>
+        android:src="@drawable/devfest_logo"/>
 
     <TextView
         android:layout_width="match_parent"
