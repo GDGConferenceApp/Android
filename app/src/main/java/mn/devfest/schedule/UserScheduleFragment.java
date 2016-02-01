@@ -9,9 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -44,11 +43,8 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
     @Bind(R.id.loading_progress)
     ProgressBar mLoadingView;
 
-    @Bind(R.id.empty_image)
-    ImageView mEmptyImage;
-
-    @Bind(R.id.empty_text)
-    TextView mEmptyText;
+    @Bind(R.id.schedule_empty_view)
+    LinearLayout mEmptyView;
 
     private SessionListAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -150,8 +146,7 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
      * Updates the UI to show if the list is empty or not
      */
     private void showEmptyView(boolean listIsEmpty) {
-        mEmptyImage.setVisibility(listIsEmpty ? View.VISIBLE : View.GONE);
-        mEmptyText.setVisibility(listIsEmpty ? View.VISIBLE : View.GONE);
+        mEmptyView.setVisibility(listIsEmpty ? View.VISIBLE : View.GONE);
         mScheduleRecyclerView.setVisibility(listIsEmpty ? View.GONE : View.VISIBLE);
     }
 

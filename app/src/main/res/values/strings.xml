@@ -10,6 +10,7 @@
     <!-- User Schedule -->
     <string name="empty_schedule">You don\'t have any events on your schedule</string>
     <string name="empty_schedule_content_description">user schedule icon</string>
+    <string name="go_to_sessions_list">Go to Sessions List</string>
 
     <!-- Speaker Details -->
     <string name="speaker_heading_plural">Speakers:</string>

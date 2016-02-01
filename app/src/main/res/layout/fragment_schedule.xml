@@ -10,28 +10,43 @@
         android:layout_height="wrap_content"
         android:visibility="gone"/>
 
-    <!-- TODO update drawable asset-->
-    <ImageView
-        android:id="@+id/empty_image"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_above="@+id/empty_text"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="@string/empty_schedule_content_description"
-        android:src="@drawable/ic_schedule_white_24dp"
-        android:visibility="visible"/>
-
-    <!-- TODO update text color and placement in layout -->
-    <TextView
-        android:id="@+id/empty_text"
+    <LinearLayout
+        android:id="@+id/schedule_empty_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="@color/darkGray"
-        android:text="@string/empty_schedule"
-        android:visibility="visible"/>
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <!-- TODO update drawable asset-->
+        <ImageView
+            android:id="@+id/empty_image"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_above="@+id/empty_text"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/empty_schedule_content_description"
+            android:src="@drawable/ic_schedule_white_24dp"
+            android:visibility="visible"/>
+
+        <!-- TODO update text color and placement in layout -->
+        <TextView
+            android:id="@+id/empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_schedule"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/darkGray"
+            android:visibility="visible"/>
+
+        <Button
+            android:id="@+id/go_to_sessions_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/go_to_sessions_list"
+            android:visibility="visible"/>
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/loading_progress"
