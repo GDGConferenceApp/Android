@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/schedule_recyclerview"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/schedule_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/schedule_empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <!-- TODO update drawable asset-->
+        <ImageView
+            android:id="@+id/empty_image"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:contentDescription="@string/empty_schedule_content_description"
+            android:src="@drawable/ic_schedule_white_24dp"
+            android:visibility="visible"/>
+
+        <!-- TODO update text color and placement in layout -->
+        <TextView
+            android:id="@+id/empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_schedule"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/darkGray"
+            android:visibility="visible"/>
+
+        <Button
+            android:id="@+id/go_to_sessions_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/go_to_sessions_list"
+            android:visibility="visible"/>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/loading_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:indeterminate="true"
+        android:visibility="gone"/>
+
+</RelativeLayout>

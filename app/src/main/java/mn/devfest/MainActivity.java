@@ -37,12 +37,14 @@ public class MainActivity extends BaseActivity {
         navigateToTopLevelFragment(navItemId, true);
     }
 
+
+    //TODO evaluate if we want this public, or if we should try something else like listeners
     /**
      * Navigate to a top-level Fragment
      * @param navItemId The ID of the top-level Fragment in the nav drawer
      * @param addToBackStack True to add this transition to the back stack
      */
-    private void navigateToTopLevelFragment(int navItemId, boolean addToBackStack) {
+    public void navigateToTopLevelFragment(int navItemId, boolean addToBackStack) {
         Fragment destination;
         switch (navItemId) {
             case R.id.nav_schedule:

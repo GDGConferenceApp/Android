@@ -9,12 +9,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mn.devfest.DevFestApplication;
+import mn.devfest.MainActivity;
 import mn.devfest.R;
 import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
@@ -37,6 +41,12 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
 
     @Bind(R.id.schedule_recyclerview)
     RecyclerView mScheduleRecyclerView;
+
+    @Bind(R.id.loading_progress)
+    ProgressBar mLoadingView;
+
+    @Bind(R.id.schedule_empty_view)
+    LinearLayout mEmptyView;
 
     private SessionListAdapter mAdapter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -78,7 +88,16 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
     public void onResume() {
         super.onResume();
         //Refresh the UI with the latest data
-        setSchedule(mDataSource.getUserSchedule());
+        List<Session> userSchedule = mDataSource.getUserSchedule();
+        if (userSchedule.size() == 0) {
+            showEmptyView(true);
+            mLoadingView.setVisibility(View.VISIBLE);
+            mDataSource.updateConferenceInfo();
+        } else {
+            showEmptyView(false);
+            setSchedule(userSchedule);
+        }
+
     }
 
     @Override
@@ -122,12 +141,29 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
             mAdapter.setSessions(sessions);
             mAdapter.notifyDataSetChanged();
         }
+        mLoadingView.setVisibility(View.GONE);
     }
+
+    /**
+     * Updates the UI to show if the list is empty or not
+     */
+    private void showEmptyView(boolean listIsEmpty) {
+        mEmptyView.setVisibility(listIsEmpty ? View.VISIBLE : View.GONE);
+        mScheduleRecyclerView.setVisibility(listIsEmpty ? View.GONE : View.VISIBLE);
+    }
+
+    @OnClick(R.id.go_to_sessions_button)
+    protected void onGoToSessionsClicked() {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.navigateToTopLevelFragment(R.id.nav_sessions, true);
+    }
+
 
     @Override
     public void onSessionsUpdate(List<Session> sessions) {
         //TODO handle redundant onSession and onSchedule updates
         setSchedule(mDataSource.getUserSchedule());
+        showEmptyView(sessions.isEmpty());
     }
 
     @Override
@@ -138,5 +174,7 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
     @Override
     public void onUserScheduleUpdate(List<Session> userSchedule) {
         setSchedule(userSchedule);
+        mLoadingView.setVisibility(View.GONE);
+        showEmptyView(userSchedule.isEmpty());
     }
 }

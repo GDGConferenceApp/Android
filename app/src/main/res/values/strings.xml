@@ -7,6 +7,11 @@
     <string name="drawer_item_speakers">Speakers</string>
     <string name="drawer_item_map">Map</string>
 
+    <!-- User Schedule -->
+    <string name="empty_schedule">You don\'t have any events on your schedule</string>
+    <string name="empty_schedule_content_description">user schedule icon</string>
+    <string name="go_to_sessions_list">Go to Sessions List</string>
+
     <!-- Speaker Details -->
     <string name="speaker_heading_plural">Speakers:</string>
     <string name="speaker_heading_singular">Speaker:</string>
@@ -47,4 +52,5 @@
     <!-- TODO remove lorem ipsum -->
     <!-- Placeholder text -->
     <string name="body_copy_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+
 </resources>
