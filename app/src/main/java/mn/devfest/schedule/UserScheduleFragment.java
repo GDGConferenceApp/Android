@@ -90,7 +90,14 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
     public void onResume() {
         super.onResume();
         //Refresh the UI with the latest data
-        setSchedule(mDataSource.getUserSchedule());
+        List<Session> userSchedule = mDataSource.getUserSchedule();
+        if (userSchedule.size() == 0) {
+            mLoadingView.setVisibility(View.VISIBLE);
+            mDataSource.updateConferenceInfo();
+        } else {
+            setSchedule(userSchedule);
+        }
+
     }
 
     @Override
@@ -134,6 +141,7 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
             mAdapter.setSessions(sessions);
             mAdapter.notifyDataSetChanged();
         }
+        mLoadingView.setVisibility(View.GONE);
     }
 
     @Override
@@ -150,5 +158,6 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
     @Override
     public void onUserScheduleUpdate(List<Session> userSchedule) {
         setSchedule(userSchedule);
+        mLoadingView.setVisibility(View.GONE);
     }
 }
