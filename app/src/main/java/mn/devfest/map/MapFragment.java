@@ -34,7 +34,9 @@ import mn.devfest.R;
  * @author bherbst
  */
 public class MapFragment extends Fragment implements OnMapReadyCallback, View.OnClickListener {
+    private static final int DEFAULT_VISIBLE_FLOOR_INDEX = 0;
 
+    //TODO extract these variables to be easily modified by other GDGs
     private static final float CONFERENCE_CENTER_ZOOM_LEVEL = 18.5f;
     private static final int[] FLOOR_OVERLAY_ID_ARRAY = {R.drawable.schultze_level_one, R.drawable.schultze_level_two, R.drawable.schultze_level_three};
 
@@ -73,6 +75,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             button.setOnClickListener(this);
             mFloorSelectorLayout.addView(button);
         }
+
+        updateButtonAppearance(DEFAULT_VISIBLE_FLOOR_INDEX);
     }
 
     @Override
@@ -105,7 +109,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             GroundOverlayOptions floorOverlayOptions = new GroundOverlayOptions()
                     .image(BitmapDescriptorFactory.fromResource(FLOOR_OVERLAY_ID_ARRAY[i]))
                     .zIndex(i)
-                    .visible((i == 0)) //Only the lowest floor is visible by default
+                    .visible((i == DEFAULT_VISIBLE_FLOOR_INDEX)) //Only the lowest floor is visible by default
                     .positionFromBounds(getConferenceCenterBounds());
             mFloorOverlayArray.add(mMap.addGroundOverlay(floorOverlayOptions));
         }
