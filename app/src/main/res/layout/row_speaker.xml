@@ -1,26 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="32dp"
-    android:orientation="horizontal"
-    android:background="?attr/selectableItemBackground"
-    style="@style/ListItem"
-    tools:ignore="RtlHardcoded,RtlSymmetry,UseCompoundDrawables">
+<RelativeLayout style="@style/ListItem"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:orientation="horizontal"
+                android:paddingLeft="32dp"
+                tools:ignore="RtlHardcoded,RtlSymmetry,UseCompoundDrawables">
 
     <ImageView
         android:id="@+id/speaker_image"
         android:layout_width="@dimen/speaker_list_image_size"
         android:layout_height="@dimen/speaker_list_image_size"
-        android:contentDescription="@null" />
+        android:contentDescription="@null"
+        tools:src="@drawable/ic_account_circle_white_48dp"/>
 
     <TextView
         android:id="@+id/speaker_row_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/spacing_normal"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+        android:layout_toEndOf="@+id/speaker_image"
+        android:fontFamily="sans-serif-medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorBlack"
+        tools:text="Brad Armstrong"/>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/speaker_row_company"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/speaker_row_name"
+        android:layout_marginLeft="@dimen/spacing_normal"
+        android:layout_toEndOf="@+id/speaker_image"
+        android:fontFamily="sans-serif-condensed"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/darkGray"
+        tools:text="Code 42 Software"/>
+
+</RelativeLayout>
