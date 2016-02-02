@@ -116,7 +116,7 @@ public class SessionDetailsFragment extends Fragment {
             return;
         }
 
-        getActivity().setTitle(mSession.getTitle());
+        getActivity().setTitle(getResources().getString(R.string.sessions_title));
         mTitleTextview.setText(mSession.getTitle());
         String start = mSession.getStartTime().toLocalTime().toString(TIME_FORMAT);
         String end = mSession.getEndTime().toLocalTime().toString(TIME_FORMAT);

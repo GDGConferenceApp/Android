@@ -69,5 +69,6 @@ public class SpeakerDetailsFragment extends Fragment {
         }
 
         mSpeakerView.setSpeaker(mSpeaker);
+        getActivity().setTitle(getResources().getString(R.string.speaker_title));
     }
 }

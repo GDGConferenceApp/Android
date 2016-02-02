@@ -65,6 +65,8 @@ public class SpeakerListFragment extends Fragment implements DevFestDataSource.D
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
+        getActivity().setTitle(getResources().getString(R.string.speaker_title));
+
         mAdapter = new SpeakerListAdapter();
         mAdapter.setSpeakers(mSpeakerData);
         mSpeakerRecyclerView.setAdapter(mAdapter);

@@ -82,6 +82,8 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         mScheduleRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
 
         setSchedule(mDataSource.getUserSchedule());
+
+        getActivity().setTitle(getResources().getString(R.string.user_schedule_title));
     }
 
     @Override
