@@ -83,6 +83,13 @@ public class SpeakerListAdapter extends RecyclerView.Adapter<SpeakerListAdapter.
 
             mNameTextView.setText(speaker.getName());
 
+            //TODO update company
+//            if (speaker.getCompany() == null || speaker.getCompany().isEmpty()) {
+//                this.company.setVisibility(View.GONE);
+//            } else {
+//                this.company.setText(speaker.getCompany());
+//            }
+
             int pictureSizePx = speakerImage.getResources().getDimensionPixelSize(R.dimen.speaker_list_image_size);
             String pictureUrl = ProfilePictureApi.getImageUrl(speaker, pictureSizePx);
 
