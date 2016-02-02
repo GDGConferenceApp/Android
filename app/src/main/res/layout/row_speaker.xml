@@ -7,6 +7,8 @@
                 android:background="?attr/selectableItemBackground"
                 android:orientation="horizontal"
                 android:paddingLeft="32dp"
+                android:paddingTop="@dimen/spacing_normal"
+                android:paddingBottom="@dimen/spacing_normal"
                 tools:ignore="RtlHardcoded,RtlSymmetry,UseCompoundDrawables">
 
     <ImageView
@@ -16,27 +18,31 @@
         android:contentDescription="@null"
         tools:src="@drawable/ic_account_circle_white_48dp"/>
 
-    <TextView
-        android:id="@+id/speaker_row_name"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/spacing_normal"
-        android:layout_toEndOf="@+id/speaker_image"
-        android:fontFamily="sans-serif-medium"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorBlack"
-        tools:text="Brad Armstrong"/>
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/speaker_image">
 
-    <TextView
-        android:id="@+id/speaker_row_company"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/speaker_row_name"
-        android:layout_marginLeft="@dimen/spacing_normal"
-        android:layout_toEndOf="@+id/speaker_image"
-        android:fontFamily="sans-serif-condensed"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/darkGray"
-        tools:text="Code 42 Software"/>
+        <TextView
+            android:id="@+id/speaker_row_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorBlack"
+            tools:text="Brad Armstrong"/>
+
+        <TextView
+            android:id="@+id/speaker_row_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/mediumGray"
+            tools:text="Code 42 Software"/>
+    </LinearLayout>
 
 </RelativeLayout>
