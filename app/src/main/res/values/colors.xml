@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Theme Palette -->
-    <color name="colorPrimary">#5b72b6</color>
-    <color name="colorPrimaryDark">#415693</color>
-    <color name="colorAccent">#d4e056</color>
-    <color name="windowBackground">#ebeff2</color>
+    <color name="colorPrimary">#495CA7</color>
+    <color name="colorPrimaryDark">#324280</color>
+    <color name="colorAccent">#F9A826</color>
+    <color name="windowBackground">#E6EBEF</color>
     <color name="colorTextPrimary">#353F50</color>
-    <color name="divider">#9e9e9e</color>
+    <color name="divider">#8F9294</color>
 
     <!-- Nav drawer -->
     <color name="nav_drawer_default">#dd000000</color>
@@ -20,11 +20,11 @@
     <color name="darkGray">#424242</color>
 
     <!-- Session category colors -->
-    <color name="category_android">#558B2F</color>
-    <color name="category_design">#03A9F4</color>
+    <color name="category_android">#548B2F</color>
+    <color name="category_design">#00B8DD</color>
     <color name="category_chromeweb">#FF8F00</color>
-    <color name="category_cloud">#757575</color>
-    <color name="category_iot">#673AB7</color>
+    <color name="category_cloud">#B4B4B4</color>
+    <color name="category_iot">#9537FF</color>
     <color name="category_reach">#F44336</color>
     <color name="category_default">#000000</color>
 
