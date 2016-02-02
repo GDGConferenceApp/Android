@@ -60,11 +60,14 @@ public class SpeakerListAdapter extends RecyclerView.Adapter<SpeakerListAdapter.
     public class SpeakerViewHolder extends RecyclerView.ViewHolder {
         private Speaker speaker;
 
+        @Bind(R.id.speaker_image)
+        ImageView speakerImage;
+
         @Bind(R.id.speaker_row_name)
         TextView mNameTextView;
 
-        @Bind(R.id.speaker_image)
-        ImageView speakerImage;
+        @Bind(R.id.speaker_row_company)
+        TextView mCompanyTextView;
 
         public SpeakerViewHolder(View itemView) {
             super(itemView);
@@ -83,12 +86,12 @@ public class SpeakerListAdapter extends RecyclerView.Adapter<SpeakerListAdapter.
 
             mNameTextView.setText(speaker.getName());
 
-            //TODO update company
-//            if (speaker.getCompany() == null || speaker.getCompany().isEmpty()) {
-//                this.company.setVisibility(View.GONE);
-//            } else {
-//                this.company.setText(speaker.getCompany());
-//            }
+            //Update company
+            if (speaker.getCompany() == null || speaker.getCompany().isEmpty()) {
+                mCompanyTextView.setVisibility(View.GONE);
+            } else {
+                mCompanyTextView.setText(speaker.getCompany());
+            }
 
             int pictureSizePx = speakerImage.getResources().getDimensionPixelSize(R.dimen.speaker_list_image_size);
             String pictureUrl = ProfilePictureApi.getImageUrl(speaker, pictureSizePx);
