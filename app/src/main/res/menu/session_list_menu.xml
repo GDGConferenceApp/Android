@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/session_menu_autohide"
+        android:title="@string/sessions_menu_autohide"
+        android:checkable="true"
+        app:showAsAction="never"/>
+
+</menu>

@@ -15,6 +15,8 @@
 
     <!-- Sessions -->
     <string name="sessions_title">Sessions</string>
+    <string name="sessions_menu_filter">Filter</string>
+    <string name="sessions_menu_autohide">Hide finished</string>
 
     <!-- Speakers -->
     <string name="speaker_heading_plural">Speakers:</string>

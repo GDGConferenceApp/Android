@@ -1,16 +1,23 @@
 package mn.devfest.sessions;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -34,6 +41,7 @@ import rx.schedulers.Schedulers;
  * @author pfuentes
  */
 public class SessionsFragment extends Fragment implements DevFestDataSource.DataSourceListener {
+    private static final String PREF_KEY_AUTOHIDE = "autohide_past_sessions";
 
     @Bind(R.id.session_list_recyclerview)
     RecyclerView mSessionRecyclerView;
@@ -44,7 +52,30 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
     private SessionListAdapter mAdapter;
 
     private DevFestDataSource mDataSource;
+    private SharedPreferences mPreferences;
     private Subscription mDataUpdateSubscription;
+
+    private boolean mAutohidePastSessions;
+    private List<Session> mAllSessions;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        mAutohidePastSessions = mPreferences.getBoolean(PREF_KEY_AUTOHIDE, true);
+        mAllSessions = new ArrayList<>(0);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.session_list_menu, menu);
+
+        MenuItem autohide = menu.findItem(R.id.session_menu_autohide);
+        autohide.setChecked(mAutohidePastSessions);
+    }
 
     @Nullable
     @Override
@@ -107,6 +138,27 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
         //TODO cleanup resources
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.session_menu_autohide:
+                // Update item state
+                item.setChecked(!item.isChecked());
+
+                // Update preferences
+                mAutohidePastSessions = item.isChecked();
+                mPreferences.edit().putBoolean(PREF_KEY_AUTOHIDE, mAutohidePastSessions).apply();
+
+                // Force a re-filter
+                setSessions(mAllSessions);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     /**
      * Notify this fragment that we have a new list of sessions for this conference
      *
@@ -116,11 +168,22 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
      * @param sessions the new sessions
      */
     public void setSessions(List<Session> sessions) {
-        mDataUpdateSubscription = Observable.from(sessions)
+        mAllSessions = sessions;
+        mDataUpdateSubscription = Observable.from(mAllSessions)
+                .filter(session -> !(mAutohidePastSessions && hasSessionEnded(session)))
                 .toSortedList(new SessionTimeSort())
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::updateDisplayedSessions);
+    }
+
+    /**
+     * Check if a session has ended
+     * @param session The session
+     * @return True if the given session has ended
+     */
+    private boolean hasSessionEnded(@NonNull Session session) {
+        return session.getEndTime().isBeforeNow();
     }
 
     /**
