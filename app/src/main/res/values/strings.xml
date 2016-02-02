@@ -11,17 +11,21 @@
     <string name="empty_schedule">You don\'t have any events on your schedule</string>
     <string name="empty_schedule_content_description">user schedule icon</string>
     <string name="go_to_sessions_list">Go to Sessions List</string>
+    <string name="user_schedule_title">Your Schedule</string>
 
-    <!-- Speaker Details -->
+    <!-- Sessions -->
+    <string name="sessions_title">Sessions</string>
+
+    <!-- Speakers -->
     <string name="speaker_heading_plural">Speakers:</string>
     <string name="speaker_heading_singular">Speaker:</string>
     <string name="start_to_end_time">%1$s - %2$s</string>
-
-    <!-- Speaker View -->
+    <string name="speaker_title">Speakers</string>
     <string name="twitter_description">Twitter button</string>
     <string name="website_description">Website button</string>
 
     <!-- Map -->
+    <string name="map_title">Map</string>
     <string name="floor_selection_button_text">"Floor %d"</string>
 
 

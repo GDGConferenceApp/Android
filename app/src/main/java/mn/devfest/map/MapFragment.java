@@ -77,6 +77,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         }
 
         updateButtonAppearance(DEFAULT_VISIBLE_FLOOR_INDEX);
+        getActivity().setTitle(getResources().getString(R.string.map_title));
     }
 
     @Override
