@@ -13,7 +13,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
 import mn.devfest.api.model.Session;
-import mn.devfest.sessions.SessionDetailsActivity;
+import mn.devfest.sessions.details.SessionDetailsActivity;
 import mn.devfest.util.CategoryColorUtil;
 
 /**

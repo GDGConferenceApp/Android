@@ -21,8 +21,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".sessions.SessionDetailsActivity"/>
-        <activity android:name=".sessions.RateSessionActivity"/>
+        <activity android:name=".sessions.details.SessionDetailsActivity"/>
+        <activity android:name=".sessions.rating.RateSessionActivity"/>
         <activity android:name=".speakers.SpeakerDetailsActivity"/>
 
         <meta-data

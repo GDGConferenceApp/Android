@@ -1,4 +1,4 @@
-package mn.devfest.sessions;
+package mn.devfest.sessions.details;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +27,7 @@ import mn.devfest.R;
 import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
+import mn.devfest.sessions.rating.RateSessionActivity;
 import mn.devfest.view.SpeakerView;
 
 
