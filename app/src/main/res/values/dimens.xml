@@ -9,6 +9,9 @@
     <dimen name="spacing_small">8dp</dimen>
     <dimen name="padding_normal">16dp</dimen>
 
+    <!-- Material dialog dimens -->
+    <dimen name="dialog_padding">24dp</dimen>
+
     <!-- List items -->
     <dimen name="list_item_vertical_padding">8dp</dimen>
     <dimen name="list_item_horizontal_padding">16dp</dimen>
@@ -16,4 +19,5 @@
     <!-- Speaker dimens -->
     <dimen name="speaker_list_image_size">72dp</dimen>
     <dimen name="speaker_details_image_size">96dp</dimen>
+
 </resources>

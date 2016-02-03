@@ -18,7 +18,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,6 +30,8 @@ import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.data.sort.SessionTimeSort;
+import mn.devfest.sessions.filter.OnCategoryFilterSelectedListener;
+import mn.devfest.sessions.filter.SessionCategoryFilterDialog;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -40,8 +44,11 @@ import rx.schedulers.Schedulers;
  * @author bherbst
  * @author pfuentes
  */
-public class SessionsFragment extends Fragment implements DevFestDataSource.DataSourceListener {
+public class SessionsFragment extends Fragment implements DevFestDataSource.DataSourceListener, OnCategoryFilterSelectedListener {
     private static final String PREF_KEY_AUTOHIDE = "autohide_past_sessions";
+
+    // TODO this shouldn't be static so we can localize
+    private static final String ALL_CATEGORY = "All";
 
     @Bind(R.id.session_list_recyclerview)
     RecyclerView mSessionRecyclerView;
@@ -57,6 +64,8 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
 
     private boolean mAutohidePastSessions;
     private List<Session> mAllSessions;
+    private Set<String> mAllCategories;
+    private String mCategoryFilter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +75,8 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         mAutohidePastSessions = mPreferences.getBoolean(PREF_KEY_AUTOHIDE, true);
         mAllSessions = new ArrayList<>(0);
+        mAllCategories = new HashSet<>(7);
+        mCategoryFilter = ALL_CATEGORY;
     }
 
     @Override
@@ -141,6 +152,13 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.session_menu_filter:
+                String[] categories = new String[mAllCategories.size()];
+                mAllCategories.toArray(categories);
+                SessionCategoryFilterDialog dialog = SessionCategoryFilterDialog.newInstance(categories);
+                dialog.setTargetFragment(this, 0);
+                dialog.show(getFragmentManager(), "category_filter");
+                return true;
 
             case R.id.session_menu_autohide:
                 // Update item state
@@ -159,6 +177,14 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
         }
     }
 
+    @Override
+    public void onCategoryFilterSelected(String category) {
+        mCategoryFilter = category;
+
+        // Force a re-filter
+        setSessions(mAllSessions);
+    }
+
     /**
      * Notify this fragment that we have a new list of sessions for this conference
      *
@@ -170,11 +196,20 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
     public void setSessions(List<Session> sessions) {
         mAllSessions = sessions;
         mDataUpdateSubscription = Observable.from(mAllSessions)
+                .doOnNext(session -> addCategoryToCategoryList(session.getCategory()))
                 .filter(session -> !(mAutohidePastSessions && hasSessionEnded(session)))
+                .filter(session -> mCategoryFilter.equals(ALL_CATEGORY) || mCategoryFilter.equalsIgnoreCase(session.getCategory()))
                 .toSortedList(new SessionTimeSort())
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::updateDisplayedSessions);
+    }
+
+    /**
+     * Add a category to the category list, replacing null categories with "All."
+     */
+    private void addCategoryToCategoryList(String category) {
+        mAllCategories.add(category == null ? ALL_CATEGORY : category);
     }
 
     /**
