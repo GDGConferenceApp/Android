@@ -1,4 +1,4 @@
-package mn.devfest.sessions;
+package mn.devfest.sessions.rating;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

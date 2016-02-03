@@ -1,4 +1,4 @@
-package mn.devfest.sessions;
+package mn.devfest.sessions.details;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,12 +7,13 @@ import android.view.MenuItem;
 import mn.devfest.base.SinglePaneActivity;
 
 /**
- * Activity that allows the user to rate a session
+ * Activity that displays details for a particular session
  *
  * @author bherbst
+ * @author pfuentes
  */
-public class RateSessionActivity extends SinglePaneActivity {
-    public static final String EXTRA_SESSION_ID = "extra_session_id";
+public class SessionDetailsActivity extends SinglePaneActivity {
+    public static final String EXTRA_SESSION_ID = "sessionId";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +24,13 @@ public class RateSessionActivity extends SinglePaneActivity {
     @Override
     protected Fragment onCreatePane() {
         Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.containsKey(EXTRA_SESSION_ID)) {
+        if (extras.containsKey(EXTRA_SESSION_ID)) {
             String sessionId = extras.getString(EXTRA_SESSION_ID);
-            return RateSessionFragment.newInstance(sessionId);
+            return SessionDetailsFragment.newInstance(sessionId);
         } else {
-            throw new IllegalStateException("RateSessionActivity requires a session ID passed in via EXTRA_SESSION_ID");
+            throw new IllegalStateException("SessionDetailsActivity requires an EXTRA_SESSION_ID");
         }
+
     }
 
     @Override
@@ -41,5 +43,4 @@ public class RateSessionActivity extends SinglePaneActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
