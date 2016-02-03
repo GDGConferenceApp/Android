@@ -63,7 +63,11 @@ public class SessionCategoryFilterAdapter extends RecyclerView.Adapter<SessionCa
         }
 
         public void bind(String category, OnCategoryFilterSelectedListener listener) {
-            categoryName.setText(category);
+            // Capitalize first letter of each category
+            StringBuilder label = new StringBuilder(category.toLowerCase());
+            label.setCharAt(0, Character.toUpperCase(label.charAt(0)));
+
+            categoryName.setText(label);
 
             int colorRes = CategoryColorUtil.getColorResForCategory(category);
             int colorInt = ContextCompat.getColor(categoryIcon.getContext(), colorRes);
