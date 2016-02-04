@@ -75,5 +75,6 @@ public class RateSessionFragment extends Fragment {
         int relevancy = mRelevancyBar.getRating();
         int content = mcontentBar.getRating();
         int speakerQuality = mSpeakerBar.getRating();
+        //TODO submit feedback to the API https://devfestmn.firebaseio.com/feedback/2016.json
     }
 }
