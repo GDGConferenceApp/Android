@@ -3,6 +3,7 @@ package mn.devfest.api;
 import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -26,18 +27,24 @@ public final class ReleaseApiModule {
     }
 
     @Provides
+    @Named("conference")
     @Singleton
-    RestAdapter provideRestAdapter(Client client, Gson gson) {
+    RestAdapter provideConferenceRestAdapter(Client client, Gson gson) {
         return new RestAdapter.Builder()
-                .setEndpoint(BuildConfig.API_BASE)
+                .setEndpoint(BuildConfig.CONFERENCE_API_BASE)
                 .setClient(client)
                 .setConverter(new GsonConverter(gson))
                 .build();
     }
 
     @Provides
+    @Named("feedback")
     @Singleton
-    DevFestApi provideDevFestApi(RestAdapter restAdapter) {
-        return restAdapter.create(DevFestApi.class);
+    RestAdapter provideFeedbackRestAdapter(Client client, Gson gson) {
+        return new RestAdapter.Builder()
+                .setEndpoint(BuildConfig.FEEDBACK_API_BASE)
+                .setClient(client)
+                .setConverter(new GsonConverter(gson))
+                .build();
     }
 }
