@@ -1,8 +1,10 @@
 package mn.devfest.base;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -10,6 +12,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.Window;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -31,6 +34,17 @@ public abstract class BaseActivity extends AppCompatActivity {
     public static final int HOME_MODE_UP = 2;
 
     private DrawerLayout mDrawerLayout;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // We will enable transitions for all screens
+            supportRequestWindowFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+            supportRequestWindowFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
+        }
+
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public void setContentView(int layoutResID) {

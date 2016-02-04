@@ -2,6 +2,11 @@ package mn.devfest.speakers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
+import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,12 +82,31 @@ public class SpeakerListAdapter extends RecyclerView.Adapter<SpeakerListAdapter.
                 Context context = mNameTextView.getContext();
                 Intent speakerDetails = new Intent(context, SpeakerDetailsActivity.class);
                 speakerDetails.putExtra(SpeakerDetailsActivity.EXTRA_SPEAKER_ID, speaker.getId());
-                context.startActivity(speakerDetails);
+
+                // Create the shared element map
+
+
+                // For simplicity's sake, just assume our context is an AppCompatActivity. This should
+                // always be true. At a later point, we should clean this up to not make this assumption
+                AppCompatActivity activity = (AppCompatActivity) context;
+                Bundle transitionBundle = ActivityOptionsCompat
+                        .makeSceneTransitionAnimation(activity,
+                                Pair.create(speakerImage, "speakerImage"),
+                                Pair.create(mNameTextView, "speakerName"),
+                                Pair.create(mCompanyTextView, "speakerCompany"))
+                        .toBundle();
+
+                context.startActivity(speakerDetails, transitionBundle);
             });
         }
 
         public void bind(Speaker speaker) {
             this.speaker = speaker;
+
+            // Set up transition names for content transitions
+            ViewCompat.setTransitionName(speakerImage, String.format("speakerImage_%s", speaker.getId()));
+            ViewCompat.setTransitionName(mNameTextView, String.format("speakerName_%s", speaker.getId()));
+            ViewCompat.setTransitionName(mCompanyTextView, String.format("speakerCompany_%s", speaker.getId()));
 
             mNameTextView.setText(speaker.getName());
 

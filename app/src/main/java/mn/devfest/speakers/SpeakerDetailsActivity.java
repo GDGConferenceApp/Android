@@ -1,9 +1,13 @@
 package mn.devfest.speakers;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.MenuItem;
 
+import mn.devfest.R;
 import mn.devfest.base.SinglePaneActivity;
 
 /**
@@ -18,6 +22,16 @@ public class SpeakerDetailsActivity extends SinglePaneActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHomeIconMode(HOME_MODE_UP);
+
+        // We need to wait for our content Fragment to exist before executing transitions
+        supportPostponeEnterTransition();
+
+        // Set up transitions for content coming into this screen
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.speaker_details);
+            getWindow().setEnterTransition(transition);
+            getWindow().setExitTransition(transition);
+        }
     }
 
     @Override
@@ -36,7 +50,7 @@ public class SpeakerDetailsActivity extends SinglePaneActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // For now, just finish the activity
-                finish();
+                supportFinishAfterTransition();
                 return true;
         }
         return super.onOptionsItemSelected(item);

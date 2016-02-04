@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -65,25 +66,27 @@ public class SpeakerView extends LinearLayout {
         ButterKnife.bind(this, view);
     }
 
-    public void setSpeaker(Speaker speaker) {
+    /**
+     * Bind to a speaker
+     * @param speaker The speaker
+     * @param useThumbail True to use a thumbail image for the speaker, false to load the full size image
+     */
+    public void setSpeaker(Speaker speaker, boolean useThumbail) {
         mSpeaker = speaker;
-        updateTextAndImage();
+        updateText();
+
+        if (useThumbail) {
+            loadThumbnail();
+        } else {
+            loadFullSizeImage(true);
+        }
     }
 
     /**
      * Updates the imageview and textviews using the currently set Speaker object.
      * TODO maybe replace this method with data binding
      */
-    private void updateTextAndImage() {
-        int pictureSizePx = mProfileImageview.getResources().getDimensionPixelSize(R.dimen.speaker_details_image_size);
-        String pictureUrl = ProfilePictureApi.getImageUrl(mSpeaker, pictureSizePx);
-
-        Picasso.with(mContext)
-                .load(pictureUrl)
-                .placeholder(R.drawable.ic_account_circle_white_48dp)
-                .transform(new SpeakerImageTransformation())
-                .into(mProfileImageview);
-
+    private void updateText() {
         mNameTextview.setText(mSpeaker.getName());
         mBioTextview.setText(mSpeaker.getBio());
         if (mSpeaker.getCompany() == null || mSpeaker.getCompany().isEmpty()) {
@@ -97,6 +100,45 @@ public class SpeakerView extends LinearLayout {
         if (mSpeaker.getWebsite() == null || mSpeaker.getWebsite().isEmpty()) {
             mWebsiteButton.setVisibility(GONE);
         }
+    }
+
+    /**
+     * Load a thumbnail sized image for the speaker.
+     *
+     * This is useful when animating in via a transition, where the thumbnail is likely already loaded from
+     * the speaker list
+     */
+    public void loadThumbnail() {
+        int pictureSizePx = mProfileImageview.getResources().getDimensionPixelSize(R.dimen.speaker_list_image_size);
+        String pictureUrl = ProfilePictureApi.getImageUrl(mSpeaker, pictureSizePx);
+
+        Picasso.with(mContext)
+                .load(pictureUrl)
+                .noFade()
+                .transform(new SpeakerImageTransformation())
+                .into(mProfileImageview);
+    }
+
+    /**
+     * Load the full size speaker image
+     *
+     * @param fadeAndPlaceholder True to fade in and use a placeholder
+     */
+    public void loadFullSizeImage(boolean fadeAndPlaceholder) {
+        int pictureSizePx = mProfileImageview.getResources().getDimensionPixelSize(R.dimen.speaker_details_image_size);
+        String pictureUrl = ProfilePictureApi.getImageUrl(mSpeaker, pictureSizePx);
+
+        RequestCreator request = Picasso.with(mContext)
+                .load(pictureUrl)
+                .transform(new SpeakerImageTransformation());
+
+        if (fadeAndPlaceholder) {
+            request = request.placeholder(R.drawable.ic_account_circle_white_48dp);
+        } else {
+            request = request.noPlaceholder().noFade();
+        }
+
+        request.into(mProfileImageview);
     }
 
     @OnClick(R.id.website_button)

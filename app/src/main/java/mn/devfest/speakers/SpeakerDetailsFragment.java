@@ -1,9 +1,11 @@
 package mn.devfest.speakers;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.transition.Transition;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +70,74 @@ public class SpeakerDetailsFragment extends Fragment {
             throw new IllegalStateException("SpeakerDetailsFragment requires a speaker ID passed via newInstance()");
         }
 
-        mSpeakerView.setSpeaker(mSpeaker);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && addTransitionListener()) {
+            // If we are transitioning in, use the already loaded thumbnail
+            mSpeakerView.setSpeaker(mSpeaker, true);
+        } else {
+            // Otherwise do the normal Picasso loading of the full size image
+            mSpeakerView.setSpeaker(mSpeaker, false);
+        }
+
         getActivity().setTitle(getResources().getString(R.string.speaker_title));
+
+        // Now the content exists, so we can start the transition
+        getActivity().supportStartPostponedEnterTransition();
+    }
+
+    /**
+     * Try and add a {@link Transition.TransitionListener} to the entering shared element
+     * {@link Transition}. We do this so that we can load the full-size image after the transition
+     * has completed.
+     *
+     * Borrowed from https://github.com/googlesamples/android-ActivitySceneTransitionBasic/blob/master/Application/src/main/java/com/example/android/activityscenetransitionbasic/DetailActivity.java
+     *
+     * @return true if we were successful in adding a listener to the enter transition
+     */
+    private boolean addTransitionListener() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            // Can't transition below lollipop
+            return false;
+        }
+
+        final Transition transition = getActivity().getWindow().getSharedElementEnterTransition();
+
+        if (transition != null) {
+            // There is an entering shared element transition so add a listener to it
+            transition.addListener(new Transition.TransitionListener() {
+                @Override
+                public void onTransitionEnd(Transition transition) {
+                    // As the transition has ended, we can now load the full-size image
+                    mSpeakerView.loadFullSizeImage(false);
+
+                    // Make sure we remove ourselves as a listener
+                    transition.removeListener(this);
+                }
+
+                @Override
+                public void onTransitionStart(Transition transition) {
+                    // No-op
+                }
+
+                @Override
+                public void onTransitionCancel(Transition transition) {
+                    // Make sure we remove ourselves as a listener
+                    transition.removeListener(this);
+                }
+
+                @Override
+                public void onTransitionPause(Transition transition) {
+                    // No-op
+                }
+
+                @Override
+                public void onTransitionResume(Transition transition) {
+                    // No-op
+                }
+            });
+            return true;
+        }
+
+        // If we reach here then we have not added a listener
+        return false;
     }
 }

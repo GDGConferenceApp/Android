@@ -175,7 +175,7 @@ public class SessionDetailsFragment extends Fragment {
         for (String speakerId : speakers) {
             Speaker speaker = mDataSource.getSpeakerById(speakerId);
             SpeakerView speakerView = new SpeakerView(getActivity());
-            speakerView.setSpeaker(speaker);
+            speakerView.setSpeaker(speaker, false);
             mSpeakerLayout.addView(speakerView);
         }
     }

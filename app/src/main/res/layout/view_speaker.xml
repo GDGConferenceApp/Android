@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/speaker_container"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
@@ -17,7 +18,9 @@
             android:layout_height="@dimen/speaker_details_image_size"
             android:layout_marginRight="@dimen/margin_medium"
             android:contentDescription="@null"
-            tools:src="@drawable/ic_account_circle_white_48dp"/>
+            android:transitionName="speakerImage"
+            android:src="@drawable/ic_account_circle_white_48dp"
+            tools:ignore="UnusedAttribute" />
 
         <TextView
             android:id="@+id/speaker_view_name"
@@ -26,7 +29,8 @@
             android:layout_marginTop="@dimen/margin_medium"
             android:layout_toRightOf="@+id/speaker_view_image"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            tools:ignore="RtlHardcoded"
+            android:transitionName="speakerName"
+            tools:ignore="RtlHardcoded,UnusedAttribute"
             tools:text="Frank Fauxman"/>
 
         <TextView
@@ -36,6 +40,8 @@
             android:layout_below="@+id/speaker_view_name"
             android:layout_toRightOf="@+id/speaker_view_image"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:transitionName="speakerCompany"
+            tools:ignore="UnusedAttribute"
             tools:text="Mentor Mate"/>
 
     </RelativeLayout>
