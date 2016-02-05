@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.liangfeizc.flowlayout.FlowLayout;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -63,6 +65,7 @@ public class SessionDetailsFragment extends Fragment {
     private DevFestDataSource mDataSource;
 
     private Session mSession;
+    private boolean mSessionHasEnded = false;
 
     public static SessionDetailsFragment newInstance(@NonNull String sessionId) {
         Bundle args = new Bundle();
@@ -139,6 +142,11 @@ public class SessionDetailsFragment extends Fragment {
         //TODO mDifficultyTextview.setText(mSession.);
         mDescriptionTextview.setText(mSession.getDescription());
         displaySpeakers(mSession.getSpeakers());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         upDateScheduleButtonAppearance();
     }
 
@@ -194,10 +202,34 @@ public class SessionDetailsFragment extends Fragment {
      * Updates the button appearance to indicate if the session is in the user's schedule
      */
     private void upDateScheduleButtonAppearance() {
+        updateHasSessionEnded();
+
+        //TODO behave differently depending on
         int resourceId = (mDataSource.isInUserSchedule(mSession.getId()))
                 ? R.drawable.ic_remove_outline : R.drawable.ic_add_outline;
         Drawable icon = ContextCompat.getDrawable(getContext(), resourceId);
         mFab.setImageDrawable(icon);
+    }
+
+    /**
+     * Updates the member variable that indicates in the session has ended yet or not
+     */
+    private void updateHasSessionEnded() {
+        DateTime endTime = mSession.getEndTime();
+
+        //Handle missing endTime or startTime
+        if (endTime == null) {
+            if (mSession.getStartTime() == null) {
+                //TODO find a good way to deal with having no start or end time
+                return;
+            }
+
+            //If we don't know the end time, switch over 8 hours after it started
+            DateTime eightHoursAgo = new DateTime().minusHours(8);
+            mSessionHasEnded = !mSession.getStartTime().isBefore(eightHoursAgo);
+        } else {
+            mSessionHasEnded = !endTime.isBeforeNow();
+        }
     }
 
     private void rateSession() {
@@ -208,7 +240,7 @@ public class SessionDetailsFragment extends Fragment {
 
     @OnClick(R.id.session_details_fab)
     public void onToggleInUserScheduleButtonClick(View view) {
-        
+
         //TODO determine if we should rateSession()
 
         String sessionId = mSession.getId();
