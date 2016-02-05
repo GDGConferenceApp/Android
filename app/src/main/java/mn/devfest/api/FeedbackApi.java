@@ -12,7 +12,7 @@ import retrofit.http.POST;
  */
 public interface FeedbackApi {
 
-    @POST("/feedback/2016.json")
+    @POST("/feedback/2016mobile.json")
     void submitRating(@Body Feedback feedback, Callback<Feedback> result);
 
 }

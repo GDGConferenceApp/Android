@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class RateSessionFragment extends Fragment {
     @Bind(R.id.field_relevancy) NumberFeedbackField mRelevancyBar;
     @Bind(R.id.field_content) NumberFeedbackField mcontentBar;
     @Bind(R.id.field_speaker_quality) NumberFeedbackField mSpeakerBar;
+    @Bind(R.id.fullname_edittext) EditText mFullname;
 
     private FeedbackApi mFeedbackApi;
 
@@ -86,12 +88,12 @@ public class RateSessionFragment extends Fragment {
         int relevancy = mRelevancyBar.getRating();
         int content = mcontentBar.getRating();
         int speakerQuality = mSpeakerBar.getRating();
+        String fullname = mFullname.getText().toString();
 
 
 //        String instanceId = InstanceID.getInstance(context).getId();
-
-        //TODO add a real install ID instead of the dummy string "000000000000"
-        Feedback feedback = new Feedback(mSessionId, "000000000000", overall, relevancy, content, speakerQuality);
+        //TODO add a real install ID as well as the fullname
+        Feedback feedback = new Feedback(mSessionId, fullname, overall, relevancy, content, speakerQuality);
         mFeedbackApi.submitRating(feedback, new Callback<Feedback>() {
             @Override
             public void success(Feedback feedback, Response response) {
