@@ -21,20 +21,13 @@
             android:orientation="vertical">
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/toggle_in_user_schedule_button"
+                android:id="@+id/session_details_fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_margin="@dimen/activity_horizontal_margin"
                 android:src="@drawable/ic_add_outline"/>
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/rate_session"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:src="@drawable/ic_feedback"/>
         </LinearLayout>
 
         <TextView

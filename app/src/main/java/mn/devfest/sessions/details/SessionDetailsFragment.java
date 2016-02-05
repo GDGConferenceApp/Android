@@ -41,8 +41,8 @@ public class SessionDetailsFragment extends Fragment {
     private static final String ARG_SESSION_ID = "sessionId";
     private static final String TIME_FORMAT = "h:mma";
 
-    @Bind(R.id.toggle_in_user_schedule_button)
-    FloatingActionButton mToggleScheduleButton;
+    @Bind(R.id.session_details_fab)
+    FloatingActionButton mFab;
     @Bind(R.id.session_details_title)
     TextView mTitleTextview;
     @Bind(R.id.session_details_time)
@@ -197,18 +197,20 @@ public class SessionDetailsFragment extends Fragment {
         int resourceId = (mDataSource.isInUserSchedule(mSession.getId()))
                 ? R.drawable.ic_remove_outline : R.drawable.ic_add_outline;
         Drawable icon = ContextCompat.getDrawable(getContext(), resourceId);
-        mToggleScheduleButton.setImageDrawable(icon);
+        mFab.setImageDrawable(icon);
     }
 
-    @OnClick(R.id.rate_session)
-    void onRateClicked() {
+    private void rateSession() {
         Intent rateSession = new Intent(getContext(), RateSessionActivity.class);
         rateSession.putExtra(RateSessionActivity.EXTRA_SESSION_ID, mSession.getId());
         startActivity(rateSession);
     }
 
-    @OnClick(R.id.toggle_in_user_schedule_button)
+    @OnClick(R.id.session_details_fab)
     public void onToggleInUserScheduleButtonClick(View view) {
+        
+        //TODO determine if we should rateSession()
+
         String sessionId = mSession.getId();
         if (mDataSource.isInUserSchedule(sessionId)) {
             mDataSource.removeFromUserSchedule(sessionId);
