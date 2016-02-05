@@ -6,6 +6,7 @@ import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -25,6 +26,9 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
 
     @Bind(R.id.session_row_title)
     TextView mTitleTextView;
+
+    @Bind(R.id.discipline_color)
+    FrameLayout mDisciplineColor;
 
     @Bind(R.id.session_row_tag)
     TextView mTagView;
@@ -70,7 +74,8 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
         Context context = mTitleTextView.getContext();
         int categoryColorRes = CategoryColorUtil.getColorResForCategory(session.getCategory());
         int categoryColor = ContextCompat.getColor(context, categoryColorRes);
-        mTagView.setBackgroundColor(categoryColor);
+        mDisciplineColor.setBackgroundColor(categoryColor);
+        mTagView.setTextColor(categoryColor);
 
         mTagView.setText(session.getCategory());
 
