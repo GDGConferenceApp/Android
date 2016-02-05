@@ -35,6 +35,7 @@ import mn.devfest.view.SpeakerView;
 
 /**
  * Fragment that displays details for a particular session
+ * TODO clean this Fragment up in general
  *
  * @author bherbst
  * @author pfuentes
@@ -204,11 +205,22 @@ public class SessionDetailsFragment extends Fragment {
     private void updateFabAppearance() {
         updateHasSessionEnded();
 
-        //TODO behave differently depending on if the event has ended
-        int resourceId = (mDataSource.isInUserSchedule(mSession.getId()))
-                ? R.drawable.ic_remove_outline : R.drawable.ic_add_outline;
-        Drawable icon = ContextCompat.getDrawable(getContext(), resourceId);
-        mFab.setImageDrawable(icon);
+        if (mSessionHasEnded) {
+            //Change to a session rating button
+            int resourceId = R.drawable.ic_feedback;
+            Drawable icon = ContextCompat.getDrawable(getContext(), resourceId);
+            mFab.setImageDrawable(icon);
+        } else {
+            //Change to a toggle-schedule button
+            int resourceId = R.drawable.ic_star_rate_black_18dp;
+            Drawable icon = ContextCompat.getDrawable(getContext(), resourceId);
+            if (mDataSource.isInUserSchedule(mSession.getId())) {
+                //TODO tint it yellow ?
+            } else {
+                //TODO tint it grey ?
+            }
+            mFab.setImageDrawable(icon);
+        }
     }
 
     /**
@@ -226,18 +238,20 @@ public class SessionDetailsFragment extends Fragment {
 
             //If we don't know the end time, switch over 8 hours after it started
             DateTime eightHoursAgo = new DateTime().minusHours(8);
-            mSessionHasEnded = !mSession.getStartTime().isBefore(eightHoursAgo);
+            mSessionHasEnded = mSession.getStartTime().isBefore(eightHoursAgo);
         } else {
-            mSessionHasEnded = !endTime.isBeforeNow();
+            mSessionHasEnded = endTime.isBeforeNow();
         }
     }
 
     @OnClick(R.id.session_details_fab)
-    public void onToggleInUserScheduleButtonClick(View view) {
+    public void onFabClick(View view) {
+        if (mSessionHasEnded) {
+            rateSession();
+        } else {
+            toggleInUserSchedule();
+        }
 
-        //TODO determine if we should rateSession()
-
-        toggleInUserSchedule();
         updateFabAppearance();
     }
 
