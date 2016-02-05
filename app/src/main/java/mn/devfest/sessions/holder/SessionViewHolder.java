@@ -97,7 +97,7 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
         if (isInUserSchedule) {
             mToggleScheduleButton.setColorFilter(ContextCompat.getColor(mToggleScheduleButton.getContext(), R.color.colorAccent));
         } else {
-            mToggleScheduleButton.setColorFilter(null);
+            mToggleScheduleButton.setColorFilter(ContextCompat.getColor(mToggleScheduleButton.getContext(), R.color.mediumGray));
         }
     }
 

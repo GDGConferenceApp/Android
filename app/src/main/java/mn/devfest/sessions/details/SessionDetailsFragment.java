@@ -14,8 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.liangfeizc.flowlayout.FlowLayout;
+
+import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 
@@ -30,9 +33,12 @@ import mn.devfest.api.model.Speaker;
 import mn.devfest.sessions.rating.RateSessionActivity;
 import mn.devfest.view.SpeakerView;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 
 /**
  * Fragment that displays details for a particular session
+ * TODO clean this Fragment up in general
  *
  * @author bherbst
  * @author pfuentes
@@ -41,8 +47,8 @@ public class SessionDetailsFragment extends Fragment {
     private static final String ARG_SESSION_ID = "sessionId";
     private static final String TIME_FORMAT = "h:mma";
 
-    @Bind(R.id.toggle_in_user_schedule_button)
-    FloatingActionButton mToggleScheduleButton;
+    @Bind(R.id.session_details_fab)
+    FloatingActionButton mFab;
     @Bind(R.id.session_details_title)
     TextView mTitleTextview;
     @Bind(R.id.session_details_time)
@@ -63,6 +69,7 @@ public class SessionDetailsFragment extends Fragment {
     private DevFestDataSource mDataSource;
 
     private Session mSession;
+    private boolean mSessionHasEnded = false;
 
     public static SessionDetailsFragment newInstance(@NonNull String sessionId) {
         Bundle args = new Bundle();
@@ -139,7 +146,12 @@ public class SessionDetailsFragment extends Fragment {
         //TODO mDifficultyTextview.setText(mSession.);
         mDescriptionTextview.setText(mSession.getDescription());
         displaySpeakers(mSession.getSpeakers());
-        upDateScheduleButtonAppearance();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateFabAppearance();
     }
 
     /**
@@ -193,28 +205,81 @@ public class SessionDetailsFragment extends Fragment {
     /**
      * Updates the button appearance to indicate if the session is in the user's schedule
      */
-    private void upDateScheduleButtonAppearance() {
-        int resourceId = (mDataSource.isInUserSchedule(mSession.getId()))
-                ? R.drawable.ic_remove_outline : R.drawable.ic_add_outline;
-        Drawable icon = ContextCompat.getDrawable(getContext(), resourceId);
-        mToggleScheduleButton.setImageDrawable(icon);
+    private void updateFabAppearance() {
+        updateHasSessionEnded();
+
+        if (mSessionHasEnded) {
+            //Change to a session rating button
+            int resourceId = R.drawable.ic_feedback;
+            Drawable icon = ContextCompat.getDrawable(getContext(), resourceId);
+            mFab.setImageDrawable(icon);
+        } else {
+            //TODO change this to use a filled in icon and an outline icon
+            //Change to a toggle-schedule button
+            int resourceId = R.drawable.ic_star_rate_black_18dp;
+            Drawable icon = ContextCompat.getDrawable(getContext(), resourceId);
+            if (mDataSource.isInUserSchedule(mSession.getId())) {
+                mFab.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorBlack));
+            } else {
+                mFab.setColorFilter(ContextCompat.getColor(getContext(), R.color.lightGray));
+            }
+            mFab.setImageDrawable(icon);
+        }
     }
 
-    @OnClick(R.id.rate_session)
-    void onRateClicked() {
-        Intent rateSession = new Intent(getContext(), RateSessionActivity.class);
-        rateSession.putExtra(RateSessionActivity.EXTRA_SESSION_ID, mSession.getId());
-        startActivity(rateSession);
+    /**
+     * Updates the member variable that indicates in the session has ended yet or not
+     */
+    private void updateHasSessionEnded() {
+        DateTime endTime = mSession.getEndTime();
+
+        //Handle missing endTime or startTime
+        if (endTime == null) {
+            if (mSession.getStartTime() == null) {
+                //TODO find a good way to deal with having no start or end time
+                return;
+            }
+
+            //If we don't know the end time, switch over 8 hours after it started
+            DateTime eightHoursAgo = new DateTime().minusHours(8);
+            mSessionHasEnded = mSession.getStartTime().isBefore(eightHoursAgo);
+        } else {
+            mSessionHasEnded = endTime.isBeforeNow();
+        }
     }
 
-    @OnClick(R.id.toggle_in_user_schedule_button)
-    public void onToggleInUserScheduleButtonClick(View view) {
+    @OnClick(R.id.session_details_fab)
+    public void onFabClick(View view) {
+        if (mSessionHasEnded) {
+            rateSession();
+        } else {
+            toggleInUserSchedule();
+        }
+
+        updateFabAppearance();
+    }
+
+    /**
+     * Toggles the status of the session being in or out of the user's schedule
+     */
+    private void toggleInUserSchedule() {
         String sessionId = mSession.getId();
         if (mDataSource.isInUserSchedule(sessionId)) {
             mDataSource.removeFromUserSchedule(sessionId);
+            //TODO find a better solution
+            Toast.makeText(getContext(), getContext().getString(R.string.session_removed_notification), LENGTH_LONG).show();
         } else {
             mDataSource.addToUserSchedule(sessionId);
+            Toast.makeText(getContext(), getContext().getString(R.string.session_added_notification), LENGTH_LONG).show();
         }
-        upDateScheduleButtonAppearance();
+    }
+
+    /**
+     * Kicks off an activity to rate this session
+     */
+    private void rateSession() {
+        Intent rateSession = new Intent(getContext(), RateSessionActivity.class);
+        rateSession.putExtra(RateSessionActivity.EXTRA_SESSION_ID, mSession.getId());
+        startActivity(rateSession);
     }
 }
