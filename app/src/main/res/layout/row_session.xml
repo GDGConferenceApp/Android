@@ -75,8 +75,11 @@
         android:layout_alignParentTop="true"
         android:layout_margin="@dimen/padding_normal"
         android:background="?android:selectableItemBackground"
+        android:padding="8dp"
         android:minHeight="44dp"
         android:minWidth="44dp"
-        android:src="@drawable/ic_add_solid"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_star_rate_black_18dp"/>
+    <!-- TODO Fix that star asset so it's not scaled up -->
 
 </RelativeLayout>
