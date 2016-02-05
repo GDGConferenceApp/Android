@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -14,7 +15,12 @@ import butterknife.OnClick;
 import mn.devfest.DevFestApplication;
 import mn.devfest.R;
 import mn.devfest.api.FeedbackApi;
+import mn.devfest.api.model.Feedback;
 import mn.devfest.view.NumberFeedbackField;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import timber.log.Timber;
 
 /**
  * Fragment that allows the user to rate a session
@@ -81,20 +87,23 @@ public class RateSessionFragment extends Fragment {
         int content = mcontentBar.getRating();
         int speakerQuality = mSpeakerBar.getRating();
 
-        //TODO add an install ID and uncomment
-//        Feedback feedback = new Feedback(mSessionId, installId, overall, relevancy, content, speakerQuality);
-//        mFeedbackApi.submitRating(feedback, new Callback<Feedback>() {
-//            @Override
-//            public void success(Feedback feedback, Response response) {
-//                Toast.makeText(getContext(), "Feedback submitted!", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-//                Timber.e(error, "Failed to submit feedback");
-//                Toast.makeText(getContext(), "Failed to submit feedback :(", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
+//        String iid = InstanceID.getInstance(context).getId();
+
+        //TODO add a real install ID instead of the dummy string "000000000000"
+        Feedback feedback = new Feedback(mSessionId, "000000000000", overall, relevancy, content, speakerQuality);
+        mFeedbackApi.submitRating(feedback, new Callback<Feedback>() {
+            @Override
+            public void success(Feedback feedback, Response response) {
+                Toast.makeText(getContext(), "Feedback submitted!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Timber.e(error, "Failed to submit feedback");
+                Toast.makeText(getContext(), "Failed to submit feedback :(", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }
