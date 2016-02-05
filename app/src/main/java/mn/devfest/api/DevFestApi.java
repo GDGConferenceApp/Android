@@ -11,7 +11,7 @@ import retrofit.http.GET;
  */
 public interface DevFestApi {
 
-    @GET("/devfest.json")
+    @GET("/2016mobile.json")
     void getConferenceInfo(Callback<Conference> callback);
 
 }
