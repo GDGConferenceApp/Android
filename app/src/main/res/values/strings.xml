@@ -54,7 +54,7 @@
     <string name="session_feedback_relevance">How relevant was this session to your projects?</string>
     <string name="session_feedback_speaker_quality">Speaker quality:</string>
     <string name="session_feedback_submitlink">Submit Feedback</string>
-    <string name="session_rating_fullname">Full Name:</string>
+    <string name="session_rating_fullname">Your Full Name:</string>
 
     <!-- TODO remove lorem ipsum -->
     <!-- Placeholder text -->
