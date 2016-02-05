@@ -30,7 +30,8 @@ android {
         versionName "1.0"
 
         // TODO set up for easy configuration for other conferences
-        buildConfigField "String", "API_BASE", "\"https://devfest.fluin.io\""
+        buildConfigField "String", "CONFERENCE_API_BASE", "\"https://devfest.fluin.io\""
+        buildConfigField "String", "FEEDBACK_API_BASE", "\"https://devfestmn.firebaseio.com\""
         resValue "string", "sw_corner_latitude", swCornerLatitude
         resValue "string", "sw_corner_longitude", swCornerLongitude
         resValue "string", "ne_corner_latitude", neCornerLatitude

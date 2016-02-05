@@ -4,6 +4,7 @@ import com.facebook.stetho.okhttp.StethoInterceptor;
 import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -31,10 +32,11 @@ public final class DebugApiModule {
     }
 
     @Provides
+    @Named("conference")
     @Singleton
-    RestAdapter provideRestAdapter(Client client, Gson gson) {
+    RestAdapter provideConferenceRestAdapter(Client client, Gson gson) {
         return new RestAdapter.Builder()
-                .setEndpoint(BuildConfig.API_BASE)
+                .setEndpoint(BuildConfig.CONFERENCE_API_BASE)
                 .setClient(client)
                 .setConverter(new GsonConverter(gson))
                 .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -42,8 +44,14 @@ public final class DebugApiModule {
     }
 
     @Provides
+    @Named("feedback")
     @Singleton
-    DevFestApi provideGw2Api(RestAdapter restAdapter) {
-        return restAdapter.create(DevFestApi.class);
+    RestAdapter provideFeedbackRestAdapter(Client client, Gson gson) {
+        return new RestAdapter.Builder()
+                .setEndpoint(BuildConfig.FEEDBACK_API_BASE)
+                .setClient(client)
+                .setConverter(new GsonConverter(gson))
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .build();
     }
 }
