@@ -4,47 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="32dp"
-    android:layout_marginRight="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginStart="32dp"
     android:background="?attr/selectableItemBackground"
     android:orientation="horizontal">
+
+    <FrameLayout
+        android:id="@+id/discipline_color"
+        android:layout_width="8dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        tools:background="@color/category_android"/>
 
 
     <TextView
         android:id="@+id/session_row_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/discipline_color"
         android:ellipsize="end"
-        android:paddingLeft="@dimen/spacing_normal"
-        android:paddingRight="@dimen/spacing_normal"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-medium"
+        android:paddingEnd="@dimen/spacing_normal"
+        android:paddingStart="@dimen/spacing_normal"
         android:singleLine="true"
-        tools:background="@color/category_android"
-        tools:text="android"/>
+        tools:text="android"
+        tools:textColor="@color/category_android"/>
 
     <TextView
         android:id="@+id/session_row_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/session_row_tag"
+        android:layout_toEndOf="@+id/discipline_color"
         android:layout_toStartOf="@+id/row_session_toggle_schedule_button"
+        android:textStyle="bold"
         android:ellipsize="end"
         android:maxLines="2"
-        android:paddingLeft="@dimen/padding_normal"
-        android:paddingRight="@dimen/padding_normal"
+        android:paddingEnd="@dimen/padding_normal"
+        android:paddingStart="@dimen/padding_normal"
         android:paddingTop="@dimen/spacing_normal"
         android:singleLine="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:text="Juggling Cats in Space"/>
 
     <TextView
         android:id="@+id/session_row_room"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/session_row_title"
+        android:layout_toEndOf="@+id/discipline_color"
         android:layout_toStartOf="@+id/row_session_toggle_schedule_button"
         android:ellipsize="end"
         android:maxLines="2"
@@ -52,7 +63,9 @@
         android:paddingLeft="@dimen/padding_normal"
         android:paddingRight="@dimen/padding_normal"
         android:singleLine="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:fontFamily="sans-serif-condensed"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/mediumGray"
         tools:text="Classroom A – 3rd Floor"/>
 
     <ImageButton
@@ -61,10 +74,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_margin="@dimen/padding_normal"
         android:background="?android:selectableItemBackground"
         android:minHeight="44dp"
         android:minWidth="44dp"
-        android:src="@drawable/ic_add_solid"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_star_rate_black_18dp"/>
+    <!-- TODO Fix that star asset so it's not scaled up -->
 
 </RelativeLayout>
