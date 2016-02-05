@@ -62,7 +62,9 @@
         android:paddingLeft="@dimen/padding_normal"
         android:paddingRight="@dimen/padding_normal"
         android:singleLine="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:fontFamily="sans-serif-condensed"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/mediumGray"
         tools:text="Classroom A – 3rd Floor"/>
 
     <ImageButton
