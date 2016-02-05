@@ -88,7 +88,7 @@ public class RateSessionFragment extends Fragment {
         int speakerQuality = mSpeakerBar.getRating();
 
 
-//        String iid = InstanceID.getInstance(context).getId();
+//        String instanceId = InstanceID.getInstance(context).getId();
 
         //TODO add a real install ID instead of the dummy string "000000000000"
         Feedback feedback = new Feedback(mSessionId, "000000000000", overall, relevancy, content, speakerQuality);
