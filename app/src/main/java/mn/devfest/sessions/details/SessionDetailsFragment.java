@@ -147,7 +147,7 @@ public class SessionDetailsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        upDateScheduleButtonAppearance();
+        updateFabAppearance();
     }
 
     /**
@@ -201,10 +201,10 @@ public class SessionDetailsFragment extends Fragment {
     /**
      * Updates the button appearance to indicate if the session is in the user's schedule
      */
-    private void upDateScheduleButtonAppearance() {
+    private void updateFabAppearance() {
         updateHasSessionEnded();
 
-        //TODO behave differently depending on
+        //TODO behave differently depending on if the event has ended
         int resourceId = (mDataSource.isInUserSchedule(mSession.getId()))
                 ? R.drawable.ic_remove_outline : R.drawable.ic_add_outline;
         Drawable icon = ContextCompat.getDrawable(getContext(), resourceId);
@@ -232,23 +232,33 @@ public class SessionDetailsFragment extends Fragment {
         }
     }
 
-    private void rateSession() {
-        Intent rateSession = new Intent(getContext(), RateSessionActivity.class);
-        rateSession.putExtra(RateSessionActivity.EXTRA_SESSION_ID, mSession.getId());
-        startActivity(rateSession);
-    }
-
     @OnClick(R.id.session_details_fab)
     public void onToggleInUserScheduleButtonClick(View view) {
 
         //TODO determine if we should rateSession()
 
+        toggleInUserSchedule();
+        updateFabAppearance();
+    }
+
+    /**
+     * Toggles the status of the session being in or out of the user's schedule
+     */
+    private void toggleInUserSchedule() {
         String sessionId = mSession.getId();
         if (mDataSource.isInUserSchedule(sessionId)) {
             mDataSource.removeFromUserSchedule(sessionId);
         } else {
             mDataSource.addToUserSchedule(sessionId);
         }
-        upDateScheduleButtonAppearance();
+    }
+
+    /**
+     * Kicks off an activity to rate this session
+     */
+    private void rateSession() {
+        Intent rateSession = new Intent(getContext(), RateSessionActivity.class);
+        rateSession.putExtra(RateSessionActivity.EXTRA_SESSION_ID, mSession.getId());
+        startActivity(rateSession);
     }
 }
