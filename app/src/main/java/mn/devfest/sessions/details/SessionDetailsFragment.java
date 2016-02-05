@@ -119,8 +119,18 @@ public class SessionDetailsFragment extends Fragment {
 
         getActivity().setTitle(getResources().getString(R.string.sessions_title));
         mTitleTextview.setText(mSession.getTitle());
-        String start = mSession.getStartTime().toLocalTime().toString(TIME_FORMAT);
-        String end = mSession.getEndTime().toLocalTime().toString(TIME_FORMAT);
+        String start;
+        if (mSession.getStartTime() == null) {
+            start = "?";
+        } else {
+            start = mSession.getStartTime().toLocalTime().toString(TIME_FORMAT);
+        }
+        String end;
+        if (mSession.getEndTime() == null) {
+            end = "?";
+        } else {
+            end = mSession.getEndTime().toLocalTime().toString(TIME_FORMAT);
+        }
         String startToEnd = String.format(getResources().getString(R.string.start_to_end_time), start, end);
         mTimeTextview.setText(startToEnd);
         mLocationTextview.setText(mSession.getRoom());

@@ -218,6 +218,10 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
      * @return True if the given session has ended
      */
     private boolean hasSessionEnded(@NonNull Session session) {
+        //TODO understand why this may be null
+        if (session.getEndTime() == null) {
+            return false;
+        }
         return session.getEndTime().isBeforeNow();
     }
 
