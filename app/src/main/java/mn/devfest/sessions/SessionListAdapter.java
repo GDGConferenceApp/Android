@@ -73,11 +73,9 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             SessionViewHolder sessionHolder = (SessionViewHolder) holder;
             Session session = mSessions.get(position);
 
-            int drawableRes =
-                    mDataSource.isInUserSchedule(session.getId()) ? R.drawable.ic_remove_solid : R.drawable.ic_add_solid;
+            boolean isInUserSchedule = mDataSource.isInUserSchedule(session.getId());
 
-
-            sessionHolder.bindSession(session, drawableRes, this);
+            sessionHolder.bindSession(session, isInUserSchedule, this);
         } else if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
             DateTime groupTime = mHeaders.get(position);
@@ -150,13 +148,13 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @DrawableRes
     @Override
-    public int onToggleScheduleButtonClicked(Session session) {
+    public boolean onToggleScheduleButtonClicked(Session session) {
         if (mDataSource.isInUserSchedule(session.getId())) {
             mDataSource.removeFromUserSchedule(session.getId());
-            return R.drawable.ic_add_solid;
+            return false;
         } else {
             mDataSource.addToUserSchedule(session.getId());
-            return R.drawable.ic_remove_solid;
+            return true;
         }
     }
 }

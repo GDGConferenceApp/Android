@@ -52,8 +52,14 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
         });
 
         mToggleScheduleButton.setOnClickListener(view -> {
-            int resourceId = mListener.onToggleScheduleButtonClicked(mSession);
-            mToggleScheduleButton.setImageDrawable(ContextCompat.getDrawable(mToggleScheduleButton.getContext(), resourceId));
+            boolean isInUserSchdedule = mListener.onToggleScheduleButtonClicked(mSession);
+            if (isInUserSchdedule) {
+                //TODO add yellow color filter
+//                mToggleScheduleButton.setImageDrawable(ContextCompat.getDrawable(mToggleScheduleButton.getContext(), resourceId));
+            } else {
+                //TODO remove color filter
+            }
+
         });
     }
 
@@ -61,15 +67,17 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
      * Bind to a new session
      * TODO this got gross. Come up with a better approach to in-schedule-status when we're not rushing in small bursts of time.
      * @param session The session that this ViewHolder will represent
-     * @param drawableRes The
+     * @param isInUserSchedule Indicates whether this session is currently in the user's schedule
      * @param listener
      */
-    public void bindSession(Session session, @DrawableRes int drawableRes, ToggleInScheduleListener listener) {
+    public void bindSession(Session session, boolean isInUserSchedule, ToggleInScheduleListener listener) {
         mSession = session;
         mListener = listener;
         mTitleTextView.setText(session.getTitle());
         mRoomTextView.setText(session.getRoom());
-        mToggleScheduleButton.setImageDrawable(ContextCompat.getDrawable(mToggleScheduleButton.getContext(), drawableRes));
+        if (isInUserSchedule) {
+            //TODO add yellow color filter
+        }
 
         Context context = mTitleTextView.getContext();
         int categoryColorRes = CategoryColorUtil.getColorResForCategory(session.getCategory());
@@ -92,6 +100,6 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
      */
     public interface ToggleInScheduleListener {
         @DrawableRes
-        int onToggleScheduleButtonClicked(Session session);
+        boolean onToggleScheduleButtonClicked(Session session);
     }
 }
