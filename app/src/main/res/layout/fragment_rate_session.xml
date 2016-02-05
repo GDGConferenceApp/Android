@@ -94,6 +94,16 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/session_rating_fullname"/>
+
+        <EditText
+            android:id="@+id/fullname_edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
         <!-- Submit button -->
         <FrameLayout
             android:id="@+id/submit_feedback_button"
