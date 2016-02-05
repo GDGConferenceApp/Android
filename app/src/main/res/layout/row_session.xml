@@ -40,13 +40,14 @@
         android:layout_below="@+id/session_row_tag"
         android:layout_toEndOf="@+id/discipline_color"
         android:layout_toStartOf="@+id/row_session_toggle_schedule_button"
+        android:textStyle="bold"
         android:ellipsize="end"
         android:maxLines="2"
         android:paddingEnd="@dimen/padding_normal"
         android:paddingStart="@dimen/padding_normal"
         android:paddingTop="@dimen/spacing_normal"
         android:singleLine="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:text="Juggling Cats in Space"/>
 
     <TextView
@@ -73,9 +74,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_margin="@dimen/padding_normal"
         android:background="?android:selectableItemBackground"
-        android:padding="8dp"
         android:minHeight="44dp"
         android:minWidth="44dp"
         android:scaleType="centerCrop"

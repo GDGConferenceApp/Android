@@ -53,20 +53,15 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
 
         mToggleScheduleButton.setOnClickListener(view -> {
             boolean isInUserSchdedule = mListener.onToggleScheduleButtonClicked(mSession);
-            if (isInUserSchdedule) {
-                //TODO add yellow color filter
-//                mToggleScheduleButton.setImageDrawable(ContextCompat.getDrawable(mToggleScheduleButton.getContext(), resourceId));
-            } else {
-                //TODO remove color filter
-            }
-
+            colorScheduleToggleButton(isInUserSchdedule);
         });
     }
 
     /**
      * Bind to a new session
      * TODO this got gross. Come up with a better approach to in-schedule-status when we're not rushing in small bursts of time.
-     * @param session The session that this ViewHolder will represent
+     *
+     * @param session          The session that this ViewHolder will represent
      * @param isInUserSchedule Indicates whether this session is currently in the user's schedule
      * @param listener
      */
@@ -75,9 +70,7 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
         mListener = listener;
         mTitleTextView.setText(session.getTitle());
         mRoomTextView.setText(session.getRoom());
-        if (isInUserSchedule) {
-            //TODO add yellow color filter
-        }
+        colorScheduleToggleButton(isInUserSchedule);
 
         Context context = mTitleTextView.getContext();
         int categoryColorRes = CategoryColorUtil.getColorResForCategory(session.getCategory());
@@ -91,6 +84,20 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
             mTagView.setVisibility(View.INVISIBLE);
         } else {
             mTagView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * Changes the color of the schedule-toggle button appropriately based on if the session is in
+     * the user's schedule
+     *
+     * @param isInUserSchedule indicates if this session is in the user's schedule
+     */
+    private void colorScheduleToggleButton(boolean isInUserSchedule) {
+        if (isInUserSchedule) {
+            mToggleScheduleButton.setColorFilter(ContextCompat.getColor(mToggleScheduleButton.getContext(), R.color.colorAccent));
+        } else {
+            mToggleScheduleButton.setColorFilter(null);
         }
     }
 
