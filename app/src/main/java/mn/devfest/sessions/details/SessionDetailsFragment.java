@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.liangfeizc.flowlayout.FlowLayout;
 
@@ -31,6 +32,8 @@ import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.sessions.rating.RateSessionActivity;
 import mn.devfest.view.SpeakerView;
+
+import static android.widget.Toast.LENGTH_LONG;
 
 
 /**
@@ -211,13 +214,14 @@ public class SessionDetailsFragment extends Fragment {
             Drawable icon = ContextCompat.getDrawable(getContext(), resourceId);
             mFab.setImageDrawable(icon);
         } else {
+            //TODO change this to use a filled in icon and an outline icon
             //Change to a toggle-schedule button
             int resourceId = R.drawable.ic_star_rate_black_18dp;
             Drawable icon = ContextCompat.getDrawable(getContext(), resourceId);
             if (mDataSource.isInUserSchedule(mSession.getId())) {
-                //TODO tint it yellow ?
+                mFab.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorBlack));
             } else {
-                //TODO tint it grey ?
+                mFab.setColorFilter(ContextCompat.getColor(getContext(), R.color.lightGray));
             }
             mFab.setImageDrawable(icon);
         }
@@ -262,8 +266,11 @@ public class SessionDetailsFragment extends Fragment {
         String sessionId = mSession.getId();
         if (mDataSource.isInUserSchedule(sessionId)) {
             mDataSource.removeFromUserSchedule(sessionId);
+            //TODO find a better solution
+            Toast.makeText(getContext(), getContext().getString(R.string.session_removed_notification), LENGTH_LONG).show();
         } else {
             mDataSource.addToUserSchedule(sessionId);
+            Toast.makeText(getContext(), getContext().getString(R.string.session_added_notification), LENGTH_LONG).show();
         }
     }
 
