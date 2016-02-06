@@ -33,8 +33,6 @@ import mn.devfest.api.model.Speaker;
 import mn.devfest.sessions.rating.RateSessionActivity;
 import mn.devfest.view.SpeakerView;
 
-import static android.widget.Toast.LENGTH_LONG;
-
 
 /**
  * Fragment that displays details for a particular session
@@ -267,10 +265,10 @@ public class SessionDetailsFragment extends Fragment {
         if (mDataSource.isInUserSchedule(sessionId)) {
             mDataSource.removeFromUserSchedule(sessionId);
             //TODO find a better solution
-            Toast.makeText(getContext(), getContext().getString(R.string.session_removed_notification), LENGTH_LONG).show();
+            Toast.makeText(getContext(), getContext().getString(R.string.session_removed_notification), Toast.LENGTH_SHORT).show();
         } else {
             mDataSource.addToUserSchedule(sessionId);
-            Toast.makeText(getContext(), getContext().getString(R.string.session_added_notification), LENGTH_LONG).show();
+            Toast.makeText(getContext(), getContext().getString(R.string.session_added_notification), Toast.LENGTH_SHORT).show();
         }
     }
 
