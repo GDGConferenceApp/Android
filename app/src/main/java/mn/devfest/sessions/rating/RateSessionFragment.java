@@ -60,8 +60,8 @@ public class RateSessionFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mSessionId = getActivity().getIntent().getStringExtra(RateSessionActivity.EXTRA_SESSION_ID);
         mFeedbackApi = DevFestApplication.get(getContext()).component().feedbackApi();
-        mSessionId = getArguments().getString(ARG_SESSION_ID);
     }
 
     @Nullable

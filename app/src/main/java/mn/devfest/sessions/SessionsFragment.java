@@ -49,6 +49,7 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
 
     // TODO this shouldn't be static so we can localize
     private static final String ALL_CATEGORY = "All";
+    private static final int MINUTES_BEFORE_ENDTIME_TO_SHOW_SESSION_FEEDBACK = 20;
 
     @Bind(R.id.session_list_recyclerview)
     RecyclerView mSessionRecyclerView;
@@ -222,7 +223,7 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
         if (session.getEndTime() == null) {
             return false;
         }
-        return session.getEndTime().isBeforeNow();
+        return session.getEndTime().minusMinutes(MINUTES_BEFORE_ENDTIME_TO_SHOW_SESSION_FEEDBACK).isBeforeNow();
     }
 
     /**
