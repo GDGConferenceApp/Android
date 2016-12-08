@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginEnd="16dp"
     android:layout_marginStart="32dp"
     android:background="?attr/selectableItemBackground"
@@ -29,7 +29,7 @@
         android:fontFamily="sans-serif-medium"
         android:paddingEnd="@dimen/spacing_normal"
         android:paddingStart="@dimen/spacing_normal"
-        android:singleLine="true"
+        android:lines="1"
         tools:text="android"
         tools:textColor="@color/category_android"/>
 
@@ -46,7 +46,7 @@
         android:paddingEnd="@dimen/padding_normal"
         android:paddingStart="@dimen/padding_normal"
         android:paddingTop="@dimen/spacing_normal"
-        android:singleLine="false"
+        android:lines="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:text="Juggling Cats in Space"/>
 
@@ -62,7 +62,6 @@
         android:paddingBottom="@dimen/padding_normal"
         android:paddingLeft="@dimen/padding_normal"
         android:paddingRight="@dimen/padding_normal"
-        android:singleLine="false"
         android:fontFamily="sans-serif-condensed"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/mediumGray"
@@ -80,7 +79,8 @@
         android:minHeight="44dp"
         android:minWidth="44dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_star_rate_black_18dp"/>
+        android:src="@drawable/ic_star_rate_black_18dp"
+        android:contentDescription="@string/toggle_in_or_out_of_your_schedule"/>
     <!-- TODO Fix that star asset so it's not scaled up -->
 
 </RelativeLayout>
