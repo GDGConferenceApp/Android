@@ -28,7 +28,7 @@
         <!-- TODO extract all of this nonsense -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC5NntnpnPY_pYLDyZivim9JnR0jhgU8zM"/>
+            android:value="AIzaSyAHzau9kLj7UiLi9w8lkxN-fNpP4UxjM8A"/>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="987e4f84ca50f911291eb02e5ae47c021127d78c" />
