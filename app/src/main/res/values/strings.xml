@@ -19,6 +19,7 @@
     <string name="sessions_menu_autohide">Hide finished</string>
     <string name="session_removed_notification">Session removed from your schedule</string>
     <string name="session_added_notification">Session added to your schedule</string>
+    <string name="toggle_in_or_out_of_your_schedule">toggle in or out of your schedule</string>
 
     <!-- Speakers -->
     <string name="speaker_heading_plural">Speakers:</string>
