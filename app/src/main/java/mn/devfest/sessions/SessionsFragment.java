@@ -1,6 +1,5 @@
 package mn.devfest.sessions;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -24,7 +23,6 @@ import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import mn.devfest.DevFestApplication;
 import mn.devfest.R;
 import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
@@ -57,9 +55,6 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
     @Bind(R.id.loading_progress)
     ProgressBar mLoadingView;
 
-    private SessionListAdapter mAdapter;
-
-    private DevFestDataSource mDataSource;
     private SharedPreferences mPreferences;
     private Subscription mDataUpdateSubscription;
 
@@ -96,22 +91,12 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (mDataSource == null) {
-            mDataSource = DevFestApplication.get(getActivity()).component().datasource();
-        }
-
-        mDataSource.setDataSourceListener(this);
-    }
-    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
         getActivity().setTitle(getResources().getString(R.string.sessions_title));
-        mAdapter = new SessionListAdapter(mDataSource);
-        mSessionRecyclerView.setAdapter(mAdapter);
+        //TODO set adapter mSessionRecyclerView.setAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mSessionRecyclerView.setLayoutManager(linearLayoutManager);
         mSessionRecyclerView.addItemDecoration(new SessionGroupDividerDecoration(getContext()));
@@ -121,14 +106,12 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
     @Override
     public void onResume() {
         super.onResume();
-        //Refresh the UI with the latest data
-        List<Session> sessions = mDataSource.getSessions();
-
+        /*TODO Refresh the UI with the latest data and display loading view if necessary
         if (sessions.size() == 0) {
             mLoadingView.setVisibility(View.VISIBLE);
         } else {
             setSessions(sessions);
-        }
+        }*/
     }
 
     @Override
@@ -231,8 +214,7 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
      * @param sessions The sessions to display
      */
     private void updateDisplayedSessions(List<Session> sessions) {
-        mAdapter.setSessions(sessions);
-        mAdapter.notifyDataSetChanged();
+       //TODO handle filtering sessions
     }
 
     @Override
