@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +16,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -30,10 +37,12 @@ import mn.devfest.api.model.Speaker;
 import mn.devfest.data.sort.SessionTimeSort;
 import mn.devfest.sessions.filter.OnCategoryFilterSelectedListener;
 import mn.devfest.sessions.filter.SessionCategoryFilterDialog;
+import mn.devfest.sessions.holder.SessionViewHolder;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 
 /**
@@ -42,12 +51,14 @@ import rx.schedulers.Schedulers;
  * @author bherbst
  * @author pfuentes
  */
-public class SessionsFragment extends Fragment implements DevFestDataSource.DataSourceListener, OnCategoryFilterSelectedListener {
+public class SessionsFragment extends Fragment implements DevFestDataSource.DataSourceListener, OnCategoryFilterSelectedListener, SessionViewHolder.ToggleInScheduleListener {
     private static final String PREF_KEY_AUTOHIDE = "autohide_past_sessions";
 
     // TODO this shouldn't be static so we can localize
     private static final String ALL_CATEGORY = "All";
     private static final int MINUTES_BEFORE_ENDTIME_TO_SHOW_SESSION_FEEDBACK = 20;
+    private static final String DEVFEST_2017_KEY = "devfest2017";
+    private static final String SESSIONS_CHILD_KEY = "schedule";
 
     @Bind(R.id.session_list_recyclerview)
     RecyclerView mSessionRecyclerView;
@@ -62,12 +73,40 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
     private List<Session> mAllSessions;
     private Set<String> mAllCategories;
     private String mCategoryFilter;
+    private DatabaseReference mFirebaseDatabaseReference;
+    private SessionListAdapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
+
+    @Override
+    public boolean onToggleScheduleButtonClicked(Session session) {
+        //TODO handle toggling schedule
+        return false;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mFirebaseDatabaseReference.child(DEVFEST_2017_KEY)
+                .child(SESSIONS_CHILD_KEY).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mAllSessions.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Timber.d("Snapshot is: " + snapshot.toString());
+                    mAllSessions.add(snapshot.getValue(Session.class));
+                }
+                Timber.d(mAllSessions.toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Failed to read value
+                Log.w(this.getClass().getSimpleName(), "Failed to read value.", databaseError.toException());
+            }
+        });
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         mAutohidePastSessions = mPreferences.getBoolean(PREF_KEY_AUTOHIDE, true);
         mAllSessions = new ArrayList<>(0);
@@ -95,10 +134,11 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
+        mLayoutManager = new LinearLayoutManager(getContext());
         getActivity().setTitle(getResources().getString(R.string.sessions_title));
-        //TODO set adapter mSessionRecyclerView.setAdapter();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        mSessionRecyclerView.setLayoutManager(linearLayoutManager);
+        mAdapter = new SessionListAdapter(null);
+        mSessionRecyclerView.setAdapter(mAdapter);
+        mSessionRecyclerView.setLayoutManager(mLayoutManager);
         mSessionRecyclerView.addItemDecoration(new SessionGroupDividerDecoration(getContext()));
         mSessionRecyclerView.addItemDecoration(new SessionDividerDecoration(getContext()));
     }

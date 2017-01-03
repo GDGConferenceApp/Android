@@ -143,7 +143,7 @@ public class SessionDetailsFragment extends Fragment {
         //displayTags(mSession.getTags());
         //TODO mDifficultyTextview.setText(mSession.);
         mDescriptionTextview.setText(mSession.getDescription());
-        displaySpeakers(mSession.getSpeakers());
+        //TODO displaySpeakers(mSession.getSpeakers());
     }
 
     @Override
