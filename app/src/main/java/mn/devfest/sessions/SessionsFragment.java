@@ -55,10 +55,10 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
     private static final String PREF_KEY_AUTOHIDE = "autohide_past_sessions";
 
     // TODO this shouldn't be static so we can localize
-    private static final String ALL_CATEGORY = "All";
-    private static final int MINUTES_BEFORE_ENDTIME_TO_SHOW_SESSION_FEEDBACK = 20;
-    private static final String DEVFEST_2017_KEY = "devfest2017";
-    private static final String SESSIONS_CHILD_KEY = "schedule";
+    public static final String ALL_CATEGORY = "All";
+    public static final int MINUTES_BEFORE_ENDTIME_TO_SHOW_SESSION_FEEDBACK = 20;
+    public static final String DEVFEST_2017_KEY = "devfest2017";
+    public static final String SESSIONS_CHILD_KEY = "schedule";
 
     @Bind(R.id.session_list_recyclerview)
     RecyclerView mSessionRecyclerView;

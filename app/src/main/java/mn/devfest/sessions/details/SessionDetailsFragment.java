@@ -1,6 +1,5 @@
 package mn.devfest.sessions.details;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -9,13 +8,18 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.liangfeizc.flowlayout.FlowLayout;
 
 import org.joda.time.DateTime;
@@ -25,13 +29,13 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import mn.devfest.DevFestApplication;
 import mn.devfest.R;
-import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
-import mn.devfest.api.model.Speaker;
 import mn.devfest.sessions.rating.RateSessionActivity;
-import mn.devfest.view.SpeakerView;
+import timber.log.Timber;
+
+import static mn.devfest.sessions.SessionsFragment.DEVFEST_2017_KEY;
+import static mn.devfest.sessions.SessionsFragment.SESSIONS_CHILD_KEY;
 
 
 /**
@@ -64,10 +68,11 @@ public class SessionDetailsFragment extends Fragment {
     @Bind(R.id.session_details_speaker_layout)
     LinearLayout mSpeakerLayout;
 
-    private DevFestDataSource mDataSource;
+    //private DevFestDataSource mDataSource;
 
     private Session mSession;
     private boolean mSessionHasEnded = false;
+    private DatabaseReference mFirebaseDatabaseReference;
 
     public static SessionDetailsFragment newInstance(@NonNull String sessionId) {
         Bundle args = new Bundle();
@@ -77,14 +82,6 @@ public class SessionDetailsFragment extends Fragment {
         frag.setArguments(args);
 
         return frag;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (mDataSource == null) {
-            mDataSource = DevFestApplication.get(getActivity()).component().datasource();
-        }
     }
 
     @Nullable
@@ -103,7 +100,25 @@ public class SessionDetailsFragment extends Fragment {
         if (args != null && args.containsKey(ARG_SESSION_ID)) {
             //Get session from data layer
             String sessionId = args.getString(ARG_SESSION_ID);
-            mSession = mDataSource.getSessionById(sessionId);
+            if (sessionId != null) {
+
+                mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+                mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(sessionId)
+                        .child(SESSIONS_CHILD_KEY).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Timber.d(dataSnapshot.toString());
+                        //TODO mSession = ;
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // Failed to read value
+                        Log.w(this.getClass().getSimpleName(), "Failed to read value.", databaseError.toException());
+                    }
+                });
+            }
+
         } else {
             throw new IllegalStateException("SessionDetailsFragment requires a session ID passed via newInstance()");
         }
@@ -193,10 +208,10 @@ public class SessionDetailsFragment extends Fragment {
 
         //Add SpeakerViews to the Speaker Layout
         for (String speakerId : speakers) {
-            Speaker speaker = mDataSource.getSpeakerById(speakerId);
+            /* TODO Speaker speaker = mDataSource.getSpeakerById(speakerId);
             SpeakerView speakerView = new SpeakerView(getActivity());
             speakerView.setSpeaker(speaker, false);
-            mSpeakerLayout.addView(speakerView);
+            mSpeakerLayout.addView(speakerView); */
         }
     }
 
@@ -216,11 +231,11 @@ public class SessionDetailsFragment extends Fragment {
             //Change to a toggle-schedule button
             int resourceId = R.drawable.ic_star_rate_black_18dp;
             Drawable icon = ContextCompat.getDrawable(getContext(), resourceId);
-            if (mDataSource.isInUserSchedule(mSession.getId())) {
+            /* TODO if (mDataSource.isInUserSchedule(mSession.getId())) {
                 mFab.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorBlack));
             } else {
                 mFab.setColorFilter(ContextCompat.getColor(getContext(), R.color.lightGray));
-            }
+            } */
             mFab.setImageDrawable(icon);
         }
     }
@@ -229,20 +244,22 @@ public class SessionDetailsFragment extends Fragment {
      * Updates the member variable that indicates in the session has ended yet or not
      */
     private void updateHasSessionEnded() {
-        DateTime endTime = mSession.getEndTime();
+        if (mSession != null) {
+            DateTime endTime = mSession.getEndTime();
 
-        //Handle missing endTime or startTime
-        if (endTime == null) {
-            if (mSession.getStartTime() == null) {
-                //TODO find a good way to deal with having no start or end time
-                return;
+            //Handle missing endTime or startTime
+            if (endTime == null) {
+                if (mSession.getStartTime() == null) {
+                    //TODO find a good way to deal with having no start or end time
+                    return;
+                }
+
+                //If we don't know the end time, switch over 8 hours after it started
+                DateTime eightHoursAgo = new DateTime().minusHours(8);
+                mSessionHasEnded = mSession.getStartTime().isBefore(eightHoursAgo);
+            } else {
+                mSessionHasEnded = endTime.isBeforeNow();
             }
-
-            //If we don't know the end time, switch over 8 hours after it started
-            DateTime eightHoursAgo = new DateTime().minusHours(8);
-            mSessionHasEnded = mSession.getStartTime().isBefore(eightHoursAgo);
-        } else {
-            mSessionHasEnded = endTime.isBeforeNow();
         }
     }
 
@@ -262,14 +279,14 @@ public class SessionDetailsFragment extends Fragment {
      */
     private void toggleInUserSchedule() {
         String sessionId = mSession.getId();
-        if (mDataSource.isInUserSchedule(sessionId)) {
+        /* TODO if (mDataSource.isInUserSchedule(sessionId)) {
             mDataSource.removeFromUserSchedule(sessionId);
             //TODO find a better solution
             Toast.makeText(getContext(), getContext().getString(R.string.session_removed_notification), Toast.LENGTH_SHORT).show();
         } else {
             mDataSource.addToUserSchedule(sessionId);
             Toast.makeText(getContext(), getContext().getString(R.string.session_added_notification), Toast.LENGTH_SHORT).show();
-        }
+        } */
     }
 
     /**
