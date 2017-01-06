@@ -96,8 +96,12 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
                 mAllSessions.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Timber.d("Snapshot is: " + snapshot.toString());
-                    mAllSessions.add(snapshot.getValue(Session.class));
+                    Session session = snapshot.getValue(Session.class);
+                    session.setId(snapshot.getKey());
+                    mAllSessions.add(session);
                 }
+                mAdapter.setSessions(mAllSessions);
+                mAdapter.notifyDataSetChanged();
                 Timber.d(mAllSessions.toString());
             }
 

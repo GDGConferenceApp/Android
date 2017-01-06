@@ -7,6 +7,8 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 
+import timber.log.Timber;
+
 /**
  * Represents a session at the conference (e.g. – a talk, workshop, etc)
  *
@@ -28,7 +30,7 @@ public class Session implements Parcelable {
     private String id;
 
     public Session() {
-
+        // Default constructor required for calls to DataSnapshot.getValue(Session.class)
     }
 
     protected Session(Parcel in) {
@@ -90,7 +92,13 @@ public class Session implements Parcelable {
     }
 
     public DateTime getEndTime() {
-        return new DateTime(endTime);
+        try {
+            return DateTime.parse(endTime);
+            //return ISODateTimeFormat.dateTime().parseDateTime(endTime);
+        } catch (Exception e) {
+            Timber.e(e, "Failed to parse the endTime");
+            return new DateTime();
+        }
     }
 
     public String getRoom() {
@@ -106,6 +114,12 @@ public class Session implements Parcelable {
     }
 
     public DateTime getStartTime() {
-        return new DateTime(startTime);
+        try {
+            return DateTime.parse(startTime);
+            //return ISODateTimeFormat.dateTime().parseDateTime(startTime);
+        } catch (Exception e) {
+            Timber.e(e, "Failed to parse the startTime");
+            return new DateTime();
+        }
     }
 }
