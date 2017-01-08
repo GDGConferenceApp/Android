@@ -1,22 +1,30 @@
 package mn.devfest.speakers;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.transition.Transition;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import mn.devfest.DevFestApplication;
 import mn.devfest.R;
-import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.view.SpeakerView;
+import timber.log.Timber;
+
+import static mn.devfest.sessions.SessionsFragment.DEVFEST_2017_KEY;
+import static mn.devfest.sessions.SessionsFragment.SPEAKERS_CHILD_KEY;
 
 /**
  * Fragment that displays details for a particular session
@@ -29,8 +37,8 @@ public class SpeakerDetailsFragment extends Fragment {
     @Bind(R.id.speaker)
     SpeakerView mSpeakerView;
 
-    private DevFestDataSource mDataSource;
     private Speaker mSpeaker;
+    private DatabaseReference mFirebaseDatabaseReference;
 
     public static SpeakerDetailsFragment newInstance(String speakerId) {
         Bundle args = new Bundle();
@@ -40,14 +48,6 @@ public class SpeakerDetailsFragment extends Fragment {
         frag.setArguments(args);
 
         return frag;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (mDataSource == null) {
-            mDataSource = DevFestApplication.get(getActivity()).component().datasource();
-        }
     }
 
     @Nullable
@@ -64,12 +64,28 @@ public class SpeakerDetailsFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null && args.containsKey(ARG_SPEAKER_ID)) {
             String speakerId = args.getString(ARG_SPEAKER_ID);
+            mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+            mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(SPEAKERS_CHILD_KEY)
+                    .child(speakerId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Timber.d(dataSnapshot.toString());
+                    mSpeaker = dataSnapshot.getValue(Speaker.class);
+                    transitionSpeaker();
+                }
 
-            mSpeaker = mDataSource.getSpeakerById(speakerId);
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Failed to read value
+                    Log.w(this.getClass().getSimpleName(), "Failed to read speaker value.", databaseError.toException());
+                }
+            });
         } else {
             throw new IllegalStateException("SpeakerDetailsFragment requires a speaker ID passed via newInstance()");
         }
+    }
 
+    private void transitionSpeaker() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && addTransitionListener()) {
             // If we are transitioning in, use the already loaded thumbnail
             mSpeakerView.setSpeaker(mSpeaker, true);
