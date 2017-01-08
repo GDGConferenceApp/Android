@@ -31,9 +31,7 @@ import java.util.Set;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
-import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
-import mn.devfest.api.model.Speaker;
 import mn.devfest.data.sort.SessionTimeSort;
 import mn.devfest.sessions.filter.OnCategoryFilterSelectedListener;
 import mn.devfest.sessions.filter.SessionCategoryFilterDialog;
@@ -51,7 +49,7 @@ import timber.log.Timber;
  * @author bherbst
  * @author pfuentes
  */
-public class SessionsFragment extends Fragment implements DevFestDataSource.DataSourceListener, OnCategoryFilterSelectedListener, SessionViewHolder.ToggleInScheduleListener {
+public class SessionsFragment extends Fragment implements OnCategoryFilterSelectedListener, SessionViewHolder.ToggleInScheduleListener {
     private static final String PREF_KEY_AUTOHIDE = "autohide_past_sessions";
 
     // TODO this shouldn't be static so we can localize
@@ -260,21 +258,5 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
      */
     private void updateDisplayedSessions(List<Session> sessions) {
        //TODO handle filtering sessions
-    }
-
-    @Override
-    public void onSessionsUpdate(List<Session> sessions) {
-        setSessions(sessions);
-        mLoadingView.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onSpeakersUpdate(List<Speaker> speakers) {
-        //TODO address update
-    }
-
-    @Override
-    public void onUserScheduleUpdate(List<Session> userSchedule) {
-        //TODO address update
     }
 }

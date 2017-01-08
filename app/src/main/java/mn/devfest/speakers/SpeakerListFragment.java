@@ -1,6 +1,5 @@
 package mn.devfest.speakers;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,11 +15,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import mn.devfest.DevFestApplication;
 import mn.devfest.R;
-import mn.devfest.api.DevFestDataSource;
-import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
+import mn.devfest.view.decoration.DividerItemDecoration;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -32,7 +29,7 @@ import rx.schedulers.Schedulers;
  * @author bherbst
  * @author pfuentes
  */
-public class SpeakerListFragment extends Fragment implements DevFestDataSource.DataSourceListener {
+public class SpeakerListFragment extends Fragment {
 
     @Bind(R.id.speaker_list_recyclerview)
     RecyclerView mSpeakerRecyclerView;
@@ -43,16 +40,8 @@ public class SpeakerListFragment extends Fragment implements DevFestDataSource.D
     private SpeakerListAdapter mAdapter;
 
     private List<Speaker> mSpeakerData = new ArrayList<>();
-    private DevFestDataSource mDataSource;
     private Subscription mDataUpdateSubscription;
 
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mDataSource = DevFestApplication.get(getActivity()).component().datasource();
-        mDataSource.setDataSourceListener(this);
-    }
 
     @Nullable
     @Override
@@ -72,20 +61,7 @@ public class SpeakerListFragment extends Fragment implements DevFestDataSource.D
         mSpeakerRecyclerView.setAdapter(mAdapter);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mSpeakerRecyclerView.setLayoutManager(mLinearLayoutManager);
-        //mSpeakerRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        //Refresh the UI with the latest data
-        List<Speaker> speakers = mDataSource.getSpeakers();
-
-        if (speakers.size() == 0) {
-            mLoadingView.setVisibility(View.VISIBLE);
-        } else {
-            setSpeakers(speakers);
-        }
+        mSpeakerRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
     }
 
     @Override
@@ -97,9 +73,6 @@ public class SpeakerListFragment extends Fragment implements DevFestDataSource.D
         }
     }
 
-    /**
-     * TODO update documentation
-     */
     @Override
     public void onDetach() {
         super.onDetach();
@@ -129,23 +102,5 @@ public class SpeakerListFragment extends Fragment implements DevFestDataSource.D
     private void updateDisplayedSpeakers(List<Speaker> speakers) {
         mAdapter.setSpeakers(speakers);
         mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onSessionsUpdate(List<Session> sessions) {
-        //Intentionally left blank; no UI update currently required
-    }
-
-    @Override
-    public void onSpeakersUpdate(List<Speaker> speakers) {
-        setSpeakers(speakers);
-        if (mLoadingView != null) {
-            mLoadingView.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void onUserScheduleUpdate(List<Session> userSchedule) {
-        //Intentionally left blank; no UI update currently required
     }
 }
