@@ -59,6 +59,7 @@ public class SessionsFragment extends Fragment implements DevFestDataSource.Data
     public static final int MINUTES_BEFORE_ENDTIME_TO_SHOW_SESSION_FEEDBACK = 20;
     public static final String DEVFEST_2017_KEY = "devfest2017";
     public static final String SESSIONS_CHILD_KEY = "schedule";
+    public static final String SPEAKERS_CHILD_KEY = "speakers";
 
     @Bind(R.id.session_list_recyclerview)
     RecyclerView mSessionRecyclerView;

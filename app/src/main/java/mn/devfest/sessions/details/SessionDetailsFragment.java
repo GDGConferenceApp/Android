@@ -31,11 +31,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mn.devfest.R;
 import mn.devfest.api.model.Session;
+import mn.devfest.api.model.Speaker;
 import mn.devfest.sessions.rating.RateSessionActivity;
+import mn.devfest.view.SpeakerView;
 import timber.log.Timber;
 
 import static mn.devfest.sessions.SessionsFragment.DEVFEST_2017_KEY;
 import static mn.devfest.sessions.SessionsFragment.SESSIONS_CHILD_KEY;
+import static mn.devfest.sessions.SessionsFragment.SPEAKERS_CHILD_KEY;
 
 
 /**
@@ -115,7 +118,7 @@ public class SessionDetailsFragment extends Fragment {
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         // Failed to read value
-                        Log.w(this.getClass().getSimpleName(), "Failed to read value.", databaseError.toException());
+                        Log.w(this.getClass().getSimpleName(), "Failed to read session value.", databaseError.toException());
                     }
                 });
             }
@@ -158,7 +161,7 @@ public class SessionDetailsFragment extends Fragment {
         //displayTags(mSession.getTags());
         //TODO mDifficultyTextview.setText(mSession.);
         mDescriptionTextview.setText(mSession.getDescription());
-        //TODO displaySpeakers(mSession.getSpeakers());
+        displaySpeakers(mSession.getSpeakers());
     }
 
     @Override
@@ -208,10 +211,22 @@ public class SessionDetailsFragment extends Fragment {
 
         //Add SpeakerViews to the Speaker Layout
         for (String speakerId : speakers) {
-            /* TODO Speaker speaker = mDataSource.getSpeakerById(speakerId);
-            SpeakerView speakerView = new SpeakerView(getActivity());
-            speakerView.setSpeaker(speaker, false);
-            mSpeakerLayout.addView(speakerView); */
+            mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(SPEAKERS_CHILD_KEY)
+                    .child(speakerId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Speaker speaker = dataSnapshot.getValue(Speaker.class);
+                    SpeakerView speakerView = new SpeakerView(getActivity());
+                    speakerView.setSpeaker(speaker, false);
+                    mSpeakerLayout.addView(speakerView);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Failed to read value
+                    Log.w(this.getClass().getSimpleName(), "Failed to read speaker value.", databaseError.toException());
+                }
+            });
         }
     }
 
