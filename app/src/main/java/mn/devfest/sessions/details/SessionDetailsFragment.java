@@ -73,6 +73,7 @@ public class SessionDetailsFragment extends Fragment {
     private Session mSession;
     private boolean mSessionHasEnded = false;
     private DatabaseReference mFirebaseDatabaseReference;
+    private String mSessionId;
 
     public static SessionDetailsFragment newInstance(@NonNull String sessionId) {
         Bundle args = new Bundle();
@@ -95,20 +96,20 @@ public class SessionDetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        //Set the session member variable
+        //Set the session ID member variable
         Bundle args = getArguments();
         if (args != null && args.containsKey(ARG_SESSION_ID)) {
             //Get session from data layer
-            String sessionId = args.getString(ARG_SESSION_ID);
-            if (sessionId != null) {
-
+             mSessionId = args.getString(ARG_SESSION_ID);
+            if (mSessionId != null) {
                 mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-                mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(sessionId)
-                        .child(SESSIONS_CHILD_KEY).addValueEventListener(new ValueEventListener() {
+                mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(SESSIONS_CHILD_KEY).child(mSessionId)
+                        .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Timber.d(dataSnapshot.toString());
-                        //TODO mSession = ;
+                        mSession = dataSnapshot.getValue(Session.class);
+                        bindViewsToSession();
                     }
 
                     @Override
@@ -118,7 +119,6 @@ public class SessionDetailsFragment extends Fragment {
                     }
                 });
             }
-
         } else {
             throw new IllegalStateException("SessionDetailsFragment requires a session ID passed via newInstance()");
         }
@@ -278,7 +278,8 @@ public class SessionDetailsFragment extends Fragment {
      * Toggles the status of the session being in or out of the user's schedule
      */
     private void toggleInUserSchedule() {
-        String sessionId = mSession.getId();
+        if (mSession != null) {
+            String sessionId = mSession.getId();
         /* TODO if (mDataSource.isInUserSchedule(sessionId)) {
             mDataSource.removeFromUserSchedule(sessionId);
             //TODO find a better solution
@@ -287,6 +288,7 @@ public class SessionDetailsFragment extends Fragment {
             mDataSource.addToUserSchedule(sessionId);
             Toast.makeText(getContext(), getContext().getString(R.string.session_added_notification), Toast.LENGTH_SHORT).show();
         } */
+        }
     }
 
     /**
