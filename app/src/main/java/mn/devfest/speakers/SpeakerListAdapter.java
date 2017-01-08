@@ -21,7 +21,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
-import mn.devfest.api.ProfilePictureApi;
 import mn.devfest.api.model.Speaker;
 
 /**
@@ -118,10 +117,9 @@ public class SpeakerListAdapter extends RecyclerView.Adapter<SpeakerListAdapter.
             }
 
             int pictureSizePx = speakerImage.getResources().getDimensionPixelSize(R.dimen.speaker_list_image_size);
-            String pictureUrl = ProfilePictureApi.getImageUrl(speaker, pictureSizePx);
 
             Picasso.with(speakerImage.getContext())
-                    .load(pictureUrl)
+                    .load(speaker.getImageUrl())
                     .transform(new SpeakerImageTransformation())
                     .placeholder(R.drawable.ic_account_circle_white_48dp)
                     .into(speakerImage);
