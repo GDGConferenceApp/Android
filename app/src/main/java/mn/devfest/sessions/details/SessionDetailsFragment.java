@@ -289,14 +289,7 @@ public class SessionDetailsFragment extends Fragment {
     private void toggleInUserSchedule() {
         if (mSession != null) {
             String sessionId = mSession.getId();
-        /* TODO if (mDataSource.isInUserSchedule(sessionId)) {
-            mDataSource.removeFromUserSchedule(sessionId);
-            //TODO find a better solution
-            Toast.makeText(getContext(), getContext().getString(R.string.session_removed_notification), Toast.LENGTH_SHORT).show();
-        } else {
-            mDataSource.addToUserSchedule(sessionId);
-            Toast.makeText(getContext(), getContext().getString(R.string.session_added_notification), Toast.LENGTH_SHORT).show();
-        } */
+        // TODO toggle in/out of the user's schedule
         }
     }
 
