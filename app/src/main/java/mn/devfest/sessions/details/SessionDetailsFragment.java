@@ -71,8 +71,6 @@ public class SessionDetailsFragment extends Fragment {
     @Bind(R.id.session_details_speaker_layout)
     LinearLayout mSpeakerLayout;
 
-    //private DevFestDataSource mDataSource;
-
     private Session mSession;
     private boolean mSessionHasEnded = false;
     private DatabaseReference mFirebaseDatabaseReference;
@@ -246,11 +244,7 @@ public class SessionDetailsFragment extends Fragment {
             //Change to a toggle-schedule button
             int resourceId = R.drawable.ic_star_rate_black_18dp;
             Drawable icon = ContextCompat.getDrawable(getContext(), resourceId);
-            /* TODO if (mDataSource.isInUserSchedule(mSession.getId())) {
-                mFab.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorBlack));
-            } else {
-                mFab.setColorFilter(ContextCompat.getColor(getContext(), R.color.lightGray));
-            } */
+            // TODO set the icon based on if the session is in the user's schedule
             mFab.setImageDrawable(icon);
         }
     }

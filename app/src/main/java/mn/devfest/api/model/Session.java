@@ -94,7 +94,6 @@ public class Session implements Parcelable {
     public DateTime getEndTime() {
         try {
             return DateTime.parse(endTime);
-            //return ISODateTimeFormat.dateTime().parseDateTime(endTime);
         } catch (Exception e) {
             Timber.e(e, "Failed to parse the endTime");
             return new DateTime();
@@ -116,7 +115,6 @@ public class Session implements Parcelable {
     public DateTime getStartTime() {
         try {
             return DateTime.parse(startTime);
-            //return ISODateTimeFormat.dateTime().parseDateTime(startTime);
         } catch (Exception e) {
             Timber.e(e, "Failed to parse the startTime");
             return new DateTime();
