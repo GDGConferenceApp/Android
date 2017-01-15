@@ -143,8 +143,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         return headers;
     }
-
-    @DrawableRes
+    
     @Override
     public boolean onToggleScheduleButtonClicked(Session session) {
         if (mDataSource.isInUserSchedule(session.getId())) {
