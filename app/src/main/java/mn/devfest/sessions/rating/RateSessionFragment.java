@@ -8,19 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mn.devfest.R;
-import mn.devfest.api.FeedbackApi;
-import mn.devfest.api.model.Feedback;
 import mn.devfest.view.NumberFeedbackField;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-import timber.log.Timber;
 
 /**
  * Fragment that allows the user to rate a session
@@ -35,8 +28,6 @@ public class RateSessionFragment extends Fragment {
     @Bind(R.id.field_content) NumberFeedbackField mcontentBar;
     @Bind(R.id.field_speaker_quality) NumberFeedbackField mSpeakerBar;
     @Bind(R.id.fullname_edittext) EditText mFullname;
-
-    private FeedbackApi mFeedbackApi;
 
     private String mSessionId;
 
@@ -89,22 +80,6 @@ public class RateSessionFragment extends Fragment {
         int speakerQuality = mSpeakerBar.getRating();
         String fullname = mFullname.getText().toString();
 
-
-//        String instanceId = InstanceID.getInstance(context).getId();
-        //TODO add a real install ID as well as the fullname
-        Feedback feedback = new Feedback(mSessionId, fullname, overall, relevancy, content, speakerQuality);
-        mFeedbackApi.submitRating(feedback, new Callback<Feedback>() {
-            @Override
-            public void success(Feedback feedback, Response response) {
-                Toast.makeText(getContext(), "Feedback submitted!", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Timber.e(error, "Failed to submit feedback");
-                Toast.makeText(getContext(), "Failed to submit feedback :(", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        //TODO submit feedback
     }
 }

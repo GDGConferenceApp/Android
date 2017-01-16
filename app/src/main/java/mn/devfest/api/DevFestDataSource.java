@@ -9,12 +9,7 @@ import java.util.List;
 import mn.devfest.api.model.Conference;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
-import mn.devfest.persistence.ConferenceRepository;
 import mn.devfest.persistence.UserScheduleRepository;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-import timber.log.Timber;
 
 /**
  * This is the source of session, schedule, and speaker information. This acts as a general
@@ -26,10 +21,9 @@ import timber.log.Timber;
  * @author bherbst
  * @author pfuentes
  */
-public class DevFestDataSource implements Callback<Conference> {
+public class DevFestDataSource {
 
     private UserScheduleRepository mScheduleRepository;
-    private ConferenceRepository mConferenceRepository;
 
     private Conference mConference;
     //TODO move to an array of listeners?
@@ -37,11 +31,6 @@ public class DevFestDataSource implements Callback<Conference> {
 
     public DevFestDataSource() {
 
-    }
-
-    public DevFestDataSource(DevFestApi api, UserScheduleRepository scheduleRepository, ConferenceRepository conferenceRepository) {
-        this.mScheduleRepository = scheduleRepository;
-        this.mConferenceRepository = conferenceRepository;
     }
 
     @NonNull
@@ -144,20 +133,6 @@ public class DevFestDataSource implements Callback<Conference> {
         mDataSourceListener.onSessionsUpdate(getSessions());
         mDataSourceListener.onSpeakersUpdate(getSpeakers());
         mDataSourceListener.onUserScheduleUpdate(getUserSchedule());
-    }
-
-    @Override
-    public void success(Conference conference, Response response) {
-        mConference = conference;
-        mConferenceRepository.setConference(conference);
-        onConferenceUpdated();
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
-        Timber.e(error, "Failed to retrieve conference info.");
-        mConference = mConferenceRepository.getConference();
-        onConferenceUpdated();
     }
 
     /**
