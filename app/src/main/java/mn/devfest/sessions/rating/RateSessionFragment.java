@@ -13,7 +13,6 @@ import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import mn.devfest.DevFestApplication;
 import mn.devfest.R;
 import mn.devfest.api.FeedbackApi;
 import mn.devfest.api.model.Feedback;
@@ -61,7 +60,7 @@ public class RateSessionFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mSessionId = getActivity().getIntent().getStringExtra(RateSessionActivity.EXTRA_SESSION_ID);
-        mFeedbackApi = DevFestApplication.get(getContext()).component().feedbackApi();
+        //TODO initialize the feedback API
     }
 
     @Nullable

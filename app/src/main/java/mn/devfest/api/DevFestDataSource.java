@@ -26,31 +26,22 @@ import timber.log.Timber;
  * @author bherbst
  * @author pfuentes
  */
-@Deprecated
 public class DevFestDataSource implements Callback<Conference> {
 
-    private final DevFestApi mApi;
-    private final UserScheduleRepository mScheduleRepository;
-    private final ConferenceRepository mConferenceRepository;
+    private UserScheduleRepository mScheduleRepository;
+    private ConferenceRepository mConferenceRepository;
 
     private Conference mConference;
     //TODO move to an array of listeners?
     private DataSourceListener mDataSourceListener;
 
-    public DevFestDataSource(DevFestApi api, UserScheduleRepository scheduleRepository, ConferenceRepository conferenceRepository) {
-        this.mApi = api;
-        this.mScheduleRepository = scheduleRepository;
-        this.mConferenceRepository = conferenceRepository;
+    public DevFestDataSource() {
+
     }
 
-    /**
-     * Checks the API for fresh info.
-     * If fresh info is available, it's persisted locally for future reference
-     * If fresh info isn't available, we fall back to the local store
-     */
-    public void updateConferenceInfo() {
-        //Check the API for fresh info
-        mApi.getConferenceInfo(this);
+    public DevFestDataSource(DevFestApi api, UserScheduleRepository scheduleRepository, ConferenceRepository conferenceRepository) {
+        this.mScheduleRepository = scheduleRepository;
+        this.mConferenceRepository = conferenceRepository;
     }
 
     @NonNull
