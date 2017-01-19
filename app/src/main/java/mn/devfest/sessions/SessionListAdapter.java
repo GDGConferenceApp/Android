@@ -1,6 +1,5 @@
 package mn.devfest.sessions;
 
-import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -114,7 +113,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (mSessions.size() > 0) {
             // Put in the first item
             Session firstSession = mSessions.get(0);
-            DateTime lastTime = firstSession.getStartTime();
+            DateTime lastTime = firstSession.getStartDateTime();
             headers.put(0, lastTime);
 
             // See below.
@@ -124,9 +123,9 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             for (int i = 1; i < mSessions.size(); i++) {
                 Session session = mSessions.get(i);
 
-                if (!session.getStartTime().isEqual(lastTime)) {
+                if (!session.getStartDateTime().isEqual(lastTime)) {
                     // We have found a new group!
-                    lastTime = session.getStartTime();
+                    lastTime = session.getStartDateTime();
                     headers.put(i, lastTime);
 
                     // Put in a dummy item to represent the header in the session list

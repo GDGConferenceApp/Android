@@ -73,14 +73,14 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
         colorScheduleToggleButton(isInUserSchedule);
 
         Context context = mTitleTextView.getContext();
-        int categoryColorRes = CategoryColorUtil.getColorResForCategory(session.getCategory());
+        int categoryColorRes = CategoryColorUtil.getColorResForCategory(session.getTrack());
         int categoryColor = ContextCompat.getColor(context, categoryColorRes);
         mDisciplineColor.setBackgroundColor(categoryColor);
         mTagView.setTextColor(categoryColor);
 
-        mTagView.setText(session.getCategory());
+        mTagView.setText(session.getTrack());
 
-        if (session.getCategory() == null) {
+        if (session.getTrack() == null) {
             mTagView.setVisibility(View.INVISIBLE);
         } else {
             mTagView.setVisibility(View.VISIBLE);

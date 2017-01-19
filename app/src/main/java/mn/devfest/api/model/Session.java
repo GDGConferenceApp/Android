@@ -2,6 +2,7 @@ package mn.devfest.api.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import org.joda.time.DateTime;
 
@@ -19,13 +20,14 @@ import timber.log.Timber;
 public class Session implements Parcelable {
     private boolean all;
     private String description;
+    private String startTime;
+    private DateTime startDateTime;
     private String endTime;
+    private DateTime endDateTime;
     private String room;
     private ArrayList<String> speakers;
-    private String startTime;
     private String title;
-
-    private String category;
+    private String track;
 
     private String id;
 
@@ -38,10 +40,10 @@ public class Session implements Parcelable {
         description = in.readString();
         endTime = in.readString();
         room = in.readString();
-        //TODO speakers = in.createStringArrayList();
+        speakers = in.createStringArrayList();
         startTime = in.readString();
         title = in.readString();
-        category = in.readString();
+        track = in.readString();
         id = in.readString();
     }
 
@@ -51,10 +53,10 @@ public class Session implements Parcelable {
         dest.writeString(description);
         dest.writeString(endTime);
         dest.writeString(room);
-        //TODO dest.writeStringList(speakers);
+        dest.writeStringList(speakers);
         dest.writeString(startTime);
         dest.writeString(title);
-        dest.writeString(category);
+        dest.writeString(track);
         dest.writeString(id);
     }
 
@@ -79,6 +81,46 @@ public class Session implements Parcelable {
         this.id = id;
     }
 
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setStartDateTime(DateTime startDateTime) {
+        this.startDateTime = startDateTime;
+    }
+
+    public void setEndDateTime(DateTime endDateTime) {
+        this.endDateTime = endDateTime;
+    }
+
+    @Nullable
+    public DateTime getStartDateTime() {
+        if (this.startDateTime == null) {
+            try {
+                this.startDateTime = DateTime.parse(startTime);
+            } catch (Exception e) {
+                Timber.e(e, "Failed to parse startTime into a DateTime");
+            }
+        }
+        return startDateTime;
+    }
+
+    @Nullable
+    public DateTime getEndDateTime() {
+        if (this.endDateTime == null) {
+            try {
+                this.endDateTime = DateTime.parse(endTime);
+            } catch (Exception e) {
+                Timber.e(e, "Failed to parse startTime into a DateTime");
+            }
+        }
+        return endDateTime;
+    }
+
     public String getId() {
         return id;
     }
@@ -91,13 +133,12 @@ public class Session implements Parcelable {
         return description;
     }
 
-    public DateTime getEndTime() {
-        try {
-            return DateTime.parse(endTime);
-        } catch (Exception e) {
-            Timber.e(e, "Failed to parse the endTime");
-            return new DateTime();
-        }
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
     }
 
     public String getRoom() {
@@ -108,16 +149,7 @@ public class Session implements Parcelable {
         return speakers;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public DateTime getStartTime() {
-        try {
-            return DateTime.parse(startTime);
-        } catch (Exception e) {
-            Timber.e(e, "Failed to parse the startTime");
-            return new DateTime();
-        }
+    public String getTrack() {
+        return track;
     }
 }

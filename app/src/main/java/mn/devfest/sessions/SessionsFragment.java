@@ -223,9 +223,9 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
     public void setSessions(List<Session> sessions) {
         mAllSessions = sessions;
         mDataUpdateSubscription = Observable.from(mAllSessions)
-                .doOnNext(session -> addCategoryToCategoryList(session.getCategory()))
+                .doOnNext(session -> addCategoryToCategoryList(session.getTrack()))
                 .filter(session -> !(mAutohidePastSessions && hasSessionEnded(session)))
-                .filter(session -> mCategoryFilter.equals(ALL_CATEGORY) || mCategoryFilter.equalsIgnoreCase(session.getCategory()))
+                .filter(session -> mCategoryFilter.equals(ALL_CATEGORY) || mCategoryFilter.equalsIgnoreCase(session.getTrack()))
                 .toSortedList(new SessionTimeSort())
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -246,10 +246,10 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
      */
     private boolean hasSessionEnded(@NonNull Session session) {
         //TODO understand why this may be null
-        if (session.getEndTime() == null) {
+        if (session.getEndDateTime() == null) {
             return false;
         }
-        return session.getEndTime().minusMinutes(MINUTES_BEFORE_ENDTIME_TO_SHOW_SESSION_FEEDBACK).isBeforeNow();
+        return session.getEndDateTime().minusMinutes(MINUTES_BEFORE_ENDTIME_TO_SHOW_SESSION_FEEDBACK).isBeforeNow();
     }
 
     /**

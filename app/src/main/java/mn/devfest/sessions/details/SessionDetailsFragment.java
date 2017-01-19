@@ -141,16 +141,16 @@ public class SessionDetailsFragment extends Fragment {
         getActivity().setTitle(getResources().getString(R.string.sessions_title));
         mTitleTextview.setText(mSession.getTitle());
         String start;
-        if (mSession.getStartTime() == null) {
+        if (mSession.getStartDateTime() == null) {
             start = "?";
         } else {
-            start = mSession.getStartTime().toLocalTime().toString(TIME_FORMAT);
+            start = mSession.getStartDateTime().toLocalTime().toString(TIME_FORMAT);
         }
         String end;
-        if (mSession.getEndTime() == null) {
+        if (mSession.getEndDateTime() == null) {
             end = "?";
         } else {
-            end = mSession.getEndTime().toLocalTime().toString(TIME_FORMAT);
+            end = mSession.getEndDateTime().toLocalTime().toString(TIME_FORMAT);
         }
         String startToEnd = String.format(getResources().getString(R.string.start_to_end_time), start, end);
         mTimeTextview.setText(startToEnd);
@@ -254,18 +254,18 @@ public class SessionDetailsFragment extends Fragment {
      */
     private void updateHasSessionEnded() {
         if (mSession != null) {
-            DateTime endTime = mSession.getEndTime();
+            DateTime endTime = mSession.getEndDateTime();
 
             //Handle missing endTime or startTime
             if (endTime == null) {
-                if (mSession.getStartTime() == null) {
+                if (mSession.getStartDateTime() == null) {
                     //TODO find a good way to deal with having no start or end time
                     return;
                 }
 
                 //If we don't know the end time, switch over 8 hours after it started
                 DateTime eightHoursAgo = new DateTime().minusHours(8);
-                mSessionHasEnded = mSession.getStartTime().isBefore(eightHoursAgo);
+                mSessionHasEnded = mSession.getStartDateTime().isBefore(eightHoursAgo);
             } else {
                 mSessionHasEnded = endTime.isBeforeNow();
             }
