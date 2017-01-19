@@ -3,6 +3,12 @@ package mn.devfest.api;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +16,10 @@ import mn.devfest.api.model.Conference;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.persistence.UserScheduleRepository;
+import timber.log.Timber;
+
+import static mn.devfest.sessions.SessionsFragment.DEVFEST_2017_KEY;
+import static mn.devfest.sessions.SessionsFragment.SESSIONS_CHILD_KEY;
 
 /**
  * This is the source of session, schedule, and speaker information. This acts as a general
@@ -24,13 +34,36 @@ import mn.devfest.persistence.UserScheduleRepository;
 public class DevFestDataSource {
 
     private UserScheduleRepository mScheduleRepository;
+    private DatabaseReference mFirebaseDatabaseReference;
+    private List<Session> mAllSessions = new ArrayList<>();
 
     private Conference mConference;
     //TODO move to an array of listeners?
     private DataSourceListener mDataSourceListener;
 
     public DevFestDataSource() {
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mFirebaseDatabaseReference.child(DEVFEST_2017_KEY)
+                .child(SESSIONS_CHILD_KEY).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mAllSessions.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Timber.d("Session snapshot is: %s", snapshot.toString());
+                    Session session = snapshot.getValue(Session.class);
+                    session.setId(snapshot.getKey());
+                    mAllSessions.add(session);
+                }
+                //TODO notify any listeners
+                Timber.d(mAllSessions.toString());
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // TODO handle failing to read value
+                Timber.e(databaseError.toException(), "Failed to read speakers value.");
+            }
+        });
     }
 
     @NonNull
