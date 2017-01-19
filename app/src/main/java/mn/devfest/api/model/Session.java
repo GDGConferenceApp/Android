@@ -133,10 +133,16 @@ public class Session implements Parcelable {
         return description;
     }
 
+    /**
+     * @return the string representing the timestamp of the starting time of the session
+     */
     public String getStartTime() {
         return startTime;
     }
 
+    /**
+     * @return the string representing the timestamp of the ending time of the session
+     */
     public String getEndTime() {
         return endTime;
     }
