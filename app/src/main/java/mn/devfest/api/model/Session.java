@@ -101,6 +101,7 @@ public class Session implements Parcelable {
     public DateTime getStartDateTime() {
         if (this.startDateTime == null) {
             try {
+                //TODO handle failed parsing better
                 this.startDateTime = DateTime.parse(startTime);
             } catch (Exception e) {
                 Timber.e(e, "Failed to parse startTime into a DateTime");
@@ -113,6 +114,7 @@ public class Session implements Parcelable {
     public DateTime getEndDateTime() {
         if (this.endDateTime == null) {
             try {
+                //TODO handle failed parsing better
                 this.endDateTime = DateTime.parse(endTime);
             } catch (Exception e) {
                 Timber.e(e, "Failed to parse startTime into a DateTime");
