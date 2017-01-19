@@ -1,5 +1,6 @@
 package mn.devfest.sessions;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -8,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,12 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -31,7 +25,9 @@ import java.util.Set;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
+import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
+import mn.devfest.api.model.Speaker;
 import mn.devfest.data.sort.SessionTimeSort;
 import mn.devfest.sessions.filter.OnCategoryFilterSelectedListener;
 import mn.devfest.sessions.filter.SessionCategoryFilterDialog;
@@ -40,7 +36,6 @@ import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import timber.log.Timber;
 
 
 /**
@@ -49,7 +44,7 @@ import timber.log.Timber;
  * @author bherbst
  * @author pfuentes
  */
-public class SessionsFragment extends Fragment implements OnCategoryFilterSelectedListener, SessionViewHolder.ToggleInScheduleListener {
+public class SessionsFragment extends Fragment implements OnCategoryFilterSelectedListener, SessionViewHolder.ToggleInScheduleListener, DevFestDataSource.DataSourceListener {
     private static final String PREF_KEY_AUTOHIDE = "autohide_past_sessions";
 
     // TODO this shouldn't be static so we can localize
@@ -67,12 +62,12 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
 
     private SharedPreferences mPreferences;
     private Subscription mDataUpdateSubscription;
+    private DevFestDataSource mDataSource;
 
     private boolean mAutohidePastSessions;
     private List<Session> mAllSessions;
     private Set<String> mAllCategories;
     private String mCategoryFilter;
-    private DatabaseReference mFirebaseDatabaseReference;
     private SessionListAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
 
@@ -87,31 +82,9 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        mFirebaseDatabaseReference.child(DEVFEST_2017_KEY)
-                .child(SESSIONS_CHILD_KEY).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mAllSessions.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Timber.d("Snapshot is: " + snapshot.toString());
-                    Session session = snapshot.getValue(Session.class);
-                    session.setId(snapshot.getKey());
-                    mAllSessions.add(session);
-                }
-                mAdapter.setSessions(mAllSessions);
-                mAdapter.notifyDataSetChanged();
-                Timber.d(mAllSessions.toString());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Failed to read value
-                Log.w(this.getClass().getSimpleName(), "Failed to read value.", databaseError.toException());
-            }
-        });
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         mAutohidePastSessions = mPreferences.getBoolean(PREF_KEY_AUTOHIDE, true);
+        mDataSource.setDataSourceListener(this);
         mAllSessions = new ArrayList<>(0);
         mAllCategories = new HashSet<>(7);
         mCategoryFilter = ALL_CATEGORY;
@@ -144,6 +117,15 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
         mSessionRecyclerView.setLayoutManager(mLayoutManager);
         mSessionRecyclerView.addItemDecoration(new SessionGroupDividerDecoration(getContext()));
         mSessionRecyclerView.addItemDecoration(new SessionDividerDecoration(getContext()));
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (mDataSource == null) {
+            //TODO initialize properly
+            mDataSource = DevFestDataSource.getInstance();
+        }
     }
 
     @Override
@@ -214,7 +196,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
 
     /**
      * Notify this fragment that we have a new list of sessions for this conference
-     *
+     * <p>
      * These sessions are not guaranteed to be displayed. The user may have a filter set up that
      * hides one or more sessions.
      *
@@ -241,6 +223,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
 
     /**
      * Check if a session has ended
+     *
      * @param session The session
      * @return True if the given session has ended
      */
@@ -254,9 +237,26 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
 
     /**
      * Update the which sessions are displayed
+     *
      * @param sessions The sessions to display
      */
     private void updateDisplayedSessions(List<Session> sessions) {
-       //TODO handle filtering sessions
+        //TODO handle filtering sessions
+    }
+
+    @Override
+    public void onSessionsUpdate(List<Session> sessions) {
+        mAdapter.setSessions(sessions);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onSpeakersUpdate(List<Speaker> speakers) {
+        //Intentionally ignored
+    }
+
+    @Override
+    public void onUserScheduleUpdate(List<Session> userSchedule) {
+        //Intentionally ignored
     }
 }

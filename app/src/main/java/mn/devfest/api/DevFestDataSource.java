@@ -10,6 +10,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import mn.devfest.api.model.Conference;
@@ -32,14 +33,21 @@ import static mn.devfest.sessions.SessionsFragment.SESSIONS_CHILD_KEY;
  * @author pfuentes
  */
 public class DevFestDataSource {
+    private static DevFestDataSource mOurInstance;
 
     private UserScheduleRepository mScheduleRepository;
     private DatabaseReference mFirebaseDatabaseReference;
-    private List<Session> mAllSessions = new ArrayList<>();
 
-    private Conference mConference;
+    private Conference mConference = new Conference();
     //TODO move to an array of listeners?
     private DataSourceListener mDataSourceListener;
+
+    public static DevFestDataSource getInstance() {
+        if (mOurInstance == null) {
+            mOurInstance = new DevFestDataSource();
+        }
+        return mOurInstance;
+    }
 
     public DevFestDataSource() {
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
@@ -47,15 +55,19 @@ public class DevFestDataSource {
                 .child(SESSIONS_CHILD_KEY).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mAllSessions.clear();
+                //Clear the old schedule data out
+                HashMap map = new HashMap<String, Session>();
+                //Add each new session into the schedule
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Timber.d("Session snapshot is: %s", snapshot.toString());
                     Session session = snapshot.getValue(Session.class);
                     session.setId(snapshot.getKey());
-                    mAllSessions.add(session);
+                    map.put(session.getId(), session);
                 }
-                //TODO notify any listeners
-                Timber.d(mAllSessions.toString());
+                mConference.setSchedule(map);
+                if (mDataSourceListener != null) {
+                    mDataSourceListener.onSessionsUpdate(new ArrayList<>(map.values()));
+                }
             }
 
             @Override
