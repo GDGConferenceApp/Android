@@ -36,8 +36,8 @@ import mn.devfest.api.model.Speaker;
 import mn.devfest.sessions.rating.RateSessionActivity;
 import mn.devfest.view.SpeakerView;
 
-import static mn.devfest.sessions.SessionsFragment.DEVFEST_2017_KEY;
-import static mn.devfest.sessions.SessionsFragment.SPEAKERS_CHILD_KEY;
+import static mn.devfest.api.DevFestDataSource.DEVFEST_2017_KEY;
+import static mn.devfest.api.DevFestDataSource.SPEAKERS_CHILD_KEY;
 
 
 /**

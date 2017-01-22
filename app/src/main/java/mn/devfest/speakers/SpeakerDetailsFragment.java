@@ -23,8 +23,8 @@ import mn.devfest.api.model.Speaker;
 import mn.devfest.view.SpeakerView;
 import timber.log.Timber;
 
-import static mn.devfest.sessions.SessionsFragment.DEVFEST_2017_KEY;
-import static mn.devfest.sessions.SessionsFragment.SPEAKERS_CHILD_KEY;
+import static mn.devfest.api.DevFestDataSource.DEVFEST_2017_KEY;
+import static mn.devfest.api.DevFestDataSource.SPEAKERS_CHILD_KEY;
 
 /**
  * Fragment that displays details for a particular session

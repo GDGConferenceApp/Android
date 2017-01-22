@@ -2,6 +2,7 @@ package mn.devfest.api;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.util.DiffUtil;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,9 +20,6 @@ import mn.devfest.api.model.Speaker;
 import mn.devfest.persistence.UserScheduleRepository;
 import timber.log.Timber;
 
-import static mn.devfest.sessions.SessionsFragment.DEVFEST_2017_KEY;
-import static mn.devfest.sessions.SessionsFragment.SESSIONS_CHILD_KEY;
-
 /**
  * This is the source of session, schedule, and speaker information. This acts as a general
  * contractor that can coordinate between various subcontractor classes including but not limited to
@@ -33,6 +31,11 @@ import static mn.devfest.sessions.SessionsFragment.SESSIONS_CHILD_KEY;
  * @author pfuentes
  */
 public class DevFestDataSource {
+
+    public static final String DEVFEST_2017_KEY = "devfest2017";
+    public static final String SESSIONS_CHILD_KEY = "schedule";
+    public static final String SPEAKERS_CHILD_KEY = "speakers";
+
     private static DevFestDataSource mOurInstance;
 
     private UserScheduleRepository mScheduleRepository;
@@ -50,7 +53,9 @@ public class DevFestDataSource {
     }
 
     public DevFestDataSource() {
+        //TODO move all firebase access into a separate class and de-duplicate code
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        //Get sessions
         mFirebaseDatabaseReference.child(DEVFEST_2017_KEY)
                 .child(SESSIONS_CHILD_KEY).addValueEventListener(new ValueEventListener() {
             @Override
@@ -73,9 +78,35 @@ public class DevFestDataSource {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // TODO handle failing to read value
-                Timber.e(databaseError.toException(), "Failed to read speakers value.");
+                Timber.e(databaseError.toException(), "Failed to read sessions value.");
             }
         });
+        //Get speakers
+        mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(SPEAKERS_CHILD_KEY)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //Clear the old speaker data out
+                        HashMap map = new HashMap<String, Session>();
+                        //Add each new speaker into the schedule
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Timber.d("Speaker snapshot is: %s", snapshot.toString());
+                            Speaker speaker = snapshot.getValue(Speaker.class);
+                            speaker.setId(snapshot.getKey());
+                            map.put(speaker.getId(), speaker);
+                        }
+                        mConference.setSpeakers(map);
+                        if (mDataSourceListener != null) {
+                            mDataSourceListener.onSpeakersUpdate(new ArrayList<>(map.values()));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // TODO handle failing to read value
+                        Timber.e(databaseError.toException(), "Failed to read speakers value.");
+                    }
+                });
     }
 
     @NonNull
@@ -130,12 +161,15 @@ public class DevFestDataSource {
             return sessions;
         }
 
-        // We use a loop that goes backwards so we can remove items as we iterate over the list without
-        // running into a concurrent modification issue or altering the indices of items
-        for (int i = sessions.size() - 1; i >= 0; i--) {
-            Session session = sessions.get(i);
-            if (mScheduleRepository.getScheduleIds().contains(session.getId())) {
-                userSessions.add(session);
+
+        if (mScheduleRepository != null) {
+            // We use a loop that goes backwards so we can remove items as we iterate over the list without
+            // running into a concurrent modification issue or altering the indices of items
+            for (int i = sessions.size() - 1; i >= 0; i--) {
+                Session session = sessions.get(i);
+                if (mScheduleRepository.getScheduleIds().contains(session.getId())) {
+                    userSessions.add(session);
+                }
             }
         }
         return userSessions;
@@ -178,6 +212,55 @@ public class DevFestDataSource {
         mDataSourceListener.onSessionsUpdate(getSessions());
         mDataSourceListener.onSpeakersUpdate(getSpeakers());
         mDataSourceListener.onUserScheduleUpdate(getUserSchedule());
+    }
+
+    //TODO de-duplicate diff methods
+    public DiffUtil.DiffResult calculateSessionDiff(final List<Session> oldList, List<Session> newList) {
+        return DiffUtil.calculateDiff(new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return oldList.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return newList.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                return oldList.get(oldItemPosition).getId().equals(newList.get(newItemPosition).getId());
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                return oldList.get(oldItemPosition).equals(newList.get(newItemPosition));
+            }
+        });
+    }
+
+    public DiffUtil.DiffResult calculateSpeakerDiff(final List<Speaker> oldList, List<Speaker> newList) {
+        return DiffUtil.calculateDiff(new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return oldList.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return newList.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                return oldList.get(oldItemPosition).equals(newList.get(newItemPosition));
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                return oldList.get(oldItemPosition).equals(newList.get(newItemPosition));
+            }
+        });
     }
 
     /**

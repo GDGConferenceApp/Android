@@ -104,7 +104,7 @@ public class Session implements Parcelable {
                 //TODO handle failed parsing better
                 this.startDateTime = DateTime.parse(startTime);
             } catch (Exception e) {
-                Timber.e(e, "Failed to parse startTime into a DateTime");
+                Timber.e(e, "Failed to parse startTime into a DateTime. startTime = %s", startTime);
             }
         }
         return startDateTime;
@@ -117,7 +117,7 @@ public class Session implements Parcelable {
                 //TODO handle failed parsing better
                 this.endDateTime = DateTime.parse(endTime);
             } catch (Exception e) {
-                Timber.e(e, "Failed to parse startTime into a DateTime");
+                Timber.e(e, "Failed to parse endTime into a DateTime. endTime = %s", endTime);
             }
         }
         return endDateTime;
@@ -159,5 +159,51 @@ public class Session implements Parcelable {
 
     public String getTrack() {
         return track;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Session session = (Session) o;
+
+        if (all != session.all) return false;
+        if (getDescription() != null ? !getDescription().equals(session.getDescription()) : session.getDescription() != null)
+            return false;
+        if (getStartTime() != null ? !getStartTime().equals(session.getStartTime()) : session.getStartTime() != null)
+            return false;
+        if (getStartDateTime() != null ? !getStartDateTime().equals(session.getStartDateTime()) : session.getStartDateTime() != null)
+            return false;
+        if (getEndTime() != null ? !getEndTime().equals(session.getEndTime()) : session.getEndTime() != null)
+            return false;
+        if (getEndDateTime() != null ? !getEndDateTime().equals(session.getEndDateTime()) : session.getEndDateTime() != null)
+            return false;
+        if (getRoom() != null ? !getRoom().equals(session.getRoom()) : session.getRoom() != null)
+            return false;
+        if (getSpeakers() != null ? !getSpeakers().equals(session.getSpeakers()) : session.getSpeakers() != null)
+            return false;
+        if (getTitle() != null ? !getTitle().equals(session.getTitle()) : session.getTitle() != null)
+            return false;
+        if (getTrack() != null ? !getTrack().equals(session.getTrack()) : session.getTrack() != null)
+            return false;
+        return getId() != null ? getId().equals(session.getId()) : session.getId() == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (all ? 1 : 0);
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        result = 31 * result + (getStartTime() != null ? getStartTime().hashCode() : 0);
+        result = 31 * result + (getStartDateTime() != null ? getStartDateTime().hashCode() : 0);
+        result = 31 * result + (getEndTime() != null ? getEndTime().hashCode() : 0);
+        result = 31 * result + (getEndDateTime() != null ? getEndDateTime().hashCode() : 0);
+        result = 31 * result + (getRoom() != null ? getRoom().hashCode() : 0);
+        result = 31 * result + (getSpeakers() != null ? getSpeakers().hashCode() : 0);
+        result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
+        result = 31 * result + (getTrack() != null ? getTrack().hashCode() : 0);
+        result = 31 * result + (getId() != null ? getId().hashCode() : 0);
+        return result;
     }
 }

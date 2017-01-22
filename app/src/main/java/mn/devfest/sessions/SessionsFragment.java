@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -50,9 +51,6 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
     // TODO this shouldn't be static so we can localize
     public static final String ALL_CATEGORY = "All";
     public static final int MINUTES_BEFORE_ENDTIME_TO_SHOW_SESSION_FEEDBACK = 20;
-    public static final String DEVFEST_2017_KEY = "devfest2017";
-    public static final String SESSIONS_CHILD_KEY = "schedule";
-    public static final String SPEAKERS_CHILD_KEY = "speakers";
 
     @Bind(R.id.session_list_recyclerview)
     RecyclerView mSessionRecyclerView;
@@ -131,12 +129,8 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
     @Override
     public void onResume() {
         super.onResume();
-        /*TODO Refresh the UI with the latest data and display loading view if necessary
-        if (sessions.size() == 0) {
-            mLoadingView.setVisibility(View.VISIBLE);
-        } else {
-            setSessions(sessions);
-        }*/
+        //TODO Display loading view if necessary
+        checkForNewSessions(mDataSource.getSessions());
     }
 
     @Override
@@ -194,6 +188,13 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
         setSessions(mAllSessions);
     }
 
+    private void checkForNewSessions(List<Session> latestSessions) {
+        DiffUtil.DiffResult sessionDiffResult = mDataSource.calculateSessionDiff(mAllSessions, latestSessions);
+        mAllSessions = latestSessions;
+        mAdapter.setSessions(mAllSessions);
+        sessionDiffResult.dispatchUpdatesTo(mAdapter);
+    }
+
     /**
      * Notify this fragment that we have a new list of sessions for this conference
      * <p>
@@ -246,8 +247,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
 
     @Override
     public void onSessionsUpdate(List<Session> sessions) {
-        mAdapter.setSessions(sessions);
-        mAdapter.notifyDataSetChanged();
+        checkForNewSessions(mDataSource.getSessions());
     }
 
     @Override
