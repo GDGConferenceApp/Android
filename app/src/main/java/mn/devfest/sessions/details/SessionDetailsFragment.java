@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.firebase.database.DatabaseReference;
 import com.liangfeizc.flowlayout.FlowLayout;
 
 import org.joda.time.DateTime;
@@ -65,7 +64,6 @@ public class SessionDetailsFragment extends Fragment {
 
     private Session mSession;
     private boolean mSessionHasEnded = false;
-    private DatabaseReference mFirebaseDatabaseReference;
     private String mSessionId;
     private DevFestDataSource mDataSource;
 

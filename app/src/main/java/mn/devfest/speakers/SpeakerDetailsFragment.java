@@ -1,30 +1,21 @@
 package mn.devfest.speakers;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.transition.Transition;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
+import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.view.SpeakerView;
-import timber.log.Timber;
-
-import static mn.devfest.api.DevFestDataSource.DEVFEST_2017_KEY;
-import static mn.devfest.api.DevFestDataSource.SPEAKERS_CHILD_KEY;
 
 /**
  * Fragment that displays details for a particular session
@@ -38,7 +29,8 @@ public class SpeakerDetailsFragment extends Fragment {
     SpeakerView mSpeakerView;
 
     private Speaker mSpeaker;
-    private DatabaseReference mFirebaseDatabaseReference;
+
+    private DevFestDataSource mDataSource;
 
     public static SpeakerDetailsFragment newInstance(String speakerId) {
         Bundle args = new Bundle();
@@ -64,24 +56,21 @@ public class SpeakerDetailsFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null && args.containsKey(ARG_SPEAKER_ID)) {
             String speakerId = args.getString(ARG_SPEAKER_ID);
-            mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-            mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(SPEAKERS_CHILD_KEY)
-                    .child(speakerId).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Timber.d(dataSnapshot.toString());
-                    mSpeaker = dataSnapshot.getValue(Speaker.class);
-                    transitionSpeaker();
-                }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    // Failed to read value
-                    Log.w(this.getClass().getSimpleName(), "Failed to read speaker value.", databaseError.toException());
-                }
-            });
+            if (mDataSource != null) {
+                mSpeaker = mDataSource.getSpeakerById(speakerId);
+                transitionSpeaker();
+            }
         } else {
             throw new IllegalStateException("SpeakerDetailsFragment requires a speaker ID passed via newInstance()");
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (mDataSource == null) {
+            mDataSource = DevFestDataSource.getInstance();
         }
     }
 
