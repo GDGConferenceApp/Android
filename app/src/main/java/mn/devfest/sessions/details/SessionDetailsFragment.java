@@ -9,17 +9,13 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.liangfeizc.flowlayout.FlowLayout;
 
 import org.joda.time.DateTime;
@@ -35,9 +31,6 @@ import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.sessions.rating.RateSessionActivity;
 import mn.devfest.view.SpeakerView;
-
-import static mn.devfest.api.DevFestDataSource.DEVFEST_2017_KEY;
-import static mn.devfest.api.DevFestDataSource.SPEAKERS_CHILD_KEY;
 
 
 /**
@@ -203,24 +196,11 @@ public class SessionDetailsFragment extends Fragment {
 
         //Add SpeakerViews to the Speaker Layout
         for (String speakerId : speakers) {
-            //TODO refactor this to use the DevFestDataSource
-            if (mFirebaseDatabaseReference != null) {
-                mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(SPEAKERS_CHILD_KEY)
-                        .child(speakerId).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Speaker speaker = dataSnapshot.getValue(Speaker.class);
-                        SpeakerView speakerView = new SpeakerView(getActivity());
-                        speakerView.setSpeaker(speaker, false);
-                        mSpeakerLayout.addView(speakerView);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        // Failed to read value
-                        Log.w(this.getClass().getSimpleName(), "Failed to read speaker value.", databaseError.toException());
-                    }
-                });
+            if (mDataSource != null) {
+                Speaker speaker = mDataSource.getSpeakerById(speakerId);
+                SpeakerView speakerView = new SpeakerView(getContext());
+                speakerView.setSpeaker(speaker, false);
+                mSpeakerLayout.addView(speakerView);
             }
         }
     }
