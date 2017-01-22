@@ -1,23 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="192dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:orientation="vertical"
-    android:gravity="bottom">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="192dp"
+                android:gravity="bottom"
+                android:orientation="vertical"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/nav_hero"/>
+        android:src="@drawable/nav_hero"
+        tools:ignore="ContentDescription"/>
 
     <ImageView
+        android:id="@+id/nav_header_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:layout_marginLeft="32dp"
-        android:layout_gravity="top|left"
-        android:src="@drawable/devfest_logo"/>
+        android:src="@drawable/devfest_logo"
+        tools:ignore="ContentDescription"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/nav_header_name_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nav_header_image"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="32dp"
+        android:textSize="16sp"
+        android:background="@color/nav_drawer_text_background"
+        android:textColor="@color/colorWhite"
+        tools:text="Patrick Fuentes"/>
+
+    <TextView
+        android:id="@+id/nav_header_email_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nav_header_name_textview"
+        android:layout_marginStart="32dp"
+        android:textSize="16sp"
+        android:background="@color/nav_drawer_text_background"
+        android:textColor="@color/colorWhite"
+        tools:text="emailaddress@gmail.com"/>
+
+</RelativeLayout>

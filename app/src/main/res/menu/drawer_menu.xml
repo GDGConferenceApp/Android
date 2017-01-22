@@ -18,6 +18,11 @@
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_map_white_24dp"
             android:title="@string/drawer_item_map" />
+
+        <item
+            android:id="@+id/nav_login_or_logout"
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            android:title="@string/drawer_item_login"/>
     </group>
 
 </menu>
