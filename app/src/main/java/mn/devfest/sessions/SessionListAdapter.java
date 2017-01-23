@@ -73,9 +73,9 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             SessionViewHolder sessionHolder = (SessionViewHolder) holder;
             Session session = mSessions.get(position);
 
-            boolean isInUserSchedule = mDataSource.isInUserSchedule(session.getId());
+//TODO            boolean isInUserSchedule = mDataSource.isInUserSchedule(session.getId());
 
-            sessionHolder.bindSession(session, isInUserSchedule, this);
+            sessionHolder.bindSession(session, false, this);  //TODO don't just pass false
         } else if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
             DateTime groupTime = mHeaders.get(position);

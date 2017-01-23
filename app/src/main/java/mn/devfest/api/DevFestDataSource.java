@@ -26,6 +26,7 @@ import timber.log.Timber;
  * @author bherbst
  * @author pfuentes
  */
+@Deprecated
 public class DevFestDataSource implements Callback<Conference> {
 
     private final DevFestApi mApi;
