@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import mn.devfest.DevFestApplication;
 import mn.devfest.R;
 import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Speaker;
@@ -29,8 +28,9 @@ public class SpeakerDetailsFragment extends Fragment {
     @Bind(R.id.speaker)
     SpeakerView mSpeakerView;
 
-    private DevFestDataSource mDataSource;
     private Speaker mSpeaker;
+
+    private DevFestDataSource mDataSource;
 
     public static SpeakerDetailsFragment newInstance(String speakerId) {
         Bundle args = new Bundle();
@@ -40,14 +40,6 @@ public class SpeakerDetailsFragment extends Fragment {
         frag.setArguments(args);
 
         return frag;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (mDataSource == null) {
-            mDataSource = DevFestApplication.get(getActivity()).component().datasource();
-        }
     }
 
     @Nullable
@@ -65,11 +57,24 @@ public class SpeakerDetailsFragment extends Fragment {
         if (args != null && args.containsKey(ARG_SPEAKER_ID)) {
             String speakerId = args.getString(ARG_SPEAKER_ID);
 
-            mSpeaker = mDataSource.getSpeakerById(speakerId);
+            if (mDataSource != null) {
+                mSpeaker = mDataSource.getSpeakerById(speakerId);
+                transitionSpeaker();
+            }
         } else {
             throw new IllegalStateException("SpeakerDetailsFragment requires a speaker ID passed via newInstance()");
         }
+    }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (mDataSource == null) {
+            mDataSource = DevFestDataSource.getInstance();
+        }
+    }
+
+    private void transitionSpeaker() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && addTransitionListener()) {
             // If we are transitioning in, use the already loaded thumbnail
             mSpeakerView.setSpeaker(mSpeaker, true);

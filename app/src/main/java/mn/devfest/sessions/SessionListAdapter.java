@@ -1,6 +1,5 @@
 package mn.devfest.sessions;
 
-import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,9 +72,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             SessionViewHolder sessionHolder = (SessionViewHolder) holder;
             Session session = mSessions.get(position);
 
-            boolean isInUserSchedule = mDataSource.isInUserSchedule(session.getId());
-
-            sessionHolder.bindSession(session, isInUserSchedule, this);
+            sessionHolder.bindSession(session, false, this);  //TODO don't just pass false for if the session is in the user's schedule
         } else if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
             DateTime groupTime = mHeaders.get(position);
@@ -116,7 +113,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (mSessions.size() > 0) {
             // Put in the first item
             Session firstSession = mSessions.get(0);
-            DateTime lastTime = firstSession.getStartTime();
+            DateTime lastTime = firstSession.getStartDateTime();
             headers.put(0, lastTime);
 
             // See below.
@@ -126,9 +123,9 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             for (int i = 1; i < mSessions.size(); i++) {
                 Session session = mSessions.get(i);
 
-                if (!session.getStartTime().isEqual(lastTime)) {
+                if (!session.getStartDateTime().isEqual(lastTime)) {
                     // We have found a new group!
-                    lastTime = session.getStartTime();
+                    lastTime = session.getStartDateTime();
                     headers.put(i, lastTime);
 
                     // Put in a dummy item to represent the header in the session list
@@ -145,8 +142,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         return headers;
     }
-
-    @DrawableRes
+    
     @Override
     public boolean onToggleScheduleButtonClicked(Session session) {
         if (mDataSource.isInUserSchedule(session.getId())) {
