@@ -1,6 +1,5 @@
 package mn.devfest.sessions;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -80,6 +79,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
+        mDataSource = DevFestDataSource.getInstance(getContext());
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         mAutohidePastSessions = mPreferences.getBoolean(PREF_KEY_AUTOHIDE, true);
         mDataSource.setDataSourceListener(this);
@@ -110,20 +110,11 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
 
         mLayoutManager = new LinearLayoutManager(getContext());
         getActivity().setTitle(getResources().getString(R.string.sessions_title));
-        mAdapter = new SessionListAdapter(null);
+        mAdapter = new SessionListAdapter(mDataSource);
         mSessionRecyclerView.setAdapter(mAdapter);
         mSessionRecyclerView.setLayoutManager(mLayoutManager);
         mSessionRecyclerView.addItemDecoration(new SessionGroupDividerDecoration(getContext()));
         mSessionRecyclerView.addItemDecoration(new SessionDividerDecoration(getContext()));
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (mDataSource == null) {
-            //TODO initialize properly
-            mDataSource = DevFestDataSource.getInstance();
-        }
     }
 
     @Override

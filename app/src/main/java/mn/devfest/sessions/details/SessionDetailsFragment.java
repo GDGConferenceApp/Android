@@ -143,7 +143,7 @@ public class SessionDetailsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (mDataSource == null) {
-            mDataSource = DevFestDataSource.getInstance();
+            mDataSource = DevFestDataSource.getInstance(context);
         }
     }
 
