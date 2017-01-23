@@ -48,4 +48,14 @@
         android:textColor="@color/colorWhite"
         tools:text="emailaddress@gmail.com"/>
 
+    <ImageView
+        android:id="@+id/nav_header_user_profile_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp"
+        tools:src="@drawable/ic_account_circle_black_24dp"/>
+
 </RelativeLayout>
