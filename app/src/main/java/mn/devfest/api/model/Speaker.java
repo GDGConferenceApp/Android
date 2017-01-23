@@ -8,20 +8,13 @@ import android.os.Parcelable;
  */
 public class Speaker implements Parcelable {
 
+    public String id;
     public String name;
     public String bio;
     public String company;
     public String twitter;
     public String website;
-    public String id;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    public String imageUrl;
 
     public String getId() {
         return id;
@@ -31,20 +24,36 @@ public class Speaker implements Parcelable {
         this.id = id;
     }
 
-    public String getBio() {
-        return bio;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCompany() {
         return company;
     }
 
-    public String getTwitter() {
-        return twitter;
+    public String getBio() {
+        return bio;
     }
 
     public String getWebsite() {
         return website;
+    }
+
+    public String getTwitter() {
+        return twitter;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Speaker() {

@@ -19,6 +19,9 @@ gen/
 # MAC
 .DS_Store
 
+#Google Services
+google-services.json
+
 # Gradle files
 .gradle/
 build/

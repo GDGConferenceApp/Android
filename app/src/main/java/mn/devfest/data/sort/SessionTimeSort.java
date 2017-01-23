@@ -11,6 +11,6 @@ import rx.functions.Func2;
 public class SessionTimeSort implements Func2<Session, Session, Integer> {
     @Override
     public Integer call(Session session, Session session2) {
-        return session.getStartTime().compareTo(session2.getStartTime());
+        return session.getStartDateTime().compareTo(session2.getStartDateTime());
     }
 }

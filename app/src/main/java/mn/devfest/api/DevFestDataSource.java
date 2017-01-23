@@ -2,18 +2,22 @@ package mn.devfest.api;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.util.DiffUtil;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import mn.devfest.api.model.Conference;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
-import mn.devfest.persistence.ConferenceRepository;
 import mn.devfest.persistence.UserScheduleRepository;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import timber.log.Timber;
 
 /**
@@ -26,30 +30,83 @@ import timber.log.Timber;
  * @author bherbst
  * @author pfuentes
  */
-public class DevFestDataSource implements Callback<Conference> {
+public class DevFestDataSource {
 
-    private final DevFestApi mApi;
-    private final UserScheduleRepository mScheduleRepository;
-    private final ConferenceRepository mConferenceRepository;
+    public static final String DEVFEST_2017_KEY = "devfest2017";
+    public static final String SESSIONS_CHILD_KEY = "schedule";
+    public static final String SPEAKERS_CHILD_KEY = "speakers";
 
-    private Conference mConference;
+    private static DevFestDataSource mOurInstance;
+
+    private UserScheduleRepository mScheduleRepository;
+    private DatabaseReference mFirebaseDatabaseReference;
+
+    private Conference mConference = new Conference();
     //TODO move to an array of listeners?
     private DataSourceListener mDataSourceListener;
 
-    public DevFestDataSource(DevFestApi api, UserScheduleRepository scheduleRepository, ConferenceRepository conferenceRepository) {
-        this.mApi = api;
-        this.mScheduleRepository = scheduleRepository;
-        this.mConferenceRepository = conferenceRepository;
+    public static DevFestDataSource getInstance() {
+        if (mOurInstance == null) {
+            mOurInstance = new DevFestDataSource();
+        }
+        return mOurInstance;
     }
 
-    /**
-     * Checks the API for fresh info.
-     * If fresh info is available, it's persisted locally for future reference
-     * If fresh info isn't available, we fall back to the local store
-     */
-    public void updateConferenceInfo() {
-        //Check the API for fresh info
-        mApi.getConferenceInfo(this);
+    public DevFestDataSource() {
+        //TODO move all firebase access into a separate class and de-duplicate code
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        //Get sessions
+        mFirebaseDatabaseReference.child(DEVFEST_2017_KEY)
+                .child(SESSIONS_CHILD_KEY).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //Clear the old schedule data out
+                HashMap map = new HashMap<String, Session>();
+                //Add each new session into the schedule
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Timber.d("Session snapshot is: %s", snapshot.toString());
+                    Session session = snapshot.getValue(Session.class);
+                    session.setId(snapshot.getKey());
+                    map.put(session.getId(), session);
+                }
+                mConference.setSchedule(map);
+                if (mDataSourceListener != null) {
+                    mDataSourceListener.onSessionsUpdate(new ArrayList<>(map.values()));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // TODO handle failing to read value
+                Timber.e(databaseError.toException(), "Failed to read sessions value.");
+            }
+        });
+        //Get speakers
+        mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(SPEAKERS_CHILD_KEY)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //Clear the old speaker data out
+                        HashMap map = new HashMap<String, Session>();
+                        //Add each new speaker into the schedule
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Timber.d("Speaker snapshot is: %s", snapshot.toString());
+                            Speaker speaker = snapshot.getValue(Speaker.class);
+                            speaker.setId(snapshot.getKey());
+                            map.put(speaker.getId(), speaker);
+                        }
+                        mConference.setSpeakers(map);
+                        if (mDataSourceListener != null) {
+                            mDataSourceListener.onSpeakersUpdate(new ArrayList<>(map.values()));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // TODO handle failing to read value
+                        Timber.e(databaseError.toException(), "Failed to read speakers value.");
+                    }
+                });
     }
 
     @NonNull
@@ -104,12 +161,15 @@ public class DevFestDataSource implements Callback<Conference> {
             return sessions;
         }
 
-        // We use a loop that goes backwards so we can remove items as we iterate over the list without
-        // running into a concurrent modification issue or altering the indices of items
-        for (int i = sessions.size() - 1; i >= 0; i--) {
-            Session session = sessions.get(i);
-            if (mScheduleRepository.getScheduleIds().contains(session.getId())) {
-                userSessions.add(session);
+
+        if (mScheduleRepository != null) {
+            // We use a loop that goes backwards so we can remove items as we iterate over the list without
+            // running into a concurrent modification issue or altering the indices of items
+            for (int i = sessions.size() - 1; i >= 0; i--) {
+                Session session = sessions.get(i);
+                if (mScheduleRepository.getScheduleIds().contains(session.getId())) {
+                    userSessions.add(session);
+                }
             }
         }
         return userSessions;
@@ -154,18 +214,53 @@ public class DevFestDataSource implements Callback<Conference> {
         mDataSourceListener.onUserScheduleUpdate(getUserSchedule());
     }
 
-    @Override
-    public void success(Conference conference, Response response) {
-        mConference = conference;
-        mConferenceRepository.setConference(conference);
-        onConferenceUpdated();
+    //TODO de-duplicate diff methods
+    public DiffUtil.DiffResult calculateSessionDiff(final List<Session> oldList, List<Session> newList) {
+        return DiffUtil.calculateDiff(new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return oldList.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return newList.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                return oldList.get(oldItemPosition).getId().equals(newList.get(newItemPosition).getId());
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                return oldList.get(oldItemPosition).equals(newList.get(newItemPosition));
+            }
+        });
     }
 
-    @Override
-    public void failure(RetrofitError error) {
-        Timber.e(error, "Failed to retrieve conference info.");
-        mConference = mConferenceRepository.getConference();
-        onConferenceUpdated();
+    public DiffUtil.DiffResult calculateSpeakerDiff(final List<Speaker> oldList, List<Speaker> newList) {
+        return DiffUtil.calculateDiff(new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return oldList.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return newList.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                return oldList.get(oldItemPosition).equals(newList.get(newItemPosition));
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                return oldList.get(oldItemPosition).equals(newList.get(newItemPosition));
+            }
+        });
     }
 
     /**

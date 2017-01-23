@@ -17,7 +17,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import mn.devfest.DevFestApplication;
 import mn.devfest.MainActivity;
 import mn.devfest.R;
 import mn.devfest.api.DevFestDataSource;
@@ -58,10 +57,9 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
     public void onAttach(Context context) {
         super.onAttach(context);
         if (mDataSource == null) {
-            mDataSource = DevFestApplication.get(getActivity()).component().datasource();
+            //TODO initialize properly
+            mDataSource = new DevFestDataSource();
         }
-        mDataSource.setDataSourceListener(this);
-        mDataSource.updateConferenceInfo();
     }
 
     @Nullable
@@ -94,7 +92,6 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         if (userSchedule.size() == 0) {
             showEmptyView(true);
             mLoadingView.setVisibility(View.VISIBLE);
-            mDataSource.updateConferenceInfo();
         } else {
             showEmptyView(false);
             setSchedule(userSchedule);
@@ -111,9 +108,6 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         }
     }
 
-    /**
-     * TODO update documentation
-     */
     @Override
     public void onDetach() {
         super.onDetach();

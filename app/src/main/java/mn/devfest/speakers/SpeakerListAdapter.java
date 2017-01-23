@@ -2,6 +2,7 @@ package mn.devfest.speakers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
@@ -21,7 +22,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mn.devfest.R;
-import mn.devfest.api.ProfilePictureApi;
 import mn.devfest.api.model.Speaker;
 
 /**
@@ -118,13 +118,19 @@ public class SpeakerListAdapter extends RecyclerView.Adapter<SpeakerListAdapter.
             }
 
             int pictureSizePx = speakerImage.getResources().getDimensionPixelSize(R.dimen.speaker_list_image_size);
-            String pictureUrl = ProfilePictureApi.getImageUrl(speaker, pictureSizePx);
 
-            Picasso.with(speakerImage.getContext())
-                    .load(pictureUrl)
-                    .transform(new SpeakerImageTransformation())
-                    .placeholder(R.drawable.ic_account_circle_white_48dp)
-                    .into(speakerImage);
+            //Load the image if there is one
+            if (!speaker.getImageUrl().isEmpty()) {
+                Picasso.with(speakerImage.getContext())
+                        .load(speaker.getImageUrl())
+                        .transform(new SpeakerImageTransformation())
+                        .placeholder(R.drawable.ic_account_circle_white_48dp)
+                        .into(speakerImage);
+            } else {
+                Drawable placeholder = speakerImage.getResources()
+                        .getDrawable(R.drawable.ic_account_circle_white_48dp, null);
+                speakerImage.setImageDrawable(placeholder);
+            }
         }
     }
 }

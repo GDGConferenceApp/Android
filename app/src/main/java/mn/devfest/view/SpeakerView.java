@@ -17,9 +17,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mn.devfest.R;
-import mn.devfest.api.ProfilePictureApi;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.speakers.SpeakerImageTransformation;
+import timber.log.Timber;
 
 /**
  * Custom view that displays information about a speaker
@@ -109,11 +109,9 @@ public class SpeakerView extends LinearLayout {
      * the speaker list
      */
     public void loadThumbnail() {
-        int pictureSizePx = mProfileImageview.getResources().getDimensionPixelSize(R.dimen.speaker_list_image_size);
-        String pictureUrl = ProfilePictureApi.getImageUrl(mSpeaker, pictureSizePx);
-
+        Timber.d("speaker image URL = " + mSpeaker.getImageUrl());
         Picasso.with(mContext)
-                .load(pictureUrl)
+                .load(mSpeaker.getImageUrl())
                 .noFade()
                 .transform(new SpeakerImageTransformation())
                 .into(mProfileImageview);
@@ -125,11 +123,8 @@ public class SpeakerView extends LinearLayout {
      * @param fadeAndPlaceholder True to fade in and use a placeholder
      */
     public void loadFullSizeImage(boolean fadeAndPlaceholder) {
-        int pictureSizePx = mProfileImageview.getResources().getDimensionPixelSize(R.dimen.speaker_details_image_size);
-        String pictureUrl = ProfilePictureApi.getImageUrl(mSpeaker, pictureSizePx);
-
         RequestCreator request = Picasso.with(mContext)
-                .load(pictureUrl)
+                .load(mSpeaker.getImageUrl())
                 .transform(new SpeakerImageTransformation());
 
         if (fadeAndPlaceholder) {
