@@ -203,7 +203,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
                 .toSortedList(new SessionTimeSort())
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::updateDisplayedSessions);
+                .subscribe(this::checkForNewSessions);
     }
 
     /**
@@ -238,7 +238,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
 
     @Override
     public void onSessionsUpdate(List<Session> sessions) {
-        checkForNewSessions(mDataSource.getSessions());
+        setSessions(mDataSource.getSessions());
     }
 
     @Override
