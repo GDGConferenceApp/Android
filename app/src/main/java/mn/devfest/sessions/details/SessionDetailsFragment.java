@@ -261,8 +261,14 @@ public class SessionDetailsFragment extends Fragment {
      * Toggles the status of the session being in or out of the user's schedule
      */
     private void toggleInUserSchedule() {
-        if (mSession != null) {
-            String sessionId = mSession.getId();
+        if (mSession == null) {
+            return;
+        }
+
+        String sessionId = mSession.getId();
+        if (mDataSource.isInUserSchedule(sessionId)) {
+            mDataSource.removeFromUserSchedule(sessionId);
+        } else {
             mDataSource.addToUserSchedule(sessionId);
         }
     }
