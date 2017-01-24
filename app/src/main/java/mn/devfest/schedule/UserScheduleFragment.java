@@ -58,7 +58,7 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         super.onAttach(context);
         if (mDataSource == null) {
             //TODO initialize properly
-            mDataSource = new DevFestDataSource();
+            mDataSource = DevFestDataSource.getInstance(context);
         }
     }
 

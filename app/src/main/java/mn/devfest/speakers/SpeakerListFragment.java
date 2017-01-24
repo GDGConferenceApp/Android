@@ -77,7 +77,7 @@ public class SpeakerListFragment extends Fragment implements DevFestDataSource.D
         super.onAttach(context);
         if (mDataSource == null) {
             //TODO initialize properly
-            mDataSource = DevFestDataSource.getInstance();
+            mDataSource = DevFestDataSource.getInstance(context);
         }
     }
 
