@@ -3,6 +3,7 @@ package mn.devfest.view;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,7 +89,7 @@ public class SpeakerView extends LinearLayout {
      */
     private void updateText() {
         mNameTextview.setText(mSpeaker.getName());
-        mBioTextview.setText(mSpeaker.getBio());
+        mBioTextview.setText(Html.fromHtml(mSpeaker.getBio()));
         if (mSpeaker.getCompany() == null || mSpeaker.getCompany().isEmpty()) {
             mCompanyTextview.setVisibility(GONE);
         } else {
