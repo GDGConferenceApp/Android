@@ -201,20 +201,33 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
             Timber.d("handleSignInResult successful login");
             // Signed in successfully, show authenticated UI.
             mGoogleAccount = result.getSignInAccount();
-            if (mGoogleAccount != null) {
-                Picasso.with(this)
-                        .load(mGoogleAccount.getPhotoUrl())
-                        .transform(new SpeakerImageTransformation())
-                        .placeholder(R.drawable.ic_account_circle_white_48dp)
-                        .into(mUserImageview);
-                mUserNameTextview.setText(mGoogleAccount.getDisplayName());
-                mUserEmailTextview.setText(mGoogleAccount.getEmail());
-            }
+            onLoggedIn();
         } else {
             Timber.d("handleSignInResult login failed");
             // Signed out, show unauthenticated UI.
-            //TODO update the UI
+            onLoggedOut();
         }
+    }
+
+    private void onLoggedIn() {
+        if (mGoogleAccount != null) {
+            mUserImageview.setVisibility(View.VISIBLE);
+            mUserEmailTextview.setVisibility(View.VISIBLE);
+            mUserNameTextview.setVisibility(View.VISIBLE);
+            Picasso.with(this)
+                    .load(mGoogleAccount.getPhotoUrl())
+                    .transform(new SpeakerImageTransformation())
+                    .placeholder(R.drawable.ic_account_circle_white_48dp)
+                    .into(mUserImageview);
+            mUserNameTextview.setText(mGoogleAccount.getDisplayName());
+            mUserEmailTextview.setText(mGoogleAccount.getEmail());
+        }
+    }
+
+    private void onLoggedOut() {
+        mUserImageview.setVisibility(View.GONE);
+        mUserEmailTextview.setVisibility(View.GONE);
+        mUserNameTextview.setVisibility(View.GONE);
     }
 
     @Override
