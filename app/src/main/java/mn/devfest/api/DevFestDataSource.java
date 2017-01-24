@@ -242,6 +242,31 @@ public class DevFestDataSource {
         });
     }
 
+    public DiffUtil.DiffResult calculateScheduleDiff(final List<Session> sessions, List<Session> oldSchedule, List<Session> newSchedule) {
+        return DiffUtil.calculateDiff(new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return sessions.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return sessions.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                return oldItemPosition == newItemPosition;
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                Session session = sessions.get(oldItemPosition);
+                return oldSchedule.contains(session) == newSchedule.contains(session);
+            }
+        });
+    }
+
     public DiffUtil.DiffResult calculateSpeakerDiff(final List<Speaker> oldList, List<Speaker> newList) {
         return DiffUtil.calculateDiff(new DiffUtil.Callback() {
             @Override

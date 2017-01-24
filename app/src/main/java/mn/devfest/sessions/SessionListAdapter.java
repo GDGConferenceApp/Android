@@ -28,6 +28,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private static final int TYPE_SESSION = 2;
 
     private List<Session> mSessions;
+    private List<Session> mSchedule;
     private DevFestDataSource mDataSource;
 
     /*
@@ -39,6 +40,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public SessionListAdapter(DevFestDataSource dataSource) {
         mDataSource = dataSource;
+        mSchedule = new ArrayList<>(0);
         mSessions = new ArrayList<>(0);
     }
 
@@ -72,7 +74,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             SessionViewHolder sessionHolder = (SessionViewHolder) holder;
             Session session = mSessions.get(position);
 
-            boolean inSchedule = mDataSource.isInUserSchedule(session.getId());
+            boolean inSchedule = mSchedule.contains(session);
             sessionHolder.bindSession(session, inSchedule, this);
         } else if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
@@ -101,6 +103,14 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         mSessions.addAll(sessions);
 
         mHeaders = generateHeaders();
+    }
+
+    /**
+     * Set the user's schedule
+     * @param schedule The new schedule.
+     */
+    public final void setSchedule(List<Session> schedule) {
+        mSchedule = schedule;
     }
 
     /**
@@ -146,7 +156,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     
     @Override
     public boolean onToggleScheduleButtonClicked(Session session) {
-        if (mDataSource.isInUserSchedule(session.getId())) {
+        if (mSchedule.contains(session)) {
             mDataSource.removeFromUserSchedule(session.getId());
             return false;
         } else {
