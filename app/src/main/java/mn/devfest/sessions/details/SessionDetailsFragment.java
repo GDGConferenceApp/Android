@@ -263,7 +263,7 @@ public class SessionDetailsFragment extends Fragment {
     private void toggleInUserSchedule() {
         if (mSession != null) {
             String sessionId = mSession.getId();
-        // TODO toggle in/out of the user's schedule
+            mDataSource.addToUserSchedule(sessionId);
         }
     }
 
