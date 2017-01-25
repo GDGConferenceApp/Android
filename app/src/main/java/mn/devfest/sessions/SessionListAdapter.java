@@ -136,8 +136,6 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             // Since we start with a header, the first session starts at index 1
             for (int i = 1; i < mSessions.size(); i++) {
                 Session session = mSessions.get(i);
-                mPositionSessionMap.put(adapterPosition, session);
-                adapterPosition++;
 
                 if (!session.getStartDateTime().isEqual(lastTime)) {
                     // We have found a new group!
@@ -145,6 +143,9 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     headers.put(adapterPosition, lastTime);
                     adapterPosition++;
                 }
+                
+                mPositionSessionMap.put(adapterPosition, session);
+                adapterPosition++;
             }
 
             totalSize = adapterPosition;
