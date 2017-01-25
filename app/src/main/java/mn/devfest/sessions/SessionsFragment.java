@@ -121,7 +121,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
     public void onResume() {
         super.onResume();
         //TODO Display loading view if necessary
-        checkForNewSessions(mDataSource.getSessions());
+        setSessions(mDataSource.getSessions());
     }
 
     @Override
