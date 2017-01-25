@@ -2,7 +2,7 @@ package mn.devfest.sessions.holder;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.DrawableRes;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -53,7 +53,7 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
 
         mToggleScheduleButton.setOnClickListener(view -> {
             boolean isInUserSchdedule = mListener.onToggleScheduleButtonClicked(mSession);
-            colorScheduleToggleButton(isInUserSchdedule);
+            updateScheduleToggleButton(isInUserSchdedule);
         });
     }
 
@@ -70,7 +70,7 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
         mListener = listener;
         mTitleTextView.setText(session.getTitle());
         mRoomTextView.setText(session.getRoom());
-        colorScheduleToggleButton(isInUserSchedule);
+        updateScheduleToggleButton(isInUserSchedule);
 
         Context context = mTitleTextView.getContext();
         int categoryColorRes = CategoryColorUtil.getColorResForCategory(session.getTrack());
@@ -88,17 +88,21 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
     }
 
     /**
-     * Changes the color of the schedule-toggle button appropriately based on if the session is in
+     * Changes the color and shape of the schedule-toggle button appropriately based on if the session is in
      * the user's schedule
      *
      * @param isInUserSchedule indicates if this session is in the user's schedule
      */
-    private void colorScheduleToggleButton(boolean isInUserSchedule) {
-        if (isInUserSchedule) {
-            mToggleScheduleButton.setColorFilter(ContextCompat.getColor(mToggleScheduleButton.getContext(), R.color.colorAccent));
-        } else {
-            mToggleScheduleButton.setColorFilter(ContextCompat.getColor(mToggleScheduleButton.getContext(), R.color.mediumGray));
-        }
+    private void updateScheduleToggleButton(boolean isInUserSchedule) {
+        int iconRes = isInUserSchedule ? R.drawable.ic_star_rate_black_18dp : R.drawable.ic_star_hollow;
+        int colorRes = isInUserSchedule ? R.color.colorAccent : R.color.mediumGray;
+
+        Context context = mToggleScheduleButton.getContext();
+        Drawable image = ContextCompat.getDrawable(mToggleScheduleButton.getContext(), iconRes);
+        int color = ContextCompat.getColor(context, colorRes);
+
+        mToggleScheduleButton.setImageDrawable(image);
+        mToggleScheduleButton.setColorFilter(color);
     }
 
     /**
@@ -106,7 +110,6 @@ public class SessionViewHolder extends RecyclerView.ViewHolder {
      * TODO document when we finalize the approach
      */
     public interface ToggleInScheduleListener {
-        @DrawableRes
         boolean onToggleScheduleButtonClicked(Session session);
     }
 }
