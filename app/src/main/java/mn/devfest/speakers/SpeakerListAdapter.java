@@ -120,7 +120,7 @@ public class SpeakerListAdapter extends RecyclerView.Adapter<SpeakerListAdapter.
             int pictureSizePx = speakerImage.getResources().getDimensionPixelSize(R.dimen.speaker_list_image_size);
 
             //Load the image if there is one
-            if (!speaker.getImageUrl().isEmpty()) {
+            if (speaker.getImageUrl() != null && !speaker.getImageUrl().isEmpty()) {
                 Picasso.with(speakerImage.getContext())
                         .load(speaker.getImageUrl())
                         .transform(new SpeakerImageTransformation())

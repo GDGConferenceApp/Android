@@ -80,6 +80,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
+        mDataSource = DevFestDataSource.getInstance(getContext());
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         mAutohidePastSessions = mPreferences.getBoolean(PREF_KEY_AUTOHIDE, true);
         mDataSource.setDataSourceListener(this);
@@ -110,7 +111,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
 
         mLayoutManager = new LinearLayoutManager(getContext());
         getActivity().setTitle(getResources().getString(R.string.sessions_title));
-        mAdapter = new SessionListAdapter(null);
+        mAdapter = new SessionListAdapter(mDataSource);
         mSessionRecyclerView.setAdapter(mAdapter);
         mSessionRecyclerView.setLayoutManager(mLayoutManager);
         mSessionRecyclerView.addItemDecoration(new SessionGroupDividerDecoration(getContext()));
@@ -122,7 +123,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
         super.onAttach(context);
         if (mDataSource == null) {
             //TODO initialize properly
-            mDataSource = DevFestDataSource.getInstance();
+            mDataSource = DevFestDataSource.getInstance(getContext());
         }
     }
 
@@ -130,7 +131,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
     public void onResume() {
         super.onResume();
         //TODO Display loading view if necessary
-        checkForNewSessions(mDataSource.getSessions());
+        setSessions(mDataSource.getSessions());
     }
 
     @Override
@@ -212,7 +213,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
                 .toSortedList(new SessionTimeSort())
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::updateDisplayedSessions);
+                .subscribe(this::checkForNewSessions);
     }
 
     /**
@@ -247,7 +248,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
 
     @Override
     public void onSessionsUpdate(List<Session> sessions) {
-        checkForNewSessions(mDataSource.getSessions());
+        setSessions(mDataSource.getSessions());
     }
 
     @Override

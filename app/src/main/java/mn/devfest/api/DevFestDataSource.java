@@ -1,5 +1,6 @@
 package mn.devfest.api;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
@@ -45,14 +46,16 @@ public class DevFestDataSource {
     //TODO move to an array of listeners?
     private DataSourceListener mDataSourceListener;
 
-    public static DevFestDataSource getInstance() {
+    public static DevFestDataSource getInstance(Context context) {
         if (mOurInstance == null) {
-            mOurInstance = new DevFestDataSource();
+            mOurInstance = new DevFestDataSource(context);
         }
         return mOurInstance;
     }
 
-    public DevFestDataSource() {
+    public DevFestDataSource(Context context) {
+        mScheduleRepository = new UserScheduleRepository(context);
+
         //TODO move all firebase access into a separate class and de-duplicate code
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         //Get sessions

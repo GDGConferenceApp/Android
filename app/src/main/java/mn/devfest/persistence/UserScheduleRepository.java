@@ -21,7 +21,7 @@ public class UserScheduleRepository {
     Context mContext;
     SharedPreferences mSharedPreferences;
 
-    public UserScheduleRepository (@NonNull Context context){
+    public UserScheduleRepository(@NonNull Context context) {
         mContext = context;
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
     }
