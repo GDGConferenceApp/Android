@@ -59,6 +59,7 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         if (mDataSource == null) {
             //TODO initialize properly
             mDataSource = DevFestDataSource.getInstance(context);
+            mDataSource.setDataSourceListener(this);
         }
     }
 
@@ -89,10 +90,14 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         super.onResume();
         //Refresh the UI with the latest data
         List<Session> userSchedule = mDataSource.getUserSchedule();
-        if (userSchedule.size() == 0) {
-            showEmptyView(true);
+        if (mDataSource.getSessions().isEmpty()) {
             mLoadingView.setVisibility(View.VISIBLE);
+            showEmptyView(false);
+        } else if (userSchedule.size() == 0) {
+            mLoadingView.setVisibility(View.GONE);
+            showEmptyView(true);
         } else {
+            mLoadingView.setVisibility(View.GONE);
             showEmptyView(false);
             setSchedule(userSchedule);
         }
@@ -159,6 +164,7 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
     public void onSessionsUpdate(List<Session> sessions) {
         //TODO handle redundant onSession and onSchedule updates
         setSchedule(mDataSource.getUserSchedule());
+        mLoadingView.setVisibility(View.GONE);
         showEmptyView(sessions.isEmpty());
     }
 
