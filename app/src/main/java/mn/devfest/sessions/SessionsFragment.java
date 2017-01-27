@@ -197,10 +197,12 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
     }
 
     private void checkForNewSessions(List<Session> latestSessions) {
-        DiffUtil.DiffResult sessionDiffResult = mDataSource.calculateSessionDiff(mAllSessions, latestSessions);
+        // TODO See #39 - this diff method doesn't take headers into account, thus reporting incorrect diffs
+        //DiffUtil.DiffResult sessionDiffResult = mDataSource.calculateSessionDiff(mAllSessions, latestSessions);
         mAllSessions = latestSessions;
         mAdapter.setSessions(mAllSessions);
-        sessionDiffResult.dispatchUpdatesTo(mAdapter);
+        mAdapter.notifyDataSetChanged();
+        //sessionDiffResult.dispatchUpdatesTo(mAdapter);
     }
 
     /**
