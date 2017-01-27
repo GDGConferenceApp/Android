@@ -11,6 +11,9 @@
 
     <!-- Material dialog dimens -->
     <dimen name="dialog_padding">24dp</dimen>
+    <dimen name="dialog_title_padding">12dp</dimen>
+    <dimen name="dialog_min_width">240dp</dimen>
+    <dimen name="dialog_title_text">12sp</dimen>
 
     <!-- List items -->
     <dimen name="list_item_vertical_padding">8dp</dimen>
