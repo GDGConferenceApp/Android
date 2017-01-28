@@ -27,6 +27,8 @@ public class CategoryColorUtil {
             return R.color.category_default;
         }
 
+        category = category.toLowerCase();
+
         switch (category) {
             case CATEGORY_ANDROID:
                 return R.color.category_android;
