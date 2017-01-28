@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/categories_list"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:minWidth="@dimen/dialog_min_width"
+    android:orientation="vertical">
+
+    <LinearLayout
+                  android:id="@+id/md_titleFrame"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center_vertical"
+                  android:orientation="horizontal"
+                  android:paddingBottom="@dimen/dialog_title_padding"
+                  android:paddingLeft="@dimen/dialog_padding"
+                  android:paddingRight="@dimen/dialog_padding"
+                  android:paddingTop="@dimen/dialog_padding">
+
+        <TextView
+            android:id="@+id/md_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dialog_title_text"
+            android:text="@string/sessions_menu_filter" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/categories_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
