@@ -185,6 +185,7 @@ public class DevFestDataSource {
      */
     public void addToUserSchedule(String sessionId) {
         mScheduleRepository.addSession(sessionId);
+        mDataSourceListener.onUserScheduleUpdate(getUserSchedule());
     }
 
     /**
@@ -194,6 +195,7 @@ public class DevFestDataSource {
      */
     public void removeFromUserSchedule(String sessionId) {
         mScheduleRepository.removeSession(sessionId);
+        mDataSourceListener.onUserScheduleUpdate(getUserSchedule());
     }
 
     /**

@@ -139,7 +139,9 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
      */
     private void updateDisplayedSessions(List<Session> sessions) {
         if (mAdapter != null) {
+            // The session list and schedule are the same here
             mAdapter.setSessions(sessions);
+            mAdapter.setSchedule(sessions);
             mAdapter.notifyDataSetChanged();
         }
         mLoadingView.setVisibility(View.GONE);

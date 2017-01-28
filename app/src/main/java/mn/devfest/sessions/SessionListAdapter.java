@@ -74,7 +74,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof SessionViewHolder) {
             SessionViewHolder sessionHolder = (SessionViewHolder) holder;
-            Session session = mSessions.get(position);
+            Session session = mPositionSessionMap.get(position);
 
             boolean inSchedule = false;
             if (mDataSource != null) {
@@ -122,6 +122,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private void generateHeadersAndSessionMap() {
         // Our conference has 10 time slots- for now, just start with that
         SparseArray<DateTime> headers = new SparseArray<>();
+        mPositionSessionMap.clear();
 
         int adapterPosition = 0;
         if (mSessions.size() > 0) {
@@ -139,8 +140,6 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             // Since we start with a header, the first session starts at index 1
             for (int i = 1; i < mSessions.size(); i++) {
                 Session session = mSessions.get(i);
-                mPositionSessionMap.put(adapterPosition, session);
-                adapterPosition++;
 
                 if (!session.getStartDateTime().isEqual(lastTime)) {
                     // We have found a new group!
@@ -148,12 +147,17 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     headers.put(adapterPosition, lastTime);
                     adapterPosition++;
                 }
+                
+                mPositionSessionMap.put(adapterPosition, session);
+                adapterPosition++;
             }
 
+            totalSize = adapterPosition;
+        } else {
+            totalSize = 0;
         }
 
         mHeaders = headers;
-        totalSize = adapterPosition - 1;
     }
     
     @Override
