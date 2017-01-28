@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -64,6 +65,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
 
     private boolean mAutohidePastSessions;
     private List<Session> mAllSessions;
+    private List<Session> mSchedule;
     private Set<String> mAllCategories;
     private String mCategoryFilter;
     private SessionListAdapter mAdapter;
@@ -131,6 +133,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
     public void onResume() {
         super.onResume();
         //TODO Display loading view if necessary
+        updateSchedule();
         setSessions(mDataSource.getSessions());
     }
 
@@ -187,6 +190,20 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
 
         // Force a re-filter
         setSessions(mAllSessions);
+    }
+
+    private void updateSchedule() {
+        List<Session> oldSchedule;
+        if (mSchedule != null) {
+            oldSchedule = mSchedule;
+        } else {
+            oldSchedule = new ArrayList<>(0);
+        }
+        mSchedule = Collections.unmodifiableList(mDataSource.getUserSchedule());
+
+        DiffUtil.DiffResult sessionDiffResult = mDataSource.calculateScheduleDiff(mAllSessions, oldSchedule, mSchedule);
+        mAdapter.setSchedule(mSchedule);
+        sessionDiffResult.dispatchUpdatesTo(mAdapter);
     }
 
     private void checkForNewSessions(List<Session> latestSessions) {

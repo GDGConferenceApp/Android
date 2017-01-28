@@ -215,11 +215,10 @@ public class SessionDetailsFragment extends Fragment {
             Drawable icon = ContextCompat.getDrawable(getContext(), resourceId);
             mFab.setImageDrawable(icon);
         } else {
-            //TODO change this to use a filled in icon and an outline icon
             //Change to a toggle-schedule button
-            int resourceId = R.drawable.ic_star_rate_black_18dp;
+            boolean inSchedule = mDataSource.getUserSchedule().contains(mSession);
+            int resourceId = inSchedule ? R.drawable.ic_star_rate_black_18dp : R.drawable.ic_star_hollow;
             Drawable icon = ContextCompat.getDrawable(getContext(), resourceId);
-            // TODO set the icon based on if the session is in the user's schedule
             mFab.setImageDrawable(icon);
         }
     }
@@ -262,9 +261,15 @@ public class SessionDetailsFragment extends Fragment {
      * Toggles the status of the session being in or out of the user's schedule
      */
     private void toggleInUserSchedule() {
-        if (mSession != null) {
-            String sessionId = mSession.getId();
-        // TODO toggle in/out of the user's schedule
+        if (mSession == null) {
+            return;
+        }
+
+        String sessionId = mSession.getId();
+        if (mDataSource.isInUserSchedule(sessionId)) {
+            mDataSource.removeFromUserSchedule(sessionId);
+        } else {
+            mDataSource.addToUserSchedule(sessionId);
         }
     }
 
