@@ -76,11 +76,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             SessionViewHolder sessionHolder = (SessionViewHolder) holder;
             Session session = mPositionSessionMap.get(position);
 
-            boolean inSchedule = false;
-            if (mDataSource != null) {
-                inSchedule = mDataSource.isInUserSchedule(session.getId());
-            }
-
+            boolean inSchedule = mSchedule.contains(session);
             sessionHolder.bindSession(session, inSchedule, this);
         } else if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
@@ -140,6 +136,8 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             // Since we start with a header, the first session starts at index 1
             for (int i = 1; i < mSessions.size(); i++) {
                 Session session = mSessions.get(i);
+                mPositionSessionMap.put(adapterPosition, session);
+                adapterPosition++;
 
                 if (!session.getStartDateTime().isEqual(lastTime)) {
                     // We have found a new group!
@@ -158,6 +156,7 @@ public class SessionListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
         mHeaders = headers;
+        totalSize = adapterPosition - 1;
     }
     
     @Override
