@@ -6,6 +6,8 @@
     <string name="drawer_item_sessions">Sessions</string>
     <string name="drawer_item_speakers">Speakers</string>
     <string name="drawer_item_map">Map</string>
+    <string name="drawer_item_login">Login</string>
+    <string name="drawer_item_logout">Log out</string>
 
     <!-- User Schedule -->
     <string name="empty_schedule">You don\'t have any events on your schedule</string>

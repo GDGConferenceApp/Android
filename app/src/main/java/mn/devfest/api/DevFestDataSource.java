@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,14 +34,15 @@ import timber.log.Timber;
  */
 public class DevFestDataSource {
 
-    public static final String DEVFEST_2017_KEY = "devfest2017";
-    public static final String SESSIONS_CHILD_KEY = "schedule";
-    public static final String SPEAKERS_CHILD_KEY = "speakers";
+    private static final String DEVFEST_2017_KEY = "devfest2017";
+    private static final String SESSIONS_CHILD_KEY = "schedule";
+    private static final String SPEAKERS_CHILD_KEY = "speakers";
 
     private static DevFestDataSource mOurInstance;
 
     private UserScheduleRepository mScheduleRepository;
     private DatabaseReference mFirebaseDatabaseReference;
+    private GoogleSignInAccount mGoogleAccount;
 
     private Conference mConference = new Conference();
     //TODO move to an array of listeners?
@@ -291,6 +293,14 @@ public class DevFestDataSource {
                 return oldList.get(oldItemPosition).equals(newList.get(newItemPosition));
             }
         });
+    }
+
+    public GoogleSignInAccount getGoogleAccount() {
+        return mGoogleAccount;
+    }
+
+    public void setGoogleAccount(GoogleSignInAccount mGoogleAccount) {
+        this.mGoogleAccount = mGoogleAccount;
     }
 
     /**

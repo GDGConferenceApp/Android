@@ -1,5 +1,6 @@
 package mn.devfest.sessions;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -117,6 +118,15 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
         mSessionRecyclerView.setLayoutManager(mLayoutManager);
         mSessionRecyclerView.addItemDecoration(new SessionGroupDividerDecoration(getContext()));
         mSessionRecyclerView.addItemDecoration(new SessionDividerDecoration(getContext()));
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (mDataSource == null) {
+            //TODO initialize properly
+            mDataSource = DevFestDataSource.getInstance(getContext());
+        }
     }
 
     @Override
