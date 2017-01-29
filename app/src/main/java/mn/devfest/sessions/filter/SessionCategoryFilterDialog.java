@@ -6,13 +6,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import mn.devfest.R;
-import mn.devfest.view.layoutmanager.WrapLinearLayoutManager;
 
 /**
  * Dialog that allows the user to select a session category filter
@@ -58,7 +58,7 @@ public class SessionCategoryFilterDialog extends AppCompatDialogFragment impleme
         super.onViewCreated(view, savedInstanceState);
 
         RecyclerView categoriesView = (RecyclerView) view.findViewById(R.id.categories_list);
-        categoriesView.setLayoutManager(new WrapLinearLayoutManager(getContext()));
+        categoriesView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         String[] categories = getArguments().getStringArray(ARG_KEY_CATEGORIES);
         SessionCategoryFilterAdapter adapter = new SessionCategoryFilterAdapter(categories, this);
