@@ -49,6 +49,7 @@ public class DevFestDataSource {
     //TODO move to an array of listeners?
     private DataSourceListener mDataSourceListener;
     private UserScheduleListener mUserScheduleListener;
+    private ValueEventListener mFirebaseUserScheduleListener;
 
     public static DevFestDataSource getInstance(Context context) {
         if (mOurInstance == null) {
@@ -306,31 +307,42 @@ public class DevFestDataSource {
     }
 
     public void setGoogleAccount(GoogleSignInAccount googleAccount) {
-        //If there's an account to track, and we're not already tracking it, track it
-        if (googleAccount != null
-                && googleAccount.getId() != null
-                && !googleAccount.getId().equals(mGoogleAccount.getId())) {
-            mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
-                    .child(googleAccount.getId()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    //Gather all of the session IDs from the user's schedule
-                    ArrayList<String> scheduleIds = new ArrayList<>();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Timber.d("User schedule snapshot is: %s", snapshot.toString());
-                        String id = snapshot.getValue(String.class);
-                        scheduleIds.add(id);
-                    }
-                    //Update the schedule IDs and send the new user schedule to the listener
-                    mScheduleRepository.setScheduleIdStringSet(scheduleIds);
-                    mUserScheduleListener.onScheduleUpdate(getUserSchedule());
-                }
+        //If we are removing the Google account, stop listening
+        if (googleAccount == null) {
+            if (mFirebaseUserScheduleListener != null && mGoogleAccount != null
+                    && mGoogleAccount.getId() != null) {
+                mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
+                        .child(mGoogleAccount.getId())
+                        .removeEventListener(mFirebaseUserScheduleListener);
+            }
+            mGoogleAccount = null;
+            return;
+        }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Timber.e(databaseError.toException(), "Failed to read user agenda value.");
-                }
-            });
+        //If there's an account to track, and we're not already tracking it, track it
+        if (googleAccount.getId() != null
+                && !googleAccount.getId().equals(mGoogleAccount.getId())) {
+            mFirebaseUserScheduleListener = mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
+                    .child(googleAccount.getId()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            //Gather all of the session IDs from the user's schedule
+                            ArrayList<String> scheduleIds = new ArrayList<>();
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                Timber.d("User schedule snapshot is: %s", snapshot.toString());
+                                String id = snapshot.getValue(String.class);
+                                scheduleIds.add(id);
+                            }
+                            //Update the schedule IDs and send the new user schedule to the listener
+                            mScheduleRepository.setScheduleIdStringSet(scheduleIds);
+                            mUserScheduleListener.onScheduleUpdate(getUserSchedule());
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Timber.e(databaseError.toException(), "Failed to read user agenda value.");
+                        }
+                    });
         }
         mGoogleAccount = googleAccount;
     }
@@ -340,6 +352,7 @@ public class DevFestDataSource {
     }
 
     //TODO break this into separate listeners
+
     /**
      * Listener for updates from the data source
      */
