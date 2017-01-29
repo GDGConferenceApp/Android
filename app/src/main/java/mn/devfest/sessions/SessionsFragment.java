@@ -267,6 +267,6 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
 
     @Override
     public void onUserScheduleUpdate(List<Session> userSchedule) {
-        //Intentionally ignored
+        updateSchedule();
     }
 }
