@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,11 +48,13 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
     @Bind (R.id.nav_view)
     NavigationView mNavigationView;
 
-    ImageView mUserImageview;
+    private ImageView mUserImageview;
 
-    TextView mUserNameTextview;
+    private TextView mUserNameTextview;
 
-    TextView mUserEmailTextview;
+    private TextView mUserEmailTextview;
+
+    private MenuItem mLoginLogoutMenuItem;
 
     private FirebaseAuth mFirebaseAuth;
 
@@ -80,6 +83,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
         mUserImageview = (ImageView) navHeaderLayout.findViewById(R.id.nav_header_user_profile_image);
         mUserEmailTextview = (TextView) navHeaderLayout.findViewById(R.id.nav_header_email_textview);
         mUserNameTextview = (TextView) navHeaderLayout.findViewById(R.id.nav_header_name_textview);
+        mLoginLogoutMenuItem = mNavigationView.getMenu().findItem(R.id.nav_login_or_logout);
     }
 
     private void initializeGoogleAuth() {
@@ -99,9 +103,11 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
             if (user != null) {
                 //User is signed in
                 Timber.d("onAuthStateChanged() with user signed in as %s", user.getDisplayName());
+                onLoggedIn();
             } else {
                 //User is signed out
                 Timber.d("onAuthStateChanged() with user signed out");
+                onLoggedOut();
             }
         };
     }
@@ -124,9 +130,6 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
     protected void navigateTo(int navItemId) {
         navigateToTopLevelFragment(navItemId, true);
     }
-
-
-    //TODO evaluate if we want this public, or if we should try something else like listeners
 
     /**
      * Navigate to a top-level Fragment
@@ -183,6 +186,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
 
     public void signOut() {
         mFirebaseAuth.signOut();
+        mGoogleAccount = null;
     }
 
     @Override
@@ -198,18 +202,23 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
 
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
-            Timber.d("handleSignInResult successful login");
+            Timber.d("handleSignInResult successful authentication change");
             // Signed in successfully, show authenticated UI.
             mGoogleAccount = result.getSignInAccount();
-            onLoggedIn();
+            if (mGoogleAccount != null) {
+                onLoggedIn();
+            } else {
+                // Signed out, show unauthenticated UI.
+                onLoggedOut();
+            }
         } else {
-            Timber.d("handleSignInResult login failed");
-            // Signed out, show unauthenticated UI.
-            onLoggedOut();
+            Timber.d("handleSignInResult authentication change failed");
         }
     }
 
     private void onLoggedIn() {
+        Timber.d("onLoggedIn called");
+        mLoginLogoutMenuItem.setTitle(R.string.drawer_item_logout);
         if (mGoogleAccount != null) {
             mUserImageview.setVisibility(View.VISIBLE);
             mUserEmailTextview.setVisibility(View.VISIBLE);
@@ -225,6 +234,8 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
     }
 
     private void onLoggedOut() {
+        Timber.d("onLoggedOut called");
+        mLoginLogoutMenuItem.setTitle(R.string.drawer_item_login);
         mUserImageview.setVisibility(View.GONE);
         mUserEmailTextview.setVisibility(View.GONE);
         mUserNameTextview.setVisibility(View.GONE);

@@ -33,9 +33,9 @@ import timber.log.Timber;
  */
 public class DevFestDataSource {
 
-    public static final String DEVFEST_2017_KEY = "devfest2017";
-    public static final String SESSIONS_CHILD_KEY = "schedule";
-    public static final String SPEAKERS_CHILD_KEY = "speakers";
+    private static final String DEVFEST_2017_KEY = "devfest2017";
+    private static final String SESSIONS_CHILD_KEY = "schedule";
+    private static final String SPEAKERS_CHILD_KEY = "speakers";
 
     private static DevFestDataSource mOurInstance;
 
