@@ -37,6 +37,7 @@ public class DevFestDataSource {
     private static final String DEVFEST_2017_KEY = "devfest2017";
     private static final String SESSIONS_CHILD_KEY = "schedule";
     private static final String SPEAKERS_CHILD_KEY = "speakers";
+    private static final String AGENDAS_KEY = "agendas";
 
     private static DevFestDataSource mOurInstance;
 
@@ -299,8 +300,25 @@ public class DevFestDataSource {
         return mGoogleAccount;
     }
 
-    public void setGoogleAccount(GoogleSignInAccount mGoogleAccount) {
-        this.mGoogleAccount = mGoogleAccount;
+    public void setGoogleAccount(GoogleSignInAccount googleAccount) {
+        //If there's an account to track, and we're not already tracking it, track it
+        if (googleAccount != null
+                && googleAccount.getId() != null
+                && !googleAccount.getId().equals(mGoogleAccount.getId())) {
+            mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
+                    .child(googleAccount.getId()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    //TODO update user schedule listener
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Timber.e(databaseError.toException(), "Failed to read user agenda value.");
+                }
+            });
+        }
+        mGoogleAccount = googleAccount;
     }
 
     /**
