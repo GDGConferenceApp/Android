@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
@@ -23,6 +22,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import mn.devfest.api.DevFestDataSource;
 import mn.devfest.base.BaseActivity;
 import mn.devfest.map.MapFragment;
 import mn.devfest.schedule.UserScheduleFragment;
@@ -62,7 +62,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
 
     private GoogleApiClient mGoogleApiClient;
 
-    private GoogleSignInAccount mGoogleAccount;
+    private DevFestDataSource mDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +73,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
             int navId = getIntent().getIntExtra(EXTRA_NAVIGATION_DESTINATION, R.id.nav_schedule);
             navigateToTopLevelFragment(navId, false);
         }
+        mDataSource = DevFestDataSource.getInstance(this);
         bindViews();
         initializeGoogleAuth();
     }
@@ -157,7 +158,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
                 break;
 
             case R.id.nav_login_or_logout:
-                if (mGoogleAccount == null) {
+                if (mDataSource.getGoogleAccount() == null) {
                     signIn();
                 } else {
                     signOut();
@@ -186,7 +187,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
 
     public void signOut() {
         mFirebaseAuth.signOut();
-        mGoogleAccount = null;
+        mDataSource.setGoogleAccount(null);
     }
 
     @Override
@@ -204,8 +205,8 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
         if (result.isSuccess()) {
             Timber.d("handleSignInResult successful authentication change");
             // Signed in successfully, show authenticated UI.
-            mGoogleAccount = result.getSignInAccount();
-            if (mGoogleAccount != null) {
+            mDataSource.setGoogleAccount(result.getSignInAccount());
+            if (mDataSource.getGoogleAccount() != null) {
                 onLoggedIn();
             } else {
                 // Signed out, show unauthenticated UI.
@@ -219,17 +220,17 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
     private void onLoggedIn() {
         Timber.d("onLoggedIn called");
         mLoginLogoutMenuItem.setTitle(R.string.drawer_item_logout);
-        if (mGoogleAccount != null) {
+        if (mDataSource.getGoogleAccount() != null) {
             mUserImageview.setVisibility(View.VISIBLE);
             mUserEmailTextview.setVisibility(View.VISIBLE);
             mUserNameTextview.setVisibility(View.VISIBLE);
             Picasso.with(this)
-                    .load(mGoogleAccount.getPhotoUrl())
+                    .load(mDataSource.getGoogleAccount().getPhotoUrl())
                     .transform(new SpeakerImageTransformation())
                     .placeholder(R.drawable.ic_account_circle_white_48dp)
                     .into(mUserImageview);
-            mUserNameTextview.setText(mGoogleAccount.getDisplayName());
-            mUserEmailTextview.setText(mGoogleAccount.getEmail());
+            mUserNameTextview.setText(mDataSource.getGoogleAccount().getDisplayName());
+            mUserEmailTextview.setText(mDataSource.getGoogleAccount().getEmail());
         }
     }
 
