@@ -48,6 +48,7 @@ public class DevFestDataSource {
     private Conference mConference = new Conference();
     //TODO move to an array of listeners?
     private DataSourceListener mDataSourceListener;
+    private UserScheduleListener mUserScheduleListener;
 
     public static DevFestDataSource getInstance(Context context) {
         if (mOurInstance == null) {
@@ -215,6 +216,10 @@ public class DevFestDataSource {
         mDataSourceListener = listener;
     }
 
+    public void setUserScheduleListener(UserScheduleListener listener) {
+        mUserScheduleListener = listener;
+    }
+
     private void onConferenceUpdated() {
         //Notify listener
         mDataSourceListener.onSessionsUpdate(getSessions());
@@ -309,7 +314,16 @@ public class DevFestDataSource {
                     .child(googleAccount.getId()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    //TODO update user schedule listener
+                    //Gather all of the session IDs from the user's schedule
+                    ArrayList<String> scheduleIds = new ArrayList<>();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Timber.d("User schedule snapshot is: %s", snapshot.toString());
+                        String id = snapshot.getValue(String.class);
+                        scheduleIds.add(id);
+                    }
+                    //Update the schedule IDs and send the new user schedule to the listener
+                    mScheduleRepository.setScheduleIdStringSet(scheduleIds);
+                    mUserScheduleListener.onScheduleUpdate(getUserSchedule());
                 }
 
                 @Override
@@ -321,6 +335,11 @@ public class DevFestDataSource {
         mGoogleAccount = googleAccount;
     }
 
+    public interface UserScheduleListener {
+        void onScheduleUpdate(List<Session> schedule);
+    }
+
+    //TODO break this into separate listeners
     /**
      * Listener for updates from the data source
      */
