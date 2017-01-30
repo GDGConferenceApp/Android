@@ -191,6 +191,19 @@ public class DevFestDataSource {
     public void addToUserSchedule(String sessionId) {
         mScheduleRepository.addSession(sessionId);
         mDataSourceListener.onUserScheduleUpdate(getUserSchedule());
+        attemptAddingSessionToFirebase(sessionId);
+    }
+
+    private void attemptAddingSessionToFirebase(String sessionId) {
+        //We can't sync to Firebase if we aren't logged in
+        if (!haveGoogleAccountAndId()) {
+            //TODO prompt the user intermittently to allow schedule sync
+            return;
+        }
+
+        //Add the session to the user's schedule in Firebase
+        mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
+                .child(mGoogleAccount.getId()).setValue(sessionId);
     }
 
     /**
@@ -201,6 +214,23 @@ public class DevFestDataSource {
     public void removeFromUserSchedule(String sessionId) {
         mScheduleRepository.removeSession(sessionId);
         mDataSourceListener.onUserScheduleUpdate(getUserSchedule());
+        attemptRemovingSessionFromFirebase(sessionId);
+    }
+
+    private void attemptRemovingSessionFromFirebase(String sessionId) {
+        //We can't sync to Firebase if we aren't logged in
+        if (!haveGoogleAccountAndId()) {
+            //TODO prompt the user intermittently to allow schedule sync
+            return;
+        }
+
+        //Add the session to the user's schedule in Firebase
+        mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
+                .child(mGoogleAccount.getId()).child(sessionId).removeValue();
+    }
+
+    private boolean haveGoogleAccountAndId() {
+        return mGoogleAccount != null && mGoogleAccount.getId() != null;
     }
 
     /**
@@ -309,8 +339,7 @@ public class DevFestDataSource {
     public void setGoogleAccount(GoogleSignInAccount googleAccount) {
         //If we are removing the Google account, stop listening
         if (googleAccount == null) {
-            if (mFirebaseUserScheduleListener != null && mGoogleAccount != null
-                    && mGoogleAccount.getId() != null) {
+            if (mFirebaseUserScheduleListener != null && haveGoogleAccountAndId()) {
                 mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
                         .child(mGoogleAccount.getId())
                         .removeEventListener(mFirebaseUserScheduleListener);
@@ -320,8 +349,7 @@ public class DevFestDataSource {
         }
 
         //If there's an account to track, and we're not already tracking it, track it
-        if (googleAccount.getId() != null
-                && !googleAccount.getId().equals(mGoogleAccount.getId())) {
+        if (haveGoogleAccountAndId() && !googleAccount.getId().equals(mGoogleAccount.getId())) {
             mFirebaseUserScheduleListener = mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
                     .child(googleAccount.getId()).addValueEventListener(new ValueEventListener() {
                         @Override
