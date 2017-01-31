@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import mn.devfest.api.model.Conference;
+import mn.devfest.api.model.Feedback;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.persistence.UserScheduleRepository;
@@ -37,6 +38,7 @@ public class DevFestDataSource {
     private static final String DEVFEST_2017_KEY = "devfest2017";
     private static final String SESSIONS_CHILD_KEY = "schedule";
     private static final String SPEAKERS_CHILD_KEY = "speakers";
+    private static final String FEEDBACK_CHILD_KEY = "feedback";
 
     private static DevFestDataSource mOurInstance;
 
@@ -214,11 +216,11 @@ public class DevFestDataSource {
         mDataSourceListener = listener;
     }
 
-    private void onConferenceUpdated() {
-        //Notify listener
-        mDataSourceListener.onSessionsUpdate(getSessions());
-        mDataSourceListener.onSpeakersUpdate(getSpeakers());
-        mDataSourceListener.onUserScheduleUpdate(getUserSchedule());
+    public void setSessionFeedback(String sessionId, Feedback feedback) {
+        mFirebaseDatabaseReference.child(FEEDBACK_CHILD_KEY)
+                .child(mGoogleAccount.getId())
+                .child(sessionId)
+                .setValue(feedback);
     }
 
     //TODO de-duplicate diff methods

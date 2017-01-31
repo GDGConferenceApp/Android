@@ -1,5 +1,6 @@
 package mn.devfest.sessions.rating;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mn.devfest.R;
+import mn.devfest.api.DevFestDataSource;
+import mn.devfest.api.model.Feedback;
 
 /**
  * Fragment that allows the user to rate a session
@@ -26,6 +29,7 @@ public class RateSessionFragment extends Fragment {
     @Bind(R.id.session_rating) RatingBar mSessionBar;
 
     private String mSessionId;
+    private DevFestDataSource mDataSource;
 
     /**
      * Get a new RateSessionFragment for a given session
@@ -63,6 +67,14 @@ public class RateSessionFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (mDataSource == null) {
+            mDataSource = DevFestDataSource.getInstance(context);
+        }
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
@@ -74,6 +86,7 @@ public class RateSessionFragment extends Fragment {
         int content = (int) mContentBar.getRating();
         int session = (int) mSessionBar.getRating();
 
-        //TODO submit feedback
+        Feedback feedback = new Feedback(speaker, content, session);
+        mDataSource.setSessionFeedback(mSessionId, feedback);
     }
 }
