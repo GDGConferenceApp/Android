@@ -6,6 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +46,7 @@ public class DevFestDataSource {
 
     private UserScheduleRepository mScheduleRepository;
     private DatabaseReference mFirebaseDatabaseReference;
+    private FirebaseAuth mFirebaseAuth;
     private GoogleSignInAccount mGoogleAccount;
 
     private Conference mConference = new Conference();
@@ -62,6 +66,7 @@ public class DevFestDataSource {
         mScheduleRepository = new UserScheduleRepository(context);
 
         //TODO move all firebase access into a separate class and de-duplicate code
+        mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         //Get sessions
         mFirebaseDatabaseReference.child(DEVFEST_2017_KEY)
@@ -337,6 +342,8 @@ public class DevFestDataSource {
     }
 
     public void setGoogleAccount(GoogleSignInAccount googleAccount) {
+        //TODO if we're logging into an account, use the schedule if we were logged out and reconcile the schedule if we
+
         //If we are removing the Google account, stop listening
         if (googleAccount == null) {
             if (mFirebaseUserScheduleListener != null && haveGoogleAccountAndId()) {
@@ -348,8 +355,13 @@ public class DevFestDataSource {
             return;
         }
 
-        //If there's an account to track, and we're not already tracking it, track it
-        if (haveGoogleAccountAndId() && !googleAccount.getId().equals(mGoogleAccount.getId())) {
+        if (googleAccount.getId() == null) {
+            throw new IllegalArgumentException("#setGoogleAccount() called without ID. googleAccount = " + googleAccount.toString());
+        }
+
+        //If we had no account, or if this new account isn't already being tracked, store in Firebase and track it
+        if (!haveGoogleAccountAndId() || !googleAccount.getId().equals(mGoogleAccount.getId())) {
+            storeAuthInFirebase(googleAccount);
             mFirebaseUserScheduleListener = mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
                     .child(googleAccount.getId()).addValueEventListener(new ValueEventListener() {
                         @Override
@@ -363,7 +375,9 @@ public class DevFestDataSource {
                             }
                             //Update the schedule IDs and send the new user schedule to the listener
                             mScheduleRepository.setScheduleIdStringSet(scheduleIds);
-                            mUserScheduleListener.onScheduleUpdate(getUserSchedule());
+                            if (mUserScheduleListener != null) {
+                                mUserScheduleListener.onScheduleUpdate(getUserSchedule());
+                            }
                         }
 
                         @Override
@@ -373,6 +387,18 @@ public class DevFestDataSource {
                     });
         }
         mGoogleAccount = googleAccount;
+    }
+
+    private void storeAuthInFirebase(GoogleSignInAccount account) {
+        AuthCredential authCredential = GoogleAuthProvider.getCredential(account.getId(), null);
+        mFirebaseAuth.signInWithCredential(authCredential)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Timber.d("FirebaseAuth login successfully completed");
+                    } else {
+                        Timber.d("FirebaseAuth login failed");
+                    }
+                });
     }
 
     public interface UserScheduleListener {
