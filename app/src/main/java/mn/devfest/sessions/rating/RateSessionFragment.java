@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.RatingBar;
 
 import butterknife.Bind;
@@ -27,7 +26,6 @@ public class RateSessionFragment extends Fragment {
     @Bind(R.id.field_relevancy) NumberFeedbackField mRelevancyBar;
     @Bind(R.id.field_content) NumberFeedbackField mcontentBar;
     @Bind(R.id.field_speaker_quality) NumberFeedbackField mSpeakerBar;
-    @Bind(R.id.fullname_edittext) EditText mFullname;
 
     private String mSessionId;
 
@@ -78,7 +76,6 @@ public class RateSessionFragment extends Fragment {
         int relevancy = mRelevancyBar.getRating();
         int content = mcontentBar.getRating();
         int speakerQuality = mSpeakerBar.getRating();
-        String fullname = mFullname.getText().toString();
 
         //TODO submit feedback
     }

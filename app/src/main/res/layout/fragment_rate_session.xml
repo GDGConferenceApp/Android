@@ -14,27 +14,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/colorBlack"
-            android:text="@string/session_rating_fullname"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="italic"
-            android:fontFamily="sans-serif-condensed"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/mediumGray"
-            android:text="Optional: You must enter your full name to be entered in raffle"/>
-
-        <EditText
-            android:id="@+id/fullname_edittext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:paddingLeft="@dimen/padding_normal"
             android:paddingStart="@dimen/padding_normal"
             android:paddingRight="@dimen/padding_normal"
