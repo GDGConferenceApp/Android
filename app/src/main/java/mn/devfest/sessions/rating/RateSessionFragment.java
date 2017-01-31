@@ -12,7 +12,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mn.devfest.R;
-import mn.devfest.view.NumberFeedbackField;
 
 /**
  * Fragment that allows the user to rate a session
@@ -22,10 +21,9 @@ import mn.devfest.view.NumberFeedbackField;
 public class RateSessionFragment extends Fragment {
     private static final String ARG_SESSION_ID = "arg_session_id";
 
-    @Bind(R.id.overall_session_rating) RatingBar mOverallBar;
-    @Bind(R.id.field_relevancy) NumberFeedbackField mRelevancyBar;
-    @Bind(R.id.field_content) NumberFeedbackField mcontentBar;
-    @Bind(R.id.field_speaker_quality) NumberFeedbackField mSpeakerBar;
+    @Bind(R.id.speaker_rating) RatingBar mSpeakerBar;
+    @Bind(R.id.content_rating) RatingBar mContentBar;
+    @Bind(R.id.session_rating) RatingBar mSessionBar;
 
     private String mSessionId;
 
@@ -72,10 +70,9 @@ public class RateSessionFragment extends Fragment {
 
     @OnClick(R.id.submit_feedback_button)
     void onSubmitClicked() {
-        int overall = (int) mOverallBar.getRating();
-        int relevancy = mRelevancyBar.getRating();
-        int content = mcontentBar.getRating();
-        int speakerQuality = mSpeakerBar.getRating();
+        int speaker = (int) mSpeakerBar.getRating();
+        int content = (int) mContentBar.getRating();
+        int session = (int) mSessionBar.getRating();
 
         //TODO submit feedback
     }
