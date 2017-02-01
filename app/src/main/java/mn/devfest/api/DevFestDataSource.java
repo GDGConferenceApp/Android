@@ -208,7 +208,7 @@ public class DevFestDataSource {
 
         //Add the session to the user's schedule in Firebase
         mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
-                .child(mGoogleAccount.getId()).setValue(sessionId);
+                .child(mFirebaseAuth.getCurrentUser().getUid()).setValue(sessionId);
     }
 
     /**
@@ -231,7 +231,7 @@ public class DevFestDataSource {
 
         //Add the session to the user's schedule in Firebase
         mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
-                .child(mGoogleAccount.getId()).child(sessionId).removeValue();
+                .child(mFirebaseAuth.getCurrentUser().getUid()).child(sessionId).removeValue();
     }
 
     private boolean haveGoogleAccountAndId() {
@@ -390,7 +390,7 @@ public class DevFestDataSource {
     }
 
     private void storeAuthInFirebase(GoogleSignInAccount account) {
-        AuthCredential authCredential = GoogleAuthProvider.getCredential(account.getId(), null);
+        AuthCredential authCredential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mFirebaseAuth.signInWithCredential(authCredential)
                 .addOnFailureListener(e -> Timber.d(e, "FirebaseAuth login failed"))
                 .addOnCompleteListener(task -> {
