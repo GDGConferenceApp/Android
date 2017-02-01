@@ -50,7 +50,6 @@ public class DevFestDataSource {
     private UserDetailsRepository mUserDetailsRepository;
     private DatabaseReference mFirebaseDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
-    private GoogleSignInAccount mGoogleAccount;
 
     private Conference mConference = new Conference();
     //TODO move to an array of listeners?
@@ -205,7 +204,7 @@ public class DevFestDataSource {
 
     private void attemptAddingSessionToFirebase(String sessionId) {
         //We can't sync to Firebase if we aren't logged in
-        if (!haveGoogleAccountAndId()) {
+        if (!haveFirebaseUid()) {
             //TODO prompt the user intermittently to allow schedule sync
             return;
         }
@@ -228,7 +227,7 @@ public class DevFestDataSource {
 
     private void attemptRemovingSessionFromFirebase(String sessionId) {
         //We can't sync to Firebase if we aren't logged in
-        if (!haveGoogleAccountAndId()) {
+        if (!haveFirebaseUid()) {
             //TODO prompt the user intermittently to allow schedule sync
             return;
         }
@@ -238,8 +237,8 @@ public class DevFestDataSource {
                 .child(mFirebaseAuth.getCurrentUser().getUid()).child(sessionId).removeValue();
     }
 
-    private boolean haveGoogleAccountAndId() {
-        return mGoogleAccount != null && mGoogleAccount.getId() != null;
+    private boolean haveFirebaseUid() {
+        return mFirebaseAuth.getCurrentUser() != null;
     }
 
     /**
@@ -341,19 +340,14 @@ public class DevFestDataSource {
         });
     }
 
-    public GoogleSignInAccount getGoogleAccount() {
-        return mGoogleAccount;
-    }
-
     public void setGoogleAccount(GoogleSignInAccount googleAccount) {
         //If we are removing the Google account, stop listening
         if (googleAccount == null) {
-            if (mFirebaseUserScheduleListener != null && haveGoogleAccountAndId()) {
+            if (mFirebaseUserScheduleListener != null && haveFirebaseUid()) {
                 mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
-                        .child(mGoogleAccount.getId())
+                        .child(mFirebaseAuth.getCurrentUser().getUid())
                         .removeEventListener(mFirebaseUserScheduleListener);
             }
-            mGoogleAccount = null;
             return;
         }
 
@@ -361,12 +355,9 @@ public class DevFestDataSource {
             throw new IllegalArgumentException("#setGoogleAccount() called without ID. googleAccount = " + googleAccount.toString());
         }
 
-        //If we had no account, or if this new account isn't already being tracked, store in Firebase and track it
-        if (!haveGoogleAccountAndId() || !googleAccount.getId().equals(mGoogleAccount.getId())) {
-            storeUserDetails(googleAccount);
-            storeAuthInFirebase(googleAccount);
-        }
-        mGoogleAccount = googleAccount;
+        //Store the user details and authenticate with firebase
+        storeUserDetails(googleAccount);
+        storeAuthInFirebase(googleAccount);
     }
 
     public void storeUserDetails(GoogleSignInAccount googleAccount) {

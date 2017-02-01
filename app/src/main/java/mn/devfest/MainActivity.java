@@ -160,7 +160,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
                 break;
 
             case R.id.nav_login_or_logout:
-                if (mDataSource.getGoogleAccount() == null) {
+                if (mFirebaseAuth.getCurrentUser() == null) {
                     signIn();
                 } else {
                     signOut();
@@ -208,7 +208,7 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
             Timber.d("handleSignInResult successful authentication change");
             // Signed in successfully, show authenticated UI.
             mDataSource.setGoogleAccount(result.getSignInAccount());
-            if (mDataSource.getGoogleAccount() != null) {
+            if (result.getSignInAccount() != null) {
                 onLoggedIn();
             } else {
                 // Signed out, show unauthenticated UI.
