@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -249,7 +250,11 @@ public class SessionDetailsFragment extends Fragment {
     @OnClick(R.id.session_details_fab)
     public void onFabClick(View view) {
         if (mSessionHasEnded) {
-            rateSession();
+            if (mDataSource.isSignedIn()) {
+                rateSession();
+            } else {
+                Snackbar.make(view, R.string.signin_required, Snackbar.LENGTH_SHORT).show();
+            }
         } else {
             toggleInUserSchedule();
         }
