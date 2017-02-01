@@ -10,6 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -22,12 +26,14 @@ import mn.devfest.api.model.Feedback;
  *
  * @author bherbst
  */
-public class RateSessionFragment extends Fragment {
+public class RateSessionFragment extends Fragment implements ValueEventListener {
     private static final String ARG_SESSION_ID = "arg_session_id";
 
     @Bind(R.id.speaker_rating) RatingBar mSpeakerBar;
     @Bind(R.id.content_rating) RatingBar mContentBar;
     @Bind(R.id.session_rating) RatingBar mSessionBar;
+    @Bind(R.id.content) View mContentView;
+    @Bind(R.id.loading) View mLoadingView;
 
     private String mSessionId;
     private DevFestDataSource mDataSource;
@@ -52,7 +58,6 @@ public class RateSessionFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mSessionId = getActivity().getIntent().getStringExtra(RateSessionActivity.EXTRA_SESSION_ID);
-        //TODO initialize the feedback API
     }
 
     @Nullable
@@ -76,6 +81,22 @@ public class RateSessionFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+        mContentView.setVisibility(View.GONE);
+        mLoadingView.setVisibility(View.VISIBLE);
+
+        mDataSource.addSessionFeedbackValueListener(this, mSessionId);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mDataSource.removeSessionFeedbackValueListener(this, mSessionId);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
@@ -93,5 +114,23 @@ public class RateSessionFragment extends Fragment {
         // We are going to assume this succeeded and trust that Firebase will sync properly.
         getActivity().setResult(Activity.RESULT_OK);
         getActivity().finish();
+    }
+
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+        Feedback feedback = dataSnapshot.getValue(Feedback.class);
+        if (feedback != null) {
+            mSpeakerBar.setRating(feedback.getSpeaker());
+            mContentBar.setRating(feedback.getContent());
+            mSessionBar.setRating(feedback.getRecommendation());
+        }
+
+        mContentView.setVisibility(View.VISIBLE);
+        mLoadingView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+        // Ignored
     }
 }

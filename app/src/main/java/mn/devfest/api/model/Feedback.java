@@ -6,10 +6,14 @@ package mn.devfest.api.model;
  * @author bherbst
  */
 public class Feedback {
-    private final int speaker;
-    private final int content;
-    private final int recommendation;
+    private int speaker;
+    private int content;
+    private int recommendation;
 
+    // Required default constructor for Firebase object mapping
+    @SuppressWarnings("unused")
+    private Feedback() {
+    }
 
     public Feedback(int speaker, int content, int recommendation) {
         this.speaker = speaker;

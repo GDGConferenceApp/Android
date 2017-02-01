@@ -263,7 +263,6 @@ public class DevFestDataSource {
 
     public void setSessionFeedback(String sessionId, Feedback feedback) {
         if (!isSignedIn()) {
-            //TODO prompt the user intermittently to allow schedule sync
             return;
         }
 
@@ -272,6 +271,30 @@ public class DevFestDataSource {
                 .child(mFirebaseAuth.getCurrentUser().getUid())
                 .child(sessionId)
                 .setValue(feedback);
+    }
+
+    public void addSessionFeedbackValueListener(ValueEventListener listener, String sessionId) {
+        if (!isSignedIn()) {
+            return;
+        }
+
+        mFirebaseDatabaseReference.child(DEVFEST_2017_KEY)
+                .child(FEEDBACK_CHILD_KEY)
+                .child(mFirebaseAuth.getCurrentUser().getUid())
+                .child(sessionId)
+                .addValueEventListener(listener);
+    }
+
+    public void removeSessionFeedbackValueListener(ValueEventListener listener, String sessionId) {
+        if (!isSignedIn()) {
+            return;
+        }
+
+        mFirebaseDatabaseReference.child(DEVFEST_2017_KEY)
+                .child(FEEDBACK_CHILD_KEY)
+                .child(mFirebaseAuth.getCurrentUser().getUid())
+                .child(sessionId)
+                .removeEventListener(listener);
     }
 
     //TODO de-duplicate diff methods
