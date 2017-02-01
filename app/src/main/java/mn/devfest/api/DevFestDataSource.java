@@ -6,6 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,6 +22,7 @@ import java.util.List;
 import mn.devfest.api.model.Conference;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
+import mn.devfest.persistence.UserDetailsRepository;
 import mn.devfest.persistence.UserScheduleRepository;
 import timber.log.Timber;
 
@@ -37,16 +41,21 @@ public class DevFestDataSource {
     private static final String DEVFEST_2017_KEY = "devfest2017";
     private static final String SESSIONS_CHILD_KEY = "schedule";
     private static final String SPEAKERS_CHILD_KEY = "speakers";
+    private static final String AGENDAS_KEY = "agendas";
+    private static final String VALUE_KEY = "value";
 
     private static DevFestDataSource mOurInstance;
 
     private UserScheduleRepository mScheduleRepository;
+    private UserDetailsRepository mUserDetailsRepository;
     private DatabaseReference mFirebaseDatabaseReference;
-    private GoogleSignInAccount mGoogleAccount;
+    private FirebaseAuth mFirebaseAuth;
 
     private Conference mConference = new Conference();
     //TODO move to an array of listeners?
     private DataSourceListener mDataSourceListener;
+    private UserScheduleListener mUserScheduleListener;
+    private ValueEventListener mFirebaseUserScheduleListener;
 
     public static DevFestDataSource getInstance(Context context) {
         if (mOurInstance == null) {
@@ -57,8 +66,10 @@ public class DevFestDataSource {
 
     public DevFestDataSource(Context context) {
         mScheduleRepository = new UserScheduleRepository(context);
+        mUserDetailsRepository = new UserDetailsRepository(context);
 
         //TODO move all firebase access into a separate class and de-duplicate code
+        mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         //Get sessions
         mFirebaseDatabaseReference.child(DEVFEST_2017_KEY)
@@ -188,6 +199,19 @@ public class DevFestDataSource {
     public void addToUserSchedule(String sessionId) {
         mScheduleRepository.addSession(sessionId);
         mDataSourceListener.onUserScheduleUpdate(getUserSchedule());
+        attemptAddingSessionToFirebase(sessionId);
+    }
+
+    private void attemptAddingSessionToFirebase(String sessionId) {
+        //We can't sync to Firebase if we aren't logged in
+        if (!haveFirebaseUid()) {
+            //TODO prompt the user intermittently to allow schedule sync
+            return;
+        }
+
+        //Add the session to the user's schedule in Firebase
+        mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
+                .child(mFirebaseAuth.getCurrentUser().getUid()).child(sessionId).child(VALUE_KEY).setValue(true);
     }
 
     /**
@@ -198,6 +222,23 @@ public class DevFestDataSource {
     public void removeFromUserSchedule(String sessionId) {
         mScheduleRepository.removeSession(sessionId);
         mDataSourceListener.onUserScheduleUpdate(getUserSchedule());
+        attemptRemovingSessionFromFirebase(sessionId);
+    }
+
+    private void attemptRemovingSessionFromFirebase(String sessionId) {
+        //We can't sync to Firebase if we aren't logged in
+        if (!haveFirebaseUid()) {
+            //TODO prompt the user intermittently to allow schedule sync
+            return;
+        }
+
+        //Add the session to the user's schedule in Firebase
+        mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
+                .child(mFirebaseAuth.getCurrentUser().getUid()).child(sessionId).removeValue();
+    }
+
+    private boolean haveFirebaseUid() {
+        return mFirebaseAuth.getCurrentUser() != null;
     }
 
     /**
@@ -212,6 +253,10 @@ public class DevFestDataSource {
 
     public void setDataSourceListener(DataSourceListener listener) {
         mDataSourceListener = listener;
+    }
+
+    public void setUserScheduleListener(UserScheduleListener listener) {
+        mUserScheduleListener = listener;
     }
 
     private void onConferenceUpdated() {
@@ -295,13 +340,93 @@ public class DevFestDataSource {
         });
     }
 
-    public GoogleSignInAccount getGoogleAccount() {
-        return mGoogleAccount;
+    public void setGoogleAccount(GoogleSignInAccount googleAccount) {
+        //If we are removing the Google account, stop listening
+        if (googleAccount == null) {
+            if (mFirebaseUserScheduleListener != null && haveFirebaseUid()) {
+                mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
+                        .child(mFirebaseAuth.getCurrentUser().getUid())
+                        .removeEventListener(mFirebaseUserScheduleListener);
+            }
+            return;
+        }
+
+        if (googleAccount.getId() == null) {
+            throw new IllegalArgumentException("#setGoogleAccount() called without ID. googleAccount = " + googleAccount.toString());
+        }
+
+        //Store the user details and authenticate with firebase
+        storeUserDetails(googleAccount);
+        storeAuthInFirebase(googleAccount);
     }
 
-    public void setGoogleAccount(GoogleSignInAccount mGoogleAccount) {
-        this.mGoogleAccount = mGoogleAccount;
+    public void storeUserDetails(GoogleSignInAccount googleAccount) {
+        mUserDetailsRepository.setUserEmail(googleAccount.getEmail());
+        mUserDetailsRepository.setUserName(googleAccount.getDisplayName());
+        mUserDetailsRepository.setPhotoUri(googleAccount.getPhotoUrl());
     }
+
+    public void clearUserDetails() {
+        mUserDetailsRepository.clearUserDetails();
+    }
+
+    public UserDetailsRepository getUserDetailsRepository() {
+        return mUserDetailsRepository;
+    }
+
+    private void storeAuthInFirebase(GoogleSignInAccount account) {
+        AuthCredential authCredential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
+        mFirebaseAuth.signInWithCredential(authCredential)
+                .addOnFailureListener(e -> Timber.d(e, "FirebaseAuth login failed"))
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Timber.d("FirebaseAuth login successfully completed");
+                        //Be sure that any session we have locally is added to the user's schedule
+                        storeLocalAgendaToFirebase();
+                        addUserScheduleListener();
+                    } else {
+                        Timber.d("FirebaseAuth login failed");
+                    }
+                });
+    }
+
+    private void storeLocalAgendaToFirebase() {
+        for (String sessionId : mScheduleRepository.getScheduleIds()) {
+            attemptAddingSessionToFirebase(sessionId);
+        }
+    }
+
+    private void addUserScheduleListener() {
+        mFirebaseUserScheduleListener = mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
+                .child(mFirebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //Gather all of the session IDs from the user's schedule
+                        ArrayList<String> scheduleIds = new ArrayList<>();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Timber.d("User schedule snapshot is: %s", snapshot.toString());
+                            String id = snapshot.getKey();
+                            scheduleIds.add(id);
+                        }
+                        //Update the schedule IDs and send the new user schedule to the listener
+                        mScheduleRepository.setScheduleIdStringSet(scheduleIds);
+                        if (mUserScheduleListener != null) {
+                            mUserScheduleListener.onScheduleUpdate(getUserSchedule());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Timber.e(databaseError.toException(), "Failed to read user agenda value.");
+                    }
+                });
+    }
+
+    public interface UserScheduleListener {
+        void onScheduleUpdate(List<Session> schedule);
+    }
+
+    //TODO break this into separate listeners
 
     /**
      * Listener for updates from the data source

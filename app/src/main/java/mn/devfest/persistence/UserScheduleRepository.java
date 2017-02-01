@@ -66,8 +66,8 @@ public class UserScheduleRepository {
         return scheduleIds.contains(sessionId);
     }
 
-    //TODO when this syncs with the API, this should be moved to another class that manages the user's schedule
-    private void setScheduleIdStringSet(@NonNull ArrayList<String> scheduleIds) {
+
+    public void setScheduleIdStringSet(@NonNull ArrayList<String> scheduleIds) {
         Set<String> stringSet = new HashSet<>(scheduleIds);
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putStringSet(SCHEDULE_ID_STRING_SET_TAG, stringSet);
