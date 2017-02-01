@@ -262,8 +262,14 @@ public class DevFestDataSource {
     }
 
     public void setSessionFeedback(String sessionId, Feedback feedback) {
-        mFirebaseDatabaseReference.child(FEEDBACK_CHILD_KEY)
-                .child(mGoogleAccount.getId())
+        if (!haveFirebaseUid()) {
+            //TODO prompt the user intermittently to allow schedule sync
+            return;
+        }
+
+        mFirebaseDatabaseReference.child(DEVFEST_2017_KEY)
+                .child(FEEDBACK_CHILD_KEY)
+                .child(mFirebaseAuth.getCurrentUser().getUid())
                 .child(sessionId)
                 .setValue(feedback);
     }
