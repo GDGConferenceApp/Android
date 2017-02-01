@@ -206,7 +206,7 @@ public class DevFestDataSource {
 
     private void attemptAddingSessionToFirebase(String sessionId) {
         //We can't sync to Firebase if we aren't logged in
-        if (!haveFirebaseUid()) {
+        if (!isSignedIn()) {
             //TODO prompt the user intermittently to allow schedule sync
             return;
         }
@@ -229,7 +229,7 @@ public class DevFestDataSource {
 
     private void attemptRemovingSessionFromFirebase(String sessionId) {
         //We can't sync to Firebase if we aren't logged in
-        if (!haveFirebaseUid()) {
+        if (!isSignedIn()) {
             //TODO prompt the user intermittently to allow schedule sync
             return;
         }
@@ -239,7 +239,7 @@ public class DevFestDataSource {
                 .child(mFirebaseAuth.getCurrentUser().getUid()).child(sessionId).removeValue();
     }
 
-    private boolean haveFirebaseUid() {
+    public boolean isSignedIn() {
         return mFirebaseAuth.getCurrentUser() != null;
     }
 
@@ -262,7 +262,7 @@ public class DevFestDataSource {
     }
 
     public void setSessionFeedback(String sessionId, Feedback feedback) {
-        if (!haveFirebaseUid()) {
+        if (!isSignedIn()) {
             //TODO prompt the user intermittently to allow schedule sync
             return;
         }
@@ -351,7 +351,7 @@ public class DevFestDataSource {
     public void setGoogleAccount(GoogleSignInAccount googleAccount) {
         //If we are removing the Google account, stop listening
         if (googleAccount == null) {
-            if (mFirebaseUserScheduleListener != null && haveFirebaseUid()) {
+            if (mFirebaseUserScheduleListener != null && isSignedIn()) {
                 mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
                         .child(mFirebaseAuth.getCurrentUser().getUid())
                         .removeEventListener(mFirebaseUserScheduleListener);
