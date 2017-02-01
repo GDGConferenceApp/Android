@@ -36,7 +36,7 @@ import rx.schedulers.Schedulers;
  * @author bherbst
  * @author pfuentes
  */
-public class UserScheduleFragment extends Fragment implements DevFestDataSource.DataSourceListener {
+public class UserScheduleFragment extends Fragment implements DevFestDataSource.DataSourceListener, DevFestDataSource.UserScheduleListener {
 
     @Bind(R.id.schedule_recyclerview)
     RecyclerView mScheduleRecyclerView;
@@ -60,6 +60,7 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
             //TODO initialize properly
             mDataSource = DevFestDataSource.getInstance(context);
             mDataSource.setDataSourceListener(this);
+            mDataSource.setUserScheduleListener(this);
         }
     }
 
@@ -83,6 +84,11 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         setSchedule(mDataSource.getUserSchedule());
 
         getActivity().setTitle(getResources().getString(R.string.user_schedule_title));
+    }
+
+    @Override
+    public void onScheduleUpdate(List<Session> schedule) {
+        setSchedule(schedule);
     }
 
     @Override
