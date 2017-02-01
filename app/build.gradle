@@ -38,6 +38,12 @@ android {
         resValue "string", "ne_corner_longitude", neCornerLongitude
     }
 
+    signingConfigs {
+        debug {
+            storeFile file('../debug.keystore')
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
