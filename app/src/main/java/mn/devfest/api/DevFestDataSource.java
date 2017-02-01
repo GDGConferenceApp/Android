@@ -392,6 +392,7 @@ public class DevFestDataSource {
     private void storeAuthInFirebase(GoogleSignInAccount account) {
         AuthCredential authCredential = GoogleAuthProvider.getCredential(account.getId(), null);
         mFirebaseAuth.signInWithCredential(authCredential)
+                .addOnFailureListener(e -> Timber.d(e, "FirebaseAuth login failed"))
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Timber.d("FirebaseAuth login successfully completed");
