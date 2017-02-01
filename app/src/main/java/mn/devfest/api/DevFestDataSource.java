@@ -343,8 +343,6 @@ public class DevFestDataSource {
     }
 
     public void setGoogleAccount(GoogleSignInAccount googleAccount) {
-        //TODO if we're logging into an account, use the schedule if we were logged out and reconcile the schedule if we
-
         //If we are removing the Google account, stop listening
         if (googleAccount == null) {
             if (mFirebaseUserScheduleListener != null && haveGoogleAccountAndId()) {
@@ -363,29 +361,6 @@ public class DevFestDataSource {
         //If we had no account, or if this new account isn't already being tracked, store in Firebase and track it
         if (!haveGoogleAccountAndId() || !googleAccount.getId().equals(mGoogleAccount.getId())) {
             storeAuthInFirebase(googleAccount);
-            mFirebaseUserScheduleListener = mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
-                    .child(googleAccount.getId()).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            //Gather all of the session IDs from the user's schedule
-                            ArrayList<String> scheduleIds = new ArrayList<>();
-                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                Timber.d("User schedule snapshot is: %s", snapshot.toString());
-                                String id = snapshot.getValue(String.class);
-                                scheduleIds.add(id);
-                            }
-                            //Update the schedule IDs and send the new user schedule to the listener
-                            mScheduleRepository.setScheduleIdStringSet(scheduleIds);
-                            if (mUserScheduleListener != null) {
-                                mUserScheduleListener.onScheduleUpdate(getUserSchedule());
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            Timber.e(databaseError.toException(), "Failed to read user agenda value.");
-                        }
-                    });
         }
         mGoogleAccount = googleAccount;
     }
@@ -397,8 +372,43 @@ public class DevFestDataSource {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Timber.d("FirebaseAuth login successfully completed");
+                        //Be sure that any session we have locally is added to the user's schedule
+                        storeLocalAgendaToFirebase();
+                        addUserScheduleListener();
                     } else {
                         Timber.d("FirebaseAuth login failed");
+                    }
+                });
+    }
+
+    private void storeLocalAgendaToFirebase() {
+        for (String sessionId : mScheduleRepository.getScheduleIds()) {
+            attemptAddingSessionToFirebase(sessionId);
+        }
+    }
+
+    private void addUserScheduleListener() {
+        mFirebaseUserScheduleListener = mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
+                .child(mFirebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //Gather all of the session IDs from the user's schedule
+                        ArrayList<String> scheduleIds = new ArrayList<>();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Timber.d("User schedule snapshot is: %s", snapshot.toString());
+                            String id = snapshot.getKey();
+                            scheduleIds.add(id);
+                        }
+                        //Update the schedule IDs and send the new user schedule to the listener
+                        mScheduleRepository.setScheduleIdStringSet(scheduleIds);
+                        if (mUserScheduleListener != null) {
+                            mUserScheduleListener.onScheduleUpdate(getUserSchedule());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Timber.e(databaseError.toException(), "Failed to read user agenda value.");
                     }
                 });
     }
