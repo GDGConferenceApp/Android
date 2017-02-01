@@ -1,5 +1,6 @@
 package mn.devfest.sessions.details;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -41,6 +42,7 @@ import mn.devfest.view.SpeakerView;
  * @author pfuentes
  */
 public class SessionDetailsFragment extends Fragment {
+    private static final int REQUEST_CODE_FEEDBACK = 418;
     private static final String ARG_SESSION_ID = "sessionId";
     private static final String TIME_FORMAT = "h:mma";
 
@@ -152,6 +154,17 @@ public class SessionDetailsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateFabAppearance();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_FEEDBACK) {
+            if (resultCode == Activity.RESULT_OK) {
+                Snackbar.make(mFab, R.string.session_feedback_submitted, Snackbar.LENGTH_SHORT).show();
+            }
+        }
     }
 
     /**
@@ -284,6 +297,6 @@ public class SessionDetailsFragment extends Fragment {
     private void rateSession() {
         Intent rateSession = new Intent(getContext(), RateSessionActivity.class);
         rateSession.putExtra(RateSessionActivity.EXTRA_SESSION_ID, mSession.getId());
-        startActivity(rateSession);
+        startActivityForResult(rateSession, REQUEST_CODE_FEEDBACK);
     }
 }

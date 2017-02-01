@@ -1,5 +1,6 @@
 package mn.devfest.sessions.rating;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -88,5 +89,9 @@ public class RateSessionFragment extends Fragment {
 
         Feedback feedback = new Feedback(speaker, content, session);
         mDataSource.setSessionFeedback(mSessionId, feedback);
+
+        // We are going to assume this succeeded and trust that Firebase will sync properly.
+        getActivity().setResult(Activity.RESULT_OK);
+        getActivity().finish();
     }
 }

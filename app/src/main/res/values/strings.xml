@@ -38,7 +38,6 @@
     <string name="map_title">Map</string>
     <string name="floor_selection_button_text">"Floor %d"</string>
 
-
     <!-- Session rating -->
     <string name="default_session_feedback_rating_bar_content_description">Session rating bar with a minimum of one star and a maximum of five stars</string>
     <string name="session_feedback_title_rate">Rate</string>
@@ -46,6 +45,7 @@
     <string name="session_feedback_content">How would you rate the content?</string>
     <string name="session_feedback_session">Would you recommend this session?</string>
     <string name="session_feedback_submitlink">Submit Feedback</string>
+    <string name="session_feedback_submitted">Thanks for the feedback!</string>
 
     <!-- TODO remove lorem ipsum -->
     <!-- Placeholder text -->
