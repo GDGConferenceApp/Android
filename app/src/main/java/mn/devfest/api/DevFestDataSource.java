@@ -41,6 +41,7 @@ public class DevFestDataSource {
     private static final String SESSIONS_CHILD_KEY = "schedule";
     private static final String SPEAKERS_CHILD_KEY = "speakers";
     private static final String AGENDAS_KEY = "agendas";
+    private static final String VALUE_KEY = "value";
 
     private static DevFestDataSource mOurInstance;
 
@@ -208,7 +209,7 @@ public class DevFestDataSource {
 
         //Add the session to the user's schedule in Firebase
         mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
-                .child(mFirebaseAuth.getCurrentUser().getUid()).setValue(sessionId);
+                .child(mFirebaseAuth.getCurrentUser().getUid()).child(sessionId).child(VALUE_KEY).setValue(true);
     }
 
     /**
