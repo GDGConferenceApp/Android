@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ import butterknife.ButterKnife;
 import mn.devfest.api.DevFestDataSource;
 import mn.devfest.base.BaseActivity;
 import mn.devfest.map.MapFragment;
+import mn.devfest.persistence.UserDetailsRepository;
 import mn.devfest.schedule.UserScheduleFragment;
 import mn.devfest.sessions.SessionsFragment;
 import mn.devfest.speakers.SpeakerImageTransformation;
@@ -220,23 +222,36 @@ public class MainActivity extends BaseActivity implements GoogleApiClient.OnConn
     private void onLoggedIn() {
         Timber.d("onLoggedIn called");
         mLoginLogoutMenuItem.setTitle(R.string.drawer_item_logout);
-        if (mDataSource.getGoogleAccount() != null) {
-            mUserImageview.setVisibility(View.VISIBLE);
-            mUserEmailTextview.setVisibility(View.VISIBLE);
-            mUserNameTextview.setVisibility(View.VISIBLE);
+        UserDetailsRepository userDetails = mDataSource.getUserDetailsRepository();
+        if (userDetails != null) {
+            bindUserDetails(userDetails);
+        }
+    }
+
+    private void bindUserDetails(UserDetailsRepository userDetails) {
+        if (userDetails.getPhotoUri() != null) {
             Picasso.with(this)
-                    .load(mDataSource.getGoogleAccount().getPhotoUrl())
+                    .load(userDetails.getPhotoUri())
                     .transform(new SpeakerImageTransformation())
                     .placeholder(R.drawable.ic_account_circle_white_48dp)
                     .into(mUserImageview);
-            mUserNameTextview.setText(mDataSource.getGoogleAccount().getDisplayName());
-            mUserEmailTextview.setText(mDataSource.getGoogleAccount().getEmail());
+            mUserImageview.setVisibility(View.VISIBLE);
+        }
+        if (!TextUtils.isEmpty(userDetails.getUserName())) {
+            mUserNameTextview.setText(userDetails.getUserName());
+            mUserNameTextview.setVisibility(View.VISIBLE);
+        }
+        if (!TextUtils.isEmpty(userDetails.getUserEmail())) {
+            mUserEmailTextview.setText(userDetails.getUserEmail());
+            mUserEmailTextview.setVisibility(View.VISIBLE);
         }
     }
 
     private void onLoggedOut() {
         Timber.d("onLoggedOut called");
         mLoginLogoutMenuItem.setTitle(R.string.drawer_item_login);
+        mDataSource.clearUserDetails();
+        mDataSource.setGoogleAccount(null);
         mUserImageview.setVisibility(View.GONE);
         mUserEmailTextview.setVisibility(View.GONE);
         mUserNameTextview.setVisibility(View.GONE);

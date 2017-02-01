@@ -22,6 +22,7 @@ import java.util.List;
 import mn.devfest.api.model.Conference;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
+import mn.devfest.persistence.UserDetailsRepository;
 import mn.devfest.persistence.UserScheduleRepository;
 import timber.log.Timber;
 
@@ -46,6 +47,7 @@ public class DevFestDataSource {
     private static DevFestDataSource mOurInstance;
 
     private UserScheduleRepository mScheduleRepository;
+    private UserDetailsRepository mUserDetailsRepository;
     private DatabaseReference mFirebaseDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
     private GoogleSignInAccount mGoogleAccount;
@@ -65,6 +67,7 @@ public class DevFestDataSource {
 
     public DevFestDataSource(Context context) {
         mScheduleRepository = new UserScheduleRepository(context);
+        mUserDetailsRepository = new UserDetailsRepository(context);
 
         //TODO move all firebase access into a separate class and de-duplicate code
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -360,9 +363,24 @@ public class DevFestDataSource {
 
         //If we had no account, or if this new account isn't already being tracked, store in Firebase and track it
         if (!haveGoogleAccountAndId() || !googleAccount.getId().equals(mGoogleAccount.getId())) {
+            storeUserDetails(googleAccount);
             storeAuthInFirebase(googleAccount);
         }
         mGoogleAccount = googleAccount;
+    }
+
+    public void storeUserDetails(GoogleSignInAccount googleAccount) {
+        mUserDetailsRepository.setUserEmail(googleAccount.getEmail());
+        mUserDetailsRepository.setUserName(googleAccount.getDisplayName());
+        mUserDetailsRepository.setPhotoUri(googleAccount.getPhotoUrl());
+    }
+
+    public void clearUserDetails() {
+        mUserDetailsRepository.clearUserDetails();
+    }
+
+    public UserDetailsRepository getUserDetailsRepository() {
+        return mUserDetailsRepository;
     }
 
     private void storeAuthInFirebase(GoogleSignInAccount account) {
