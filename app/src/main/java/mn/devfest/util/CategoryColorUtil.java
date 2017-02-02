@@ -13,10 +13,9 @@ import mn.devfest.R;
 public class CategoryColorUtil {
     private static final String CATEGORY_ANDROID = "android";
     private static final String CATEGORY_DESIGN = "design";
-    private static final String CATEGORY_CHROMEWEB = "chromeweb";
+    private static final String CATEGORY_WEB = "web";
     private static final String CATEGORY_CLOUD = "cloud";
     private static final String CATEGORY_IOT = "iot";
-    private static final String CATEGORY_REACH = "reach";
 
     /**
      * Get the color associated with a particular category
@@ -36,17 +35,14 @@ public class CategoryColorUtil {
             case CATEGORY_DESIGN:
                 return R.color.category_design;
 
-            case CATEGORY_CHROMEWEB:
-                return R.color.category_chromeweb;
+            case CATEGORY_WEB:
+                return R.color.category_web;
 
             case CATEGORY_CLOUD:
                 return R.color.category_cloud;
 
             case CATEGORY_IOT:
                 return R.color.category_iot;
-
-            case CATEGORY_REACH:
-                return R.color.category_reach;
 
             default:
                 return R.color.category_default;
