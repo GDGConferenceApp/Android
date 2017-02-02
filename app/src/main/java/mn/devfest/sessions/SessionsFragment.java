@@ -176,7 +176,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
                 mPreferences.edit().putBoolean(PREF_KEY_AUTOHIDE, mAutohidePastSessions).apply();
 
                 // Force a re-filter
-                setSessions(mAllSessions);
+                setSessions(mDataSource.getSessions());
                 return true;
 
             default:
@@ -189,7 +189,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
         mCategoryFilter = category;
 
         // Force a re-filter
-        setSessions(mAllSessions);
+        setSessions(mDataSource.getSessions());
     }
 
     private void updateSchedule() {
