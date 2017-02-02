@@ -38,7 +38,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
     //TODO extract these variables to be easily modified by other GDGs
     private static final float CONFERENCE_CENTER_ZOOM_LEVEL = 18.5f;
-    private static final int[] FLOOR_OVERLAY_ID_ARRAY = {R.drawable.schultze_level_one, R.drawable.schultze_level_two, R.drawable.schultze_level_three};
+    private static final int[] FLOOR_OVERLAY_ID_ARRAY = {R.drawable.schulze_hall_level_one, R.drawable.schulze_hall_level_two, R.drawable.schulze_hall_level_three};
 
 
     @Bind(R.id.map_view)
