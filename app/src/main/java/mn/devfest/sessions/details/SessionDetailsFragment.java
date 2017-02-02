@@ -1,5 +1,6 @@
 package mn.devfest.sessions.details;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -40,6 +42,7 @@ import mn.devfest.view.SpeakerView;
  * @author pfuentes
  */
 public class SessionDetailsFragment extends Fragment {
+    private static final int REQUEST_CODE_FEEDBACK = 418;
     private static final String ARG_SESSION_ID = "sessionId";
     private static final String TIME_FORMAT = "h:mma";
 
@@ -153,6 +156,17 @@ public class SessionDetailsFragment extends Fragment {
         updateFabAppearance();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_FEEDBACK) {
+            if (resultCode == Activity.RESULT_OK) {
+                Snackbar.make(mFab, R.string.session_feedback_submitted, Snackbar.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     /**
      * Takes an array list of tags and adds new tag views to the Tag layout for each
      * To clear the tags, call with an empty List of tags for the parameter
@@ -249,7 +263,11 @@ public class SessionDetailsFragment extends Fragment {
     @OnClick(R.id.session_details_fab)
     public void onFabClick(View view) {
         if (mSessionHasEnded) {
-            rateSession();
+            if (mDataSource.isSignedIn()) {
+                rateSession();
+            } else {
+                Snackbar.make(view, R.string.signin_required, Snackbar.LENGTH_SHORT).show();
+            }
         } else {
             toggleInUserSchedule();
         }
@@ -279,6 +297,6 @@ public class SessionDetailsFragment extends Fragment {
     private void rateSession() {
         Intent rateSession = new Intent(getContext(), RateSessionActivity.class);
         rateSession.putExtra(RateSessionActivity.EXTRA_SESSION_ID, mSession.getId());
-        startActivity(rateSession);
+        startActivityForResult(rateSession, REQUEST_CODE_FEEDBACK);
     }
 }

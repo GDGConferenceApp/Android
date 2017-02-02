@@ -1,147 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:devfest="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding_normal">
+        android:layout_gravity="center"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/colorBlack"
-            android:text="@string/session_rating_fullname"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="italic"
-            android:fontFamily="sans-serif-condensed"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/mediumGray"
-            android:text="Optional: You must enter your full name to be entered in raffle"/>
+    <ScrollView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/fullname_edittext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/padding_normal"
-            android:paddingStart="@dimen/padding_normal"
-            android:paddingRight="@dimen/padding_normal"
-            android:paddingEnd="@dimen/padding_normal"
-            android:paddingTop="@dimen/spacing_normal"
-            android:paddingBottom="@dimen/spacing_normal"
-            android:minHeight="?android:listPreferredItemHeightSmall"
-            android:gravity="center_vertical"
-            android:text="@string/session_rating_label_text"
-            android:textAlignment="viewStart"
-            style="@style/TextAppearance.AppCompat.Body2" />
-
-        <RatingBar
-            android:id="@+id/overall_session_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="?android:listPreferredItemHeightSmall"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/spacing_normal"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_marginRight="@dimen/spacing_normal"
-            android:layout_marginEnd="@dimen/spacing_normal"
-            android:paddingTop="@dimen/spacing_normal"
-            android:contentDescription="@string/default_session_feedback_rating_bar_content_description"
-            style="@style/FeedbackRatingBar" />
-
-        <FrameLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/padding_normal"
-            android:paddingStart="@dimen/padding_normal"
-            android:paddingRight="@dimen/padding_normal"
-            android:paddingEnd="@dimen/padding_normal"
-            android:paddingTop="@dimen/spacing_small"
-            android:paddingBottom="@dimen/padding_normal">
+            android:padding="@dimen/padding_normal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start|left"
-                android:text="@string/session_feedback_not_so_awesome"
-                android:textAppearance="@style/TextAppearance.DevFest.FeedbackRatingCaption" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|right"
-                android:text="@string/session_feedback_awesome"
-                android:textAppearance="@style/TextAppearance.DevFest.FeedbackRatingCaption" />
-
-        </FrameLayout>
-
-        <mn.devfest.view.NumberFeedbackField
-            android:id="@+id/field_relevancy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            devfest:fieldLabel="@string/session_feedback_relevance"
-            devfest:rating0Label="@string/session_feedback_not_at_all_relevant"
-            devfest:rating5Label="@string/session_feedback_extremely_relevant" />
-
-        <mn.devfest.view.NumberFeedbackField
-            android:id="@+id/field_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            devfest:fieldLabel="@string/session_feedback_content_label_text"
-            devfest:rating0Label="@string/session_feedback_basic"
-            devfest:rating5Label="@string/session_feedback_advanced" />
-
-        <mn.devfest.view.NumberFeedbackField
-            android:id="@+id/field_speaker_quality"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            devfest:fieldLabel="@string/session_feedback_speaker_quality"
-            devfest:rating0Label="@string/session_feedback_poor"
-            devfest:rating5Label="@string/session_feedback_outstanding" />
-
-        <!-- we need this space to anchor the button at the bottom on tall devices -->
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <!-- Submit button -->
-        <FrameLayout
-            android:id="@+id/submit_feedback_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?colorPrimary"
-            android:clickable="true"
-            android:contentDescription="@string/session_feedback_submitlink"
-            android:focusable="true"
-            android:foreground="?android:selectableItemBackground"
-            android:minHeight="?actionBarSize"
-            android:theme="@style/ThemeOverlay.AppCompat.Light">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:drawableLeft="@drawable/ic_check_black_24dp"
-                android:drawablePadding="8dp"
+                android:paddingTop="@dimen/spacing_normal"
+                android:minHeight="?android:listPreferredItemHeightSmall"
                 android:gravity="center_vertical"
-                android:paddingRight="24dp"
-                android:text="@string/session_feedback_submitlink"
-                android:textAllCaps="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+                android:text="@string/session_feedback_speaker"
+                style="@style/TextAppearance.AppCompat.Body2" />
 
-        </FrameLayout>
+            <RatingBar
+                android:id="@+id/speaker_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="?android:listPreferredItemHeightSmall"
+                android:layout_gravity="center"
+                android:paddingBottom="@dimen/spacing_normal"
+                android:contentDescription="@string/default_session_feedback_rating_bar_content_description"
+                style="@style/FeedbackRatingBar" />
 
-    </LinearLayout>
-</ScrollView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/spacing_normal"
+                android:minHeight="?android:listPreferredItemHeightSmall"
+                android:gravity="center_vertical"
+                android:text="@string/session_feedback_content"
+                style="@style/TextAppearance.AppCompat.Body2" />
+
+            <RatingBar
+                android:id="@+id/content_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="?android:listPreferredItemHeightSmall"
+                android:layout_gravity="center"
+                android:paddingBottom="@dimen/spacing_normal"
+                android:contentDescription="@string/default_session_feedback_rating_bar_content_description"
+                style="@style/FeedbackRatingBar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/spacing_small"
+                android:minHeight="?android:listPreferredItemHeightSmall"
+                android:gravity="center_vertical"
+                android:text="@string/session_feedback_session"
+                style="@style/TextAppearance.AppCompat.Body2" />
+
+            <RatingBar
+                android:id="@+id/session_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="?android:listPreferredItemHeightSmall"
+                android:layout_gravity="center"
+                android:paddingBottom="@dimen/spacing_normal"
+                android:contentDescription="@string/default_session_feedback_rating_bar_content_description"
+                style="@style/FeedbackRatingBar" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="1dp"
+                android:layout_height="@dimen/padding_normal" />
+
+            <!-- Submit button -->
+            <FrameLayout
+                android:id="@+id/submit_feedback_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?actionBarSize"
+                android:background="@drawable/button_purple"
+                android:clickable="true"
+                android:focusable="true"
+                android:contentDescription="@string/session_feedback_submitlink">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@drawable/ic_check_black_24dp"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:paddingRight="24dp"
+                    android:text="@string/session_feedback_submitlink"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorWhite"
+                    android:drawableTint="@color/colorWhite"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

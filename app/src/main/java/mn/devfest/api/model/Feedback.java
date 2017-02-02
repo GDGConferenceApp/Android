@@ -6,20 +6,30 @@ package mn.devfest.api.model;
  * @author bherbst
  */
 public class Feedback {
-    private final String sessionId;
-    private final String installId;
-    private final int overall;
-    private final int relevancy;
-    private final int difficulty;
-    private final int speakerQuality;
+    private int speaker;
+    private int content;
+    private int recommendation;
 
+    // Required default constructor for Firebase object mapping
+    @SuppressWarnings("unused")
+    private Feedback() {
+    }
 
-    public Feedback(String sessionId, String installId, int overall, int relevancy, int difficulty, int speakerQuality) {
-        this.sessionId = sessionId;
-        this.installId = installId;
-        this.overall = overall;
-        this.relevancy = relevancy;
-        this.difficulty = difficulty;
-        this.speakerQuality = speakerQuality;
+    public Feedback(int speaker, int content, int recommendation) {
+        this.speaker = speaker;
+        this.content = content;
+        this.recommendation = recommendation;
+    }
+
+    public int getSpeaker() {
+        return speaker;
+    }
+
+    public int getContent() {
+        return content;
+    }
+
+    public int getRecommendation() {
+        return recommendation;
     }
 }

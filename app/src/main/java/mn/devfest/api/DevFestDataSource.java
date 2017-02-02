@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import mn.devfest.api.model.Conference;
+import mn.devfest.api.model.Feedback;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
 import mn.devfest.persistence.UserDetailsRepository;
@@ -43,6 +44,7 @@ public class DevFestDataSource {
     private static final String SPEAKERS_CHILD_KEY = "speakers";
     private static final String AGENDAS_KEY = "agendas";
     private static final String VALUE_KEY = "value";
+    private static final String FEEDBACK_CHILD_KEY = "feedback";
 
     private static DevFestDataSource mOurInstance;
 
@@ -204,7 +206,7 @@ public class DevFestDataSource {
 
     private void attemptAddingSessionToFirebase(String sessionId) {
         //We can't sync to Firebase if we aren't logged in
-        if (!haveFirebaseUid()) {
+        if (!isSignedIn()) {
             //TODO prompt the user intermittently to allow schedule sync
             return;
         }
@@ -227,7 +229,7 @@ public class DevFestDataSource {
 
     private void attemptRemovingSessionFromFirebase(String sessionId) {
         //We can't sync to Firebase if we aren't logged in
-        if (!haveFirebaseUid()) {
+        if (!isSignedIn()) {
             //TODO prompt the user intermittently to allow schedule sync
             return;
         }
@@ -237,7 +239,7 @@ public class DevFestDataSource {
                 .child(mFirebaseAuth.getCurrentUser().getUid()).child(sessionId).removeValue();
     }
 
-    private boolean haveFirebaseUid() {
+    public boolean isSignedIn() {
         return mFirebaseAuth.getCurrentUser() != null;
     }
 
@@ -259,11 +261,40 @@ public class DevFestDataSource {
         mUserScheduleListener = listener;
     }
 
-    private void onConferenceUpdated() {
-        //Notify listener
-        mDataSourceListener.onSessionsUpdate(getSessions());
-        mDataSourceListener.onSpeakersUpdate(getSpeakers());
-        mDataSourceListener.onUserScheduleUpdate(getUserSchedule());
+    public void setSessionFeedback(String sessionId, Feedback feedback) {
+        if (!isSignedIn()) {
+            return;
+        }
+
+        mFirebaseDatabaseReference.child(DEVFEST_2017_KEY)
+                .child(FEEDBACK_CHILD_KEY)
+                .child(mFirebaseAuth.getCurrentUser().getUid())
+                .child(sessionId)
+                .setValue(feedback);
+    }
+
+    public void addSessionFeedbackValueListener(ValueEventListener listener, String sessionId) {
+        if (!isSignedIn()) {
+            return;
+        }
+
+        mFirebaseDatabaseReference.child(DEVFEST_2017_KEY)
+                .child(FEEDBACK_CHILD_KEY)
+                .child(mFirebaseAuth.getCurrentUser().getUid())
+                .child(sessionId)
+                .addValueEventListener(listener);
+    }
+
+    public void removeSessionFeedbackValueListener(ValueEventListener listener, String sessionId) {
+        if (!isSignedIn()) {
+            return;
+        }
+
+        mFirebaseDatabaseReference.child(DEVFEST_2017_KEY)
+                .child(FEEDBACK_CHILD_KEY)
+                .child(mFirebaseAuth.getCurrentUser().getUid())
+                .child(sessionId)
+                .removeEventListener(listener);
     }
 
     //TODO de-duplicate diff methods
@@ -343,7 +374,7 @@ public class DevFestDataSource {
     public void setGoogleAccount(GoogleSignInAccount googleAccount) {
         //If we are removing the Google account, stop listening
         if (googleAccount == null) {
-            if (mFirebaseUserScheduleListener != null && haveFirebaseUid()) {
+            if (mFirebaseUserScheduleListener != null && isSignedIn()) {
                 mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
                         .child(mFirebaseAuth.getCurrentUser().getUid())
                         .removeEventListener(mFirebaseUserScheduleListener);
