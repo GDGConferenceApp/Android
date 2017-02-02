@@ -171,9 +171,10 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
     @Override
     public void onSessionsUpdate(List<Session> sessions) {
         //TODO handle redundant onSession and onSchedule updates
-        setSchedule(mDataSource.getUserSchedule());
+        List<Session> schedule = mDataSource.getUserSchedule();
+        setSchedule(schedule);
         mLoadingView.setVisibility(View.GONE);
-        showEmptyView(sessions.isEmpty());
+        showEmptyView(schedule.isEmpty());
     }
 
     @Override
