@@ -64,7 +64,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
     private DevFestDataSource mDataSource;
 
     private boolean mAutohidePastSessions;
-    private List<Session> mAllSessions;
+    private List<Session> mSessions;
     private List<Session> mSchedule;
     private Set<String> mAllCategories;
     private String mCategoryFilter;
@@ -86,7 +86,7 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         mAutohidePastSessions = mPreferences.getBoolean(PREF_KEY_AUTOHIDE, true);
         mDataSource.setDataSourceListener(this);
-        mAllSessions = new ArrayList<>(0);
+        mSessions = new ArrayList<>(0);
         mAllCategories = new HashSet<>(7);
         mCategoryFilter = ALL_CATEGORY;
     }
@@ -201,16 +201,16 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
         }
         mSchedule = Collections.unmodifiableList(mDataSource.getUserSchedule());
 
-        DiffUtil.DiffResult sessionDiffResult = mDataSource.calculateScheduleDiff(mAllSessions, oldSchedule, mSchedule);
+        DiffUtil.DiffResult sessionDiffResult = mDataSource.calculateScheduleDiff(mSessions, oldSchedule, mSchedule);
         mAdapter.setSchedule(mSchedule);
         sessionDiffResult.dispatchUpdatesTo(mAdapter);
     }
 
     private void checkForNewSessions(List<Session> latestSessions) {
         // TODO See #39 - this diff method doesn't take headers into account, thus reporting incorrect diffs
-        //DiffUtil.DiffResult sessionDiffResult = mDataSource.calculateSessionDiff(mAllSessions, latestSessions);
-        mAllSessions = latestSessions;
-        mAdapter.setSessions(mAllSessions);
+        //DiffUtil.DiffResult sessionDiffResult = mDataSource.calculateSessionDiff(mSessions, latestSessions);
+        mSessions = latestSessions;
+        mAdapter.setSessions(mSessions);
         mAdapter.notifyDataSetChanged();
         //sessionDiffResult.dispatchUpdatesTo(mAdapter);
     }
@@ -224,11 +224,11 @@ public class SessionsFragment extends Fragment implements OnCategoryFilterSelect
      * @param sessions the new sessions
      */
     public void setSessions(List<Session> sessions) {
-        mAllSessions = sessions;
-        mDataUpdateSubscription = Observable.from(mAllSessions)
+        mSessions = sessions;
+        mDataUpdateSubscription = Observable.from(mSessions)
                 .doOnNext(session -> addCategoryToCategoryList(session.getTrack()))
                 .filter(session -> !(mAutohidePastSessions && hasSessionEnded(session)))
-                .filter(session -> mCategoryFilter.equals(ALL_CATEGORY) || mCategoryFilter.equalsIgnoreCase(session.getTrack()))
+                .filter(session -> mCategoryFilter.equalsIgnoreCase(ALL_CATEGORY) || mCategoryFilter.equalsIgnoreCase(session.getTrack()))
                 .toSortedList(new SessionTimeSort())
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
