@@ -21,12 +21,11 @@
     <color name="darkGray">#424242</color>
 
     <!-- Session category colors -->
-    <color name="category_android">#548B2F</color>
-    <color name="category_design">#00B8DD</color>
-    <color name="category_chromeweb">#FF8F00</color>
-    <color name="category_cloud">#B4B4B4</color>
-    <color name="category_iot">#9537FF</color>
-    <color name="category_reach">#F44336</color>
-    <color name="category_default">#000000</color>
+    <color name="category_android">#79C239</color>
+    <color name="category_design">#DB6A25</color>
+    <color name="category_web">#FFC000</color>
+    <color name="category_cloud">#F13E2C</color>
+    <color name="category_iot">#617DED</color>
+    <color name="category_default">#090909</color>
 
 </resources>
