@@ -57,6 +57,7 @@ public class DevFestDataSource {
     //TODO move to an array of listeners?
     private DataSourceListener mDataSourceListener;
     private UserScheduleListener mUserScheduleListener;
+    private LoginPromptListener mLoginPromptListener;
     private ValueEventListener mFirebaseUserScheduleListener;
 
     public static DevFestDataSource getInstance(Context context) {
@@ -453,8 +454,22 @@ public class DevFestDataSource {
                 });
     }
 
+    public void setLoginPromptListener(LoginPromptListener listener) {
+        mLoginPromptListener = listener;
+    }
+
+    /**
+     * Listener that will be updated when the user's schedule is updated
+     */
     public interface UserScheduleListener {
         void onScheduleUpdate(List<Session> schedule);
+    }
+
+    /**
+     * Listener that can remind the user to login
+     */
+    public interface LoginPromptListener {
+        void promptUserToLogin();
     }
 
     //TODO break this into separate listeners
