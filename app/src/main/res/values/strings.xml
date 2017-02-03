@@ -3,7 +3,7 @@
 
     <!-- Authentication -->
     <string name="signin_required">You need to sign in to do that!</string>
-    <string name="snackbar_login_message">You\'re not logged in. Log in to sync your schedule with the web</string>
+    <string name="snackbar_login_message">You\'re not logged in. Log in to sync your agenda with the web</string>
 
     <!-- Nav drawer -->
     <string name="drawer_item_my_schedule">My Schedule</string>
@@ -13,19 +13,21 @@
     <string name="drawer_item_login">Login</string>
     <string name="drawer_item_logout">Log out</string>
 
-    <!-- User Schedule -->
-    <string name="empty_schedule">You don\'t have any events on your schedule</string>
-    <string name="empty_schedule_content_description">user schedule icon</string>
-    <string name="go_to_sessions_list">Go to Sessions List</string>
-    <string name="user_schedule_title">Your Schedule</string>
+    <!-- User Agenda -->
+    <string name="user_agenda_title">Your Agenda</string>
+    <string name="empty_agenda_header">You don\'t have any events on your agenda</string>
+    <string name="empty_agenda_login_button">login</string>
+    <string name="empty_agenda_browse_sessions_button">browse sessions</string>
+    <string name="empty_agenda_login_prompt">You can log in to sync your agenda with the website and other apps</string>
+    <string name="empty_agenda_go_to_sessions_button">You can browse sessions and add them to your agenda</string>
 
     <!-- Sessions -->
     <string name="sessions_title">Sessions</string>
     <string name="sessions_menu_filter">Filter</string>
     <string name="sessions_menu_autohide">Hide finished</string>
-    <string name="session_removed_notification">Session removed from your schedule</string>
-    <string name="session_added_notification">Session added to your schedule</string>
-    <string name="toggle_in_or_out_of_your_schedule">toggle in or out of your schedule</string>
+    <string name="session_removed_notification">Session removed from your agenda</string>
+    <string name="session_added_notification">Session added to your agenda</string>
+    <string name="toggle_in_or_out_of_your_schedule">toggle in or out of your agenda</string>
 
     <!-- Speakers -->
     <string name="speaker_heading_plural">Speakers:</string>
@@ -48,7 +50,6 @@
     <string name="session_feedback_submitlink">Submit Feedback</string>
     <string name="session_feedback_submitted">Thanks for the feedback!</string>
 
-    <!-- TODO remove lorem ipsum -->
     <!-- Placeholder text -->
     <string name="body_copy_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
 

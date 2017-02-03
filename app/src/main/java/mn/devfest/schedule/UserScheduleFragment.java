@@ -83,7 +83,7 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
 
         setSchedule(mDataSource.getUserSchedule());
 
-        getActivity().setTitle(getResources().getString(R.string.user_schedule_title));
+        getActivity().setTitle(getResources().getString(R.string.user_agenda_title));
     }
 
     @Override
@@ -161,7 +161,7 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         mScheduleRecyclerView.setVisibility(listIsEmpty ? View.GONE : View.VISIBLE);
     }
 
-    @OnClick(R.id.go_to_sessions_button)
+    @OnClick(R.id.empty_agenda_go_to_sessions_button)
     protected void onGoToSessionsClicked() {
         MainActivity mainActivity = (MainActivity) getActivity();
         mainActivity.navigateToTopLevelFragment(R.id.nav_sessions, true);
