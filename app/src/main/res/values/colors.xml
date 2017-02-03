@@ -15,7 +15,7 @@
 
     <!-- Generic colors -->
     <color name="colorBlack">#000000</color>
-    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorWhite">#FFF</color>
     <color name="lightGray">#eee</color>
     <color name="mediumGray">#BDBDBD</color>
     <color name="darkGray">#424242</color>

@@ -7,6 +7,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -43,7 +44,8 @@ import timber.log.Timber;
  *
  * @author bherbst
  */
-public abstract class BaseActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public abstract class BaseActivity extends AppCompatActivity
+        implements GoogleApiClient.OnConnectionFailedListener, DevFestDataSource.LoginPromptListener {
     private static final int GOOGLE_SIGN_IN_REQUEST_CODE = 1111;
 
     @Retention(RetentionPolicy.SOURCE)
@@ -80,6 +82,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
         }
         super.onCreate(savedInstanceState);
         mDataSource = DevFestDataSource.getInstance(this);
+        mDataSource.setLoginPromptListener(this);
         initializeGoogleAuth();
     }
 
@@ -303,6 +306,16 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
             mUserEmailTextview.setText(userDetails.getUserEmail());
             mUserEmailTextview.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void promptUserToLogin() {
+        Snackbar.make(
+                findViewById(android.R.id.content),
+                R.string.snackbar_login_message,
+                Snackbar.LENGTH_LONG)
+                .setAction(R.string.drawer_item_login, view -> signIn())
+                .show();
     }
 
     @Override

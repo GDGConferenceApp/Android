@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">DevFest</string>
 
-    <!-- General -->
+    <!-- Authentication -->
     <string name="signin_required">You need to sign in to do that!</string>
+    <string name="snackbar_login_message">You\'re not logged in. Log in to sync your schedule with the web</string>
 
     <!-- Nav drawer -->
     <string name="drawer_item_my_schedule">My Schedule</string>
