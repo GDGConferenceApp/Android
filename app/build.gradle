@@ -23,7 +23,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "mn.devfest"
+        applicationId "com.devfestmn"
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 6
