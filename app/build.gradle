@@ -26,7 +26,7 @@ android {
         applicationId "com.devfestmn"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 6
+        versionCode 7
         versionName "1.1"
 
         // TODO set up for easy configuration for other conferences

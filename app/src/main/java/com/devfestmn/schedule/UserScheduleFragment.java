@@ -14,11 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.devfestmn.MainActivity;
 import com.devfestmn.R;
 import com.devfestmn.api.DevFestDataSource;
@@ -28,6 +23,12 @@ import com.devfestmn.base.BaseActivity;
 import com.devfestmn.data.sort.SessionTimeSort;
 import com.devfestmn.sessions.SessionListAdapter;
 import com.devfestmn.view.decoration.DividerItemDecoration;
+
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -39,7 +40,7 @@ import rx.schedulers.Schedulers;
  * @author bherbst
  * @author pfuentes
  */
-public class UserScheduleFragment extends Fragment implements DevFestDataSource.DataSourceListener, DevFestDataSource.UserScheduleListener {
+public class UserScheduleFragment extends Fragment implements DevFestDataSource.DataSourceListener, DevFestDataSource.UserScheduleListener, DevFestDataSource.AuthListener {
 
     @Bind(R.id.user_agenda_recyclerview)
     RecyclerView mScheduleRecyclerView;
@@ -70,6 +71,7 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
             mDataSource = DevFestDataSource.getInstance(context);
             mDataSource.setDataSourceListener(this);
             mDataSource.setUserScheduleListener(this);
+            mDataSource.setAuthListener(this);
         }
     }
 
@@ -207,5 +209,14 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         setSchedule(userSchedule);
         mLoadingView.setVisibility(View.GONE);
         showEmptyView(userSchedule.isEmpty());
+    }
+
+    @Override
+    public void onAuthEvent() {
+        if (mEmptyView.getVisibility() == View.VISIBLE) {
+            int visibility = mDataSource.isSignedIn() ? View.GONE : View.VISIBLE;
+            mLoginPrompt.setVisibility(visibility);
+            mLoginButton.setVisibility(visibility);
+        }
     }
 }

@@ -5,6 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 
+import com.devfestmn.api.model.Conference;
+import com.devfestmn.api.model.Feedback;
+import com.devfestmn.api.model.Session;
+import com.devfestmn.api.model.Speaker;
+import com.devfestmn.persistence.UserDetailsRepository;
+import com.devfestmn.persistence.UserScheduleRepository;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,12 +25,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.devfestmn.api.model.Conference;
-import com.devfestmn.api.model.Feedback;
-import com.devfestmn.api.model.Session;
-import com.devfestmn.api.model.Speaker;
-import com.devfestmn.persistence.UserDetailsRepository;
-import com.devfestmn.persistence.UserScheduleRepository;
 import timber.log.Timber;
 
 /**
@@ -60,6 +60,7 @@ public class DevFestDataSource {
     private DataSourceListener mDataSourceListener;
     private UserScheduleListener mUserScheduleListener;
     private LoginPromptListener mLoginPromptListener;
+    private AuthListener mAuthListener;
     private ValueEventListener mFirebaseUserScheduleListener;
 
     public static DevFestDataSource getInstance(Context context) {
@@ -416,6 +417,7 @@ public class DevFestDataSource {
 
     public void clearUserDetails() {
         mUserDetailsRepository.clearUserDetails();
+        mAuthListener.onAuthEvent();
     }
 
     public UserDetailsRepository getUserDetailsRepository() {
@@ -434,6 +436,9 @@ public class DevFestDataSource {
                         addUserScheduleListener();
                     } else {
                         Timber.d("FirebaseAuth login failed");
+                    }
+                    if (mAuthListener != null) {
+                        mAuthListener.onAuthEvent();
                     }
                 });
     }
@@ -474,6 +479,10 @@ public class DevFestDataSource {
         mLoginPromptListener = listener;
     }
 
+    public void setAuthListener(AuthListener listener) {
+        mAuthListener = listener;
+    }
+
     /**
      * Listener that will be updated when the user's schedule is updated
      */
@@ -486,6 +495,10 @@ public class DevFestDataSource {
      */
     public interface LoginPromptListener {
         void promptUserToLogin();
+    }
+
+    public interface AuthListener {
+        void onAuthEvent();
     }
 
     //TODO break this into separate listeners
