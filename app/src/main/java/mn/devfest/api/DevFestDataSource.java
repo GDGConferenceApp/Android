@@ -38,6 +38,7 @@ import timber.log.Timber;
  * @author pfuentes
  */
 public class DevFestDataSource {
+    private static final int CHANGES_ALLOWED_BEFORE_LOGIN_PROMPT = 2;
 
     private static final String DEVFEST_2017_KEY = "devfest2017";
     private static final String SESSIONS_CHILD_KEY = "schedule";
@@ -52,6 +53,7 @@ public class DevFestDataSource {
     private UserDetailsRepository mUserDetailsRepository;
     private DatabaseReference mFirebaseDatabaseReference;
     private FirebaseAuth mFirebaseAuth;
+    private int timesSinceLoginPrompted = 0;
 
     private Conference mConference = new Conference();
     //TODO move to an array of listeners?
@@ -208,7 +210,7 @@ public class DevFestDataSource {
     private void attemptAddingSessionToFirebase(String sessionId) {
         //We can't sync to Firebase if we aren't logged in
         if (!isSignedIn()) {
-            //TODO prompt the user intermittently to allow schedule sync
+            checkIfShouldPromptUser();
             return;
         }
 
@@ -231,13 +233,27 @@ public class DevFestDataSource {
     private void attemptRemovingSessionFromFirebase(String sessionId) {
         //We can't sync to Firebase if we aren't logged in
         if (!isSignedIn()) {
-            //TODO prompt the user intermittently to allow schedule sync
+            checkIfShouldPromptUser();
             return;
         }
 
         //Add the session to the user's schedule in Firebase
         mFirebaseDatabaseReference.child(DEVFEST_2017_KEY).child(AGENDAS_KEY)
                 .child(mFirebaseAuth.getCurrentUser().getUid()).child(sessionId).removeValue();
+    }
+
+    /**
+     * Prompts the user if they've tried to modify their schedule enough times without syncing
+     */
+    private void checkIfShouldPromptUser() {
+        if (timesSinceLoginPrompted < CHANGES_ALLOWED_BEFORE_LOGIN_PROMPT) {
+            timesSinceLoginPrompted++;
+        } else {
+            if (mLoginPromptListener != null) {
+                mLoginPromptListener.promptUserToLogin();
+            }
+            timesSinceLoginPrompted = 0;
+        }
     }
 
     public boolean isSignedIn() {
