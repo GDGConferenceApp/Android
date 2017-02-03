@@ -1,4 +1,4 @@
-package mn.devfest.api;
+package com.devfestmn.api;
 
 import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
@@ -8,7 +8,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import mn.devfest.BuildConfig;
+import com.devfestmn.BuildConfig;
 import retrofit.RestAdapter;
 import retrofit.client.Client;
 import retrofit.converter.GsonConverter;

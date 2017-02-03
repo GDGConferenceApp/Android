@@ -1,10 +1,10 @@
-package mn.devfest;
+package com.devfestmn;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
-import mn.devfest.api.ReleaseApiModule;
-import mn.devfest.data.DataModule;
+import com.devfestmn.api.ReleaseApiModule;
+import com.devfestmn.data.DataModule;
 
 /**
  * Release DevFest Dagger component
