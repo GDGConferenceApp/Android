@@ -22,6 +22,7 @@ import mn.devfest.R;
 import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
+import mn.devfest.base.BaseActivity;
 import mn.devfest.data.sort.SessionTimeSort;
 import mn.devfest.sessions.SessionListAdapter;
 import mn.devfest.view.decoration.DividerItemDecoration;
@@ -161,12 +162,18 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
         mScheduleRecyclerView.setVisibility(listIsEmpty ? View.GONE : View.VISIBLE);
     }
 
+    @OnClick(R.id.empty_agenda_login_button)
+    protected void onLoginClicked() {
+        //TODO re-architect to avoid casts
+        BaseActivity activity = (BaseActivity) getActivity();
+        activity.signIn();
+    }
+
     @OnClick(R.id.empty_agenda_go_to_sessions_button)
     protected void onGoToSessionsClicked() {
         MainActivity mainActivity = (MainActivity) getActivity();
         mainActivity.navigateToTopLevelFragment(R.id.nav_sessions, true);
     }
-
 
     @Override
     public void onSessionsUpdate(List<Session> sessions) {
