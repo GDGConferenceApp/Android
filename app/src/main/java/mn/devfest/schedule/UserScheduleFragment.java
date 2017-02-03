@@ -9,8 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -22,6 +24,7 @@ import mn.devfest.R;
 import mn.devfest.api.DevFestDataSource;
 import mn.devfest.api.model.Session;
 import mn.devfest.api.model.Speaker;
+import mn.devfest.base.BaseActivity;
 import mn.devfest.data.sort.SessionTimeSort;
 import mn.devfest.sessions.SessionListAdapter;
 import mn.devfest.view.decoration.DividerItemDecoration;
@@ -38,8 +41,14 @@ import rx.schedulers.Schedulers;
  */
 public class UserScheduleFragment extends Fragment implements DevFestDataSource.DataSourceListener, DevFestDataSource.UserScheduleListener {
 
-    @Bind(R.id.schedule_recyclerview)
+    @Bind(R.id.user_agenda_recyclerview)
     RecyclerView mScheduleRecyclerView;
+
+    @Bind(R.id.empty_agenda_view_login_text)
+    TextView mLoginPrompt;
+
+    @Bind(R.id.empty_agenda_login_button)
+    Button mLoginButton;
 
     @Bind(R.id.loading_progress)
     ProgressBar mLoadingView;
@@ -83,7 +92,7 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
 
         setSchedule(mDataSource.getUserSchedule());
 
-        getActivity().setTitle(getResources().getString(R.string.user_schedule_title));
+        getActivity().setTitle(getResources().getString(R.string.user_agenda_title));
     }
 
     @Override
@@ -157,16 +166,27 @@ public class UserScheduleFragment extends Fragment implements DevFestDataSource.
      * Updates the UI to show if the list is empty or not
      */
     private void showEmptyView(boolean listIsEmpty) {
+        if (listIsEmpty) {
+            mLoginPrompt.setVisibility(mDataSource.isSignedIn() ? View.GONE : View.VISIBLE);
+            mLoginButton.setVisibility(mDataSource.isSignedIn() ? View.GONE : View.VISIBLE);
+        }
+
         mEmptyView.setVisibility(listIsEmpty ? View.VISIBLE : View.GONE);
         mScheduleRecyclerView.setVisibility(listIsEmpty ? View.GONE : View.VISIBLE);
     }
 
-    @OnClick(R.id.go_to_sessions_button)
+    @OnClick(R.id.empty_agenda_login_button)
+    protected void onLoginClicked() {
+        //TODO re-architect to avoid casts
+        BaseActivity activity = (BaseActivity) getActivity();
+        activity.signIn();
+    }
+
+    @OnClick(R.id.empty_agenda_go_to_sessions_button)
     protected void onGoToSessionsClicked() {
         MainActivity mainActivity = (MainActivity) getActivity();
         mainActivity.navigateToTopLevelFragment(R.id.nav_sessions, true);
     }
-
 
     @Override
     public void onSessionsUpdate(List<Session> sessions) {
