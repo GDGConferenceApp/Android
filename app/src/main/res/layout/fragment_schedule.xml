@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/schedule_recyclerview"
+        android:id="@+id/user_agenda_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -46,7 +46,7 @@
                 android:visibility="visible"/>
 
             <TextView
-                android:id="@+id/schedule_empty_view_login_text"
+                android:id="@+id/empty_agenda_view_login_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
